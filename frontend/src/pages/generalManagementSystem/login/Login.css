@@ -1,0 +1,185 @@
+
+
+.loginActive {
+    /* border-bottom: 2px solid #0D6DFA; */
+    font-weight: bold;
+    color: #0D6DFA;
+}
+
+.loginModalButton:hover {
+    transform: scale(1.05);
+    transition: 0.5s;
+}
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+}
+
+#sectionLogin {
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#sectionLogin .bg {
+    min-height: 800px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+}
+
+
+#sectionLogin .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 800px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust the color and opacity for your overlay */
+}
+
+
+#sectionLogin .trees {
+    min-height: 800px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 100;
+    pointer-events: none;
+}
+
+#sectionLogin .girl {
+    min-height: 800px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: 100%;
+    animation: animateGirl 30s linear infinite;
+    object-fit: cover;
+}
+
+@keyframes animateGirl {
+    0% {
+        transform: translateX(calc(100% + 100vw));
+    }
+
+    50% {
+        transform: translateX(calc(-100% - 100vw));
+    }
+
+    50.01% {
+        transform: translateX(calc(-100% - 100vw)) rotateY(180deg);
+    }
+
+    100% {
+        transform: translateX(calc(100% + 100vw)) rotateY(180deg);
+    }
+}
+
+
+
+.logIn {
+    position: absolute;
+    top: 10%;
+    padding: 20px 30px;
+    background: white;
+    backdrop-filter: blur(15px);
+    border: 1px solid #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 1);
+}
+
+.logIn h2 {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #4a0958;
+    margin-bottom: 5px;
+}
+
+.logIn .inputBox {
+    position: relative;
+}
+
+.logIn .inputBox input {
+    position: relative;
+    width: 100%;
+    padding: 10px 20px;
+    outline: none;
+    font-size: 1.25em;
+    color: #8f2c24;
+    border-radius: 5px;
+    background: #fff;
+    border: none;
+    margin-bottom: 30px;
+}
+
+.logIn .inputBox ::placeholder {
+    color: #8f2c24;
+}
+
+.logIn .inputBox #btn {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: #1199ce;
+/* background-image: linear-gradient(43deg, #11248e 0%, #d02ac7 46%, #ef9c28 100%); */
+
+    
+
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.25em;
+    font-weight: 500;
+    transition: 0.5s;
+}
+
+
+.logIn .inputBox #btn:hover {
+    background-color: #0b175c;
+/* background-image: linear-gradient(43deg, #0b175c 0%, #c322be 46%, #ce7e09 100%); */
+
+}
+
+.logIn .group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logIn .group a {
+    font-size: 1.25em;
+    font-weight: 500;
+    text-decoration: none;
+    color: #4a0958;
+}
+
+.logIn .group a:nth-child(2) {
+    text-decoration: underline;
+}
