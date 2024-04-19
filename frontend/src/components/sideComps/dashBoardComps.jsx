@@ -37,6 +37,7 @@ export function SideNavigation(props) {
                 </li>
                 <li>
                     <Link
+                        to="/"
                         className="logout">
                         <i className='bx bxs-log-out-circle' ></i>
                         <span className="text">Logout</span>

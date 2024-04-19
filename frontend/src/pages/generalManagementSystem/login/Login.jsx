@@ -2,13 +2,12 @@ import React, { useEffect } from 'react'
 import './Login.css'
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import axios from 'axios';
 import Alert from '@mui/material/Alert';
-import MenuItem from '@mui/material/MenuItem';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { forwardRef, useImperativeHandle } from 'react';
 import { motion } from "framer-motion";
+import * as reqSend from '../../../global/reqSender.jsx';
 
 import bg1 from '../../../assets/bg1.jpeg';
 
@@ -35,41 +34,55 @@ const Login = (props) => {
         { value: 'sales_manager', label: 'Sales Manager' },
         { value: 'training_development_manager', label: 'Training and Development Manager' },
     ];
+
+
+    const systemRoles = {
+        quality_assurance_manager: '/qualityassuarance-management',
+        inventory_manager: '/inventory-management',
+        customer_order_manager: '/customerorder-management',
+        financial_manager: '/finantial-management',
+        human_resource_manager: '/humanResource-management',
+        logistic_manager: '/logistic-management',
+        manufacturing_manager: '/manufacturing-management',
+        sales_manager: '/sales-management',
+        training_development_manager: '/trainingdevelopment-management',
+        customer: '/'
+    };
     
 
-    const submitLogForm = () => {
-        if (loginEmail !== "" && loginPassword !== "") {
 
+    const navigateToManagerPortal = (role) => {
+        const portalLink = systemRoles[role] || '/general-management';
+        navigate(portalLink);
+    };
+
+
+    
+    const submitLogForm = () => {
+        if (loginEmail && loginPassword && props.role) {
             const loginFormData = {
                 email: loginEmail,
-                password: loginPassword
-            }
-
-
-            axios.post('http://localhost:3001/user/login', loginFormData).then(response => {
-                const responseStatus = response.status;
-                console.log(response.data)
-                if (responseStatus === 200 | responseStatus === 201) {
-                    localStorage.setItem('token', response.data['token']);
-                    localStorage.setItem('role', response.data['role']);
-                    localStorage.setItem('store', response.data['store']);
-                    if (response.data.status === 0) {
-                        navigate('/');
+                password: loginPassword,
+                role: props.role
+            };
+    
+            reqSend.defaultReq("POST", 'api/login', loginFormData, 
+                response => {
+                    if (response.status === 200 && response.data && response.data.role) {
+                        navigateToManagerPortal(response.data.role);
                     } else {
-                        navigate('/dashboard');
+                        console.error("Invalid response format:", response);
                     }
-
-                    Toast.fire({ icon: 'success', title: 'You have successfully logged in!' });
-                } else {
-                    setShowAlert(response.data['message'])
+                },
+                error => {
+                    console.error("API request failed:", error);
                 }
-            }).catch(error => { // Handle any errors
-                setShowAlert("Error Occured")
-            });
+            );
         } else {
-            setShowAlert("Some fiels are Empty")
+            console.error("Missing or invalid login credentials");
         }
-    }
+    };
+    
 
 
 
@@ -102,28 +115,6 @@ const Login = (props) => {
                             id="password" label="Password" variant="outlined" type="password" fullWidth />
                     </Grid>
                 </Grid>
-
-                {props.role && props.role === "manager" && (
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                select
-                                fullWidth
-                                label="Position"
-                                value={managerPosition}
-                                onChange={e => setManagerPosition(e.target.value)}
-                                variant="outlined"
-                            >
-                                {positions.map(position => (
-                                    <MenuItem key={position.value} value={position.value}>
-                                        {position.label}
-                                    </MenuItem>
-                                ))}
-
-                            </TextField>
-                        </Grid>
-                    </Grid>
-                )}
 
                 <div className="inputBox">
                     <input type="submit" value="Log In" id="btn" onClick={submitLogForm} />
