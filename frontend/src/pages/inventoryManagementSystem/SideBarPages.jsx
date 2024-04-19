@@ -5,10 +5,10 @@ import avatar from '../../assets/avatar.svg';
 
 
 
-export function ViewStocks(props) {
+export function ViewReports(props) {
 
     const tableData = {
-        name: "Sample Table",
+        name: "Report 1",
         heading: ["Column 1", "Column 2", "Column 3"],
         body: [
             <tr key="row1">
@@ -21,6 +21,16 @@ export function ViewStocks(props) {
                 <td>Data 5</td>
                 <td>Data 6</td>
             </tr>,
+            <tr key="row3">
+                <td>Data 7</td>
+                <td>Data 8</td>
+                <td>Data 9</td>
+            </tr>,
+            <tr key="row4">
+                <td>Data 10</td>
+                <td>Data 11</td>
+                <td>Data 12</td>
+            </tr>,
             // Add more rows as needed
         ],
     };
@@ -30,7 +40,54 @@ export function ViewStocks(props) {
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <h1>View Stocks</h1>
+                        <h1>Report Generation</h1>
+                    </div>
+
+                    <TableComp data={tableData} />
+
+                </div>
+
+            </main>
+        </>
+    )
+}
+
+export function ViewRepairs(props) {
+
+    const tableData = {
+        name: "Information on repairs",
+        heading: ["Column 1", "Column 2", "Column 3"],
+        body: [
+            <tr key="row1">
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+            </tr>,
+            <tr key="row2">
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>,
+            <tr key="row3">
+                <td>Data 7</td>
+                <td>Data 8</td>
+                <td>Data 9</td>
+            </tr>,
+            <tr key="row4">
+                <td>Data 10</td>
+                <td>Data 11</td>
+                <td>Data 12</td>
+            </tr>,
+            // Add more rows as needed
+        ],
+    };
+
+    return (
+        <>
+            <main>
+                <div className="head-title">
+                    <div className="left">
+                        <h1>Repairs</h1>
                     </div>
 
                     <TableComp data={tableData} />
