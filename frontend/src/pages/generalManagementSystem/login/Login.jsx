@@ -33,6 +33,7 @@ const Login = (props) => {
         manufacturing_manager: '/manufacturing-management/dashboard',
         sales_manager: '/sales-management/dashboard',
         training_development_manager: '/trainingdevelopment-management/dashboard',
+        general_manager: '/general-management/dashboard',
         customer: '/'
     };
     
@@ -50,7 +51,7 @@ const Login = (props) => {
             const loginFormData = {
                 email: loginEmail,
                 password: loginPassword,
-                role: props.role
+                role: props.role    
             };
     
             reqSend.defaultReq("POST", 'api/login', loginFormData, 
