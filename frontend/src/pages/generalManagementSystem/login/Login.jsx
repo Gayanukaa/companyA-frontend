@@ -22,37 +22,24 @@ const Login = (props) => {
     const [showAlert, setShowAlert] = useState(null);
 
 
-    const positions = [
-        { value: 'general_manager', label: 'General Manager' },
-        { value: 'inventory_manager', label: 'Inventory Manager' },
-        { value: 'human_resource_manager', label: 'Human Resource Manager' },
-        { value: 'customer_order_manager', label: 'Customer Order Manager' },
-        { value: 'financial_manager', label: 'Financial Manager' },
-        { value: 'logistic_manager', label: 'Logistic Manager' },
-        { value: 'manufacturing_manager', label: 'Manufacturing Manager' },
-        { value: 'quality_assurance_manager', label: 'Quality Assurance Manager' },
-        { value: 'sales_manager', label: 'Sales Manager' },
-        { value: 'training_development_manager', label: 'Training and Development Manager' },
-    ];
-
 
     const systemRoles = {
-        quality_assurance_manager: '/qualityassuarance-management',
-        inventory_manager: '/inventory-management',
-        customer_order_manager: '/customerorder-management',
-        financial_manager: '/finantial-management',
-        human_resource_manager: '/humanResource-management',
-        logistic_manager: '/logistic-management',
-        manufacturing_manager: '/manufacturing-management',
-        sales_manager: '/sales-management',
-        training_development_manager: '/trainingdevelopment-management',
+        quality_assurance_manager: '/qualityassuarance-management/dashboard',
+        inventory_manager: '/inventory-management/dashboard',
+        customer_order_manager: '/customerorder-management/dashboard',
+        financial_manager: '/finantial-management/dashboard',
+        human_resource_manager: '/humanResource-management/dashboard',
+        logistic_manager: '/logistic-management/dashboard',
+        manufacturing_manager: '/manufacturing-management/dashboard',
+        sales_manager: '/sales-management/dashboard',
+        training_development_manager: '/trainingdevelopment-management/dashboard',
         customer: '/'
     };
     
 
 
     const navigateToManagerPortal = (role) => {
-        const portalLink = systemRoles[role] || '/general-management';
+        const portalLink = systemRoles[role];
         navigate(portalLink);
     };
 
@@ -69,6 +56,7 @@ const Login = (props) => {
             reqSend.defaultReq("POST", 'api/login', loginFormData, 
                 response => {
                     if (response.status === 200 && response.data && response.data.role) {
+                        localStorage.setItem("role", response.data.role);
                         navigateToManagerPortal(response.data.role);
                     } else {
                         console.error("Invalid response format:", response);
@@ -107,7 +95,6 @@ const Login = (props) => {
                     </Grid>
                 </Grid>
 
-
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextField
@@ -119,15 +106,11 @@ const Login = (props) => {
                 <div className="inputBox">
                     <input type="submit" value="Log In" id="btn" onClick={submitLogForm} />
                 </div>
-                <div className="group">
+                {/* <div className="group">
                     <Link to="/" className='nav-avatar-list'>Forgot password</Link>
                     <Link to="/register" className='nav-avatar-list'> Sign Up</Link>
-                </div>
-
-
+                </div> */}
             </motion.div>
-
-
         </section>
     )
 }

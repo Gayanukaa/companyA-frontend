@@ -1,11 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
 
 
-
 // Side Bar component
 export function SideNavigation(props) {
 
     const location = useLocation();
+
+    const handleLogout = () => {
+        localStorage.clear();
+    }
+
+    const getLastPart = (url) => {
+        const parts = url.split('/');
+        return parts[parts.length - 1];
+    }
 
 
     return (
@@ -17,8 +25,10 @@ export function SideNavigation(props) {
 
             <ul className="side-menu top">
                 {props.data && props.data.map((item, index) => {
+                    console.log(location.pathname);
+
                     return (
-                        <li key={index} className={location.pathname === item.to ? "active" : ""}>
+                        <li key={index} className={getLastPart(location.pathname) === item.to ? "active" : ""}>
                             <Link to={item.to}>
                                 {item.icon}
                                 <span className="text">{item.name}</span>
@@ -38,6 +48,7 @@ export function SideNavigation(props) {
                 <li>
                     <Link
                         to="/"
+                        onClick={handleLogout}
                         className="logout">
                         <i className='bx bxs-log-out-circle' ></i>
                         <span className="text">Logout</span>
