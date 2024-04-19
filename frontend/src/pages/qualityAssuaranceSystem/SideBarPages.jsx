@@ -5,10 +5,10 @@ import avatar from '../../assets/avatar.svg';
 
 
 
-export function ViewManagers(props) {
+export function ViewStocks(props) {
 
     const tableData = {
-        name: "Sample Table 1",
+        name: "Sample Table",
         heading: ["Column 1", "Column 2", "Column 3"],
         body: [
             <tr key="row1">
@@ -30,7 +30,7 @@ export function ViewManagers(props) {
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <h1>View Customers</h1>
+                        <h1>View Stocks</h1>
                     </div>
 
                     <TableComp data={tableData} />
@@ -41,7 +41,6 @@ export function ViewManagers(props) {
         </>
     )
 }
-
 
 
 export function DashboardView(props) {
