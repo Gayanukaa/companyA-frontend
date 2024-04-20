@@ -7,7 +7,7 @@ import LoginHandle from './pages/generalManagementSystem/login/LoginHandle.jsx';
 
 import CustomerOrder from './pages/customerOrderSystem/Dashboard.jsx';
 import FinanticalManagement from './pages/financeSystem/Dashboard.jsx';
-import GeneralManagement from './pages/customerOrderSystem/Dashboard.jsx';
+import GeneralManagement from './pages/generalManagementSystem/Dashboard.jsx';
 import HumanResourceManagement from './pages/humanResourceSystem/Dashboard.jsx';
 import InventoryManagement from './pages/inventoryManagementSystem/Dashboard.jsx';
 import LogisticManagement from './pages/logisticsAndMaintenanceSystem/Dashboard.jsx';
