@@ -69,7 +69,7 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/view-customers" element={<ViewManagers />} />
+                        <Route path="/view-managers" element={<ViewManagers />} />
                     </Routes>
                 </section>
                 

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
-
+import axios from "axios";
 
 
 export function ViewManagers(props) {
@@ -24,6 +24,21 @@ export function ViewManagers(props) {
             // Add more rows as needed
         ],
     };
+
+
+    useEffect(() => {
+
+        axios.get('http://localhost:8090/api/manager/viewAllManagers')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data: ', error);
+            });
+
+    }, [])
+
+
 
     return (
         <>

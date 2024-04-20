@@ -13,7 +13,10 @@ export const personImages=[per1,per2,per3,per4,per5,per6,per7,per8]
 
 export const dashboardAdminData = [
     { name: "Dashboard", icon: <i className='bx bxs-dashboard' ></i>, active: true, to: 'dashboard' },
-    { name: "View Managers", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-customers' }
+    { name: "Managers", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-managers' },
+    { name: "Employee Request", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'employee-request' },
+    { name: "Feedbacks", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-feedback' },
+
 ]
 
   
