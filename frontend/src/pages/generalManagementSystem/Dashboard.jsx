@@ -9,6 +9,9 @@ import {
 } from './data/DashBoardData';
 
 import { ViewManagers, DashboardView } from './SideBarPages';
+import ModalForm from './components/ModalForm'
+import AddManager from './components/AddManager';
+
 
 
 
@@ -70,6 +73,8 @@ export default function Dashboard() {
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
                         <Route path="/view-managers" element={<ViewManagers />} />
+                        <Route path="/update-managers" element={<ModalForm />} />
+                        <Route path="/add-managers" element={<AddManager />} />
                     </Routes>
                 </section>
                 
