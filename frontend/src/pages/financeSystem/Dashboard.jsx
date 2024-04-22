@@ -8,9 +8,7 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView, ViewStocks } from './SideBarPages';
-
-
+import { DashboardView, ViewEmployee, ViewStocks } from './SideBarPages';
 
 
 export default function Dashboard() {
@@ -70,6 +68,8 @@ export default function Dashboard() {
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
                         <Route path="/view-stocks" element={<ViewStocks />} />
+                        <Route path="/view-salary-details" element={<ViewEmployee/>} />
+                        
                     </Routes>
                 </section>
                 
