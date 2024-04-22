@@ -132,78 +132,10 @@ export function DashboardView(props) {
     }, [data]);
 
 
-    // const dataList = [
-    //     {
-    //         image: avatar,
-    //         altText: "Avatar 1",
-    //         count: 5,
-    //         name: "John Doe"
-    //     },
-    //     {
-    //         image: avatar,
-    //         altText: "Avatar 2",
-    //         count: "Malitha Prabashana",
-    //         name: "malith@fam.com"
-    //     },
-    //     {
-    //         image: avatar,
-    //         altText: "Avatar 3",
-    //         count: 7,
-    //         name: "Bob Johnson"
-
-    //     },
-
-    //     {
-    //         image: avatar,
-    //         altText: "Avatar 3",
-    //         count: 7,
-    //         name: "Bob Johnson"
-
-    //     }
-    // ];
-
-    // const dataList1 = [
-    //     {
-    //         image: avatar,
-    //         altText: "Avatar 1",
-    //         count: 5,
-    //         name: "John Doe"
-    //     },
-    //     {
-    //         image: avatar,
-    //         altText: "Avatar 2",
-    //         count: "Malitha Prabashana",
-    //         name: "malith@fam.com"
-    //     },
-    //     {
-    //         image: avatar,
-    //         altText: "Avatar 3",
-    //         count: 7,
-    //         name: "Bob Johnson"
-
-    //     },
-
-    //     {
-    //         image: avatar,
-    //         altText: "Avatar 3",
-    //         count: 7,
-    //         name: "Bob Johnson"
-
-    //     }
-    // ];
-
     return (
         <>
             <main>
-                {/* <div className="head-title">
-                    <div className="left">
-                        <h1>Employee</h1>
-                    </div>
 
-                    <CardComp data={dataList} />
-
-                    
-                </div> */}
                 <br></br>
                 <div className="head-title">
                     <div className="left">
