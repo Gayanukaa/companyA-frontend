@@ -32,11 +32,15 @@ export function DashboardView(props) {
     const [tableData, setTableData] = useState(null);
     const [showAddItemForm, setShowAddItemForm] = useState(false);
     const [showDeleteItemForm, setShowDeleteItemForm] = useState(false);
-    const [selectedItem, setSelectedItem] = useState('');
     const [msg, setmsg] = useState('');
+    const [delmsg, setDelmsg] = useState('');
+    const [warehouseOptions, setWarehouseOptions] = useState([]);
+    const [stockOptions, setStockOptions] = useState([]);
 
     useEffect(() => {
         fetchData();
+        fetchWarehouseOptions();
+        fetchDeleteItemData();
     }, []);
 
     const fetchData = () => {
@@ -68,6 +72,25 @@ export function DashboardView(props) {
         );
     };
 
+    const fetchWarehouseOptions = () => {
+        reqSend.defaultReq("GET", 'api/v1/warehouse', {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    const options = response.data.map(warehouse => ({
+                        id: warehouse.warehouseId,
+                        name: warehouse.name
+                    }));
+                    setWarehouseOptions(options);
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    };
+
     const handleAddItemClick = () => {
         setShowAddItemForm(true);
     };
@@ -75,8 +98,6 @@ export function DashboardView(props) {
     const handleSubmit = (event) => {
         event.preventDefault();
         
-
-        // Gather form data
         const formData = {
             name: event.target.inputItemName.value,
             quantity: event.target.inputQuantity.value,
@@ -90,7 +111,6 @@ export function DashboardView(props) {
             inventoryType: event.target.inputInventoryType.value
         };
 
-        // Check for missing fields
         for (const key in formData) {
             if (!formData[key]) {
                 setmsg("Please fill in all fields");
@@ -102,6 +122,7 @@ export function DashboardView(props) {
             response => {
                 if (response.status === 201) {
                     setmsg('Item added successfully');
+                    fetchData();
                 } else {
                     console.error("Error adding item:", response);
                     setmsg("Error adding item. Please try again later.");
@@ -126,8 +147,7 @@ export function DashboardView(props) {
                     <CloseIcon />
                 </IconButton>
                 <table>
-                    <tbody>
-                        <tr>
+                <tr>
                             <td colSpan="3"><label className="form-label">Item Name</label></td>
                             <td colSpan="2"><input type="text" className="form-control" id="inputItemName"/></td>
                         </tr>
@@ -151,13 +171,12 @@ export function DashboardView(props) {
                             <td><label className="form-label">Warehouse</label></td>
                             <td>
                                 <select className="form-select" id="inputWarehouse">
-                                    <option value="W0001">Warehouse 1</option>
-                                    <option value="W0002">Warehouse 2</option>
-                                    <option value="W0003">Warehouse 3</option>
-                                    <option value="W0004">Warehouse 4</option>
-                                    <option value="W0005">Warehouse 5</option>
+                                    {warehouseOptions.map(option => (
+                                        <option key={option.id} value={option.id}>{option.name}</option>
+                                    ))}
                                 </select>
                             </td>
+
                             <td><label className="form-label">State of Item</label></td>
                             <td>
                                 <select className="form-select" id="inputStateOfProduct">
@@ -181,7 +200,7 @@ export function DashboardView(props) {
                                 <button type="submit" className="btn btn-primary">Submit</button>
                             </td>
                         </tr>
-                    </tbody>
+
                 </table>
                 {msg && <p style={{ color: "red" }}>{msg}</p>}
             </form>
@@ -192,12 +211,42 @@ export function DashboardView(props) {
         setShowDeleteItemForm(true);
     };
 
+    const fetchDeleteItemData = () => {
+        reqSend.defaultReq("GET", 'api/v1/stock', {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    const options = response.data.map(item => ({
+                        id: item.id,
+                        name: item.name
+                    }));
+                    setStockOptions(options);
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    };
+    
     const handleDeleteItemSubmit = (event) => {
         event.preventDefault();
         const selectedItem = event.target.selectItem.value;
-        // Send API request to delete item
-        // Update state or show message accordingly
-        console.log("Selected item to delete:", selectedItem);
+
+        reqSend.defaultReq("DELETE", `api/v1/stock/deleteStock/${selectedItem}`, {},
+            response => {
+                if (response.status === 200) {
+                    setDelmsg('Item deleted successfully');
+                    fetchData();
+                } else {
+                    setDelmsg("Error deleting item. Please try again later.");
+                }
+            },
+            error => {
+                setDelmsg("Error deleting item. Please try again later.");
+            }
+        );
     };
 
     const formDeleteItem = (
@@ -211,13 +260,24 @@ export function DashboardView(props) {
                 >
                     <CloseIcon />
                 </IconButton>
-                <label htmlFor="selectItem">Select Item to Delete:</label>
-                <select id="selectItem" name="selectItem">
-                    <option value="item1">Item 1</option>
-                    <option value="item2">Item 2</option>
-                    <option value="item3">Item 3</option>
-                </select>
-                <button type="submit" className="btn btn-danger">Delete</button>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label htmlFor="selectItem">Select Item to Delete:</label></td>
+                            <td>
+                                <select id="selectItem" name="selectItem">
+                                    {stockOptions.map(option => (
+                                        <option key={option.id} value={option.id}>{option.id} - {option.name}</option>
+                                    ))}
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit" className="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> 
+                {delmsg && <p style={{ color: "red" }}>{delmsg}</p>}
             </form>
         </div>
     );
@@ -310,57 +370,6 @@ export function OrderItems(props) {
         </>
     )
 }
-
-/*export function OrderItems(props) {
-    const [tableData, setTableData] = useState(null);
-    const [showTable, setShowTable] = useState(false);
-
-    const fetchData = () => {
-        reqSend.defaultReq("POST", 'api/v1/stock/checkQuantity', {},
-            response => {
-                if (response.status === 200 && response.data) {
-                    const fetchedData = response.data.map(item => (
-                        <tr key={item.alertId}>
-                            <td>{item.alertId}</td>
-                            <td>{item.itemId}</td>
-                            <td>{item.itemName}</td>
-                            <td>{item.reorderQuantity}</td>
-                        </tr>
-                    ));
-                    setTableData({
-                        name: "Items Quantity Below the Required Limit",
-                        heading: ["Alert No", "Item No", "Item Name", "Required Quantity"],
-                        body: fetchedData,
-                    });
-                    setShowTable(true);
-                } else {
-                    console.error("Invalid response format:", response);
-                }
-            },
-            error => {
-                console.error("API request failed:", error);
-            }
-        );
-    };
-
-    return (
-        <>
-            <main>
-                <div className="head-title">
-                    <div className="left">
-                        <h1>Order Items</h1>
-                    </div>
-
-                    <button onClick={fetchData} type="button" className="btn btn-primary">Show Items to Order</button>
-
-                    {showTable && tableData && (
-                        <TableComp data={tableData} />
-                    )}
-                </div>
-            </main>
-        </>
-    )
-}*/
 
 export function ViewReports(props) {
 
