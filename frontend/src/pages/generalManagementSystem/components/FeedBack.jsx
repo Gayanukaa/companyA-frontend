@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Card from '@mui/material/Card';
+import {Card, CardContent} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
@@ -13,10 +13,10 @@ const FeedbackCard = ({ name, email, message }) => {
             background: 'var(--light)',
             padding: '24px',
             overflowX: 'auto',
-            width: 'calc(50% - 30px)', 
+            width: 'calc(50% - 30px)',
             marginBottom: '20px',
             marginLeft: '20px',
-            display: 'inline-block' 
+            display: 'inline-block'
         }}>
             <CardContent>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -57,20 +57,20 @@ const FeedbackSection = () => {
 
     return (
         <main>
-            <div style={{ 	top:' 2px',left: '2px',bottom: '2px' }}>
-              
-                    <h1>Feedback Section</h1><br></br>
-                    <div className="feedback-container">
-                        {feedbackData.map((feedback, index) => (
-                            <FeedbackCard
-                                key={index}
-                                name={feedback.name}
-                                email={feedback.email}
-                                message={feedback.message}
-                            />
-                        ))}
-                    </div>
-               
+            <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
+
+                <h1>Feedback Section</h1><br></br>
+                <div className="feedback-container">
+                    {feedbackData.map((feedback, index) => (
+                        <FeedbackCard
+                            key={index}
+                            name={feedback.name}
+                            email={feedback.email}
+                            message={feedback.message}
+                        />
+                    ))}
+                </div>
+
             </div>
         </main>
 

@@ -6,8 +6,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import TrashIcon from "./components/TrashIcon";
 import { useNavigate } from 'react-router-dom';
-
-
+import { systemRoles } from './data/RoleDetails.jsx';
+import * as reqSend from '../../global/reqSender.jsx';
 
 
 
@@ -26,7 +26,6 @@ export function ViewManagers(props) {
         const portalLink = '/general-management/add-managers';
         navigate(portalLink);
     };
-
 
 
     const style = {
@@ -61,12 +60,14 @@ export function ViewManagers(props) {
                     heading: ["Person", "Name", "e-mail", "Role", "edit", ""],
                     body: data.map((tablerow, index) => {
 
+                        const roleLabel = systemRoles.find(role => role.role === tablerow.role)?.label || 'Unknown Role';
+
                         return (
                             <tr key={index}>
                                 <td><img src={avatar} alt="Avatar" /></td>
                                 <td>{tablerow.firstName + " " + tablerow.lastName}</td>
                                 <td >{tablerow.email}</td>
-                                <td>{tablerow.role}</td>
+                                <td>{roleLabel}</td>
                                 <td><button onClick={() => updateManagerButtonClick(tablerow.id)} className="btn btn-dark">Update</button></td>
                                 <td><TrashIcon /></td>
                             </tr>

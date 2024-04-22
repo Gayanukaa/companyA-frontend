@@ -4,8 +4,15 @@ import { Grid, TextField, Button, Select, MenuItem, FormControl, InputLabel } fr
 import CardForm from './CardForm';
 // import "../../../styles/styles.css";
 import '../../../styles/dashboard.css';
+import * as reqSend from '../../../global/reqSender.jsx';
+import { useNavigate } from 'react-router-dom';
+import { systemRoles } from '../data/RoleDetails.jsx';
+
+
 
 const AddManager = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -24,32 +31,32 @@ const AddManager = () => {
   };
 
 
-  const systemRoles = [
-    { role: 'quality_assurance_manager', label: 'General Manager' },
-    { role: 'inventory_manager', label: 'Inventory Manager' },
-    { role: 'customer_order_manager', label: 'Customer Order Manager' },
-    { role: 'financial_manager', label: 'Financial Manager' },
-    { role: 'human_resource_manager', label: 'Human Resource Manager' },
-    { role: 'logistic_manager', label: 'Logistic Manager' },
-    { role: 'manufacturing_manager', label: 'Manufacturing Manager' },
-    { role: 'sales_manager', label: 'Sales Manager' },
-    { role: 'training_development_manager', label: 'Training Development Manager' },
-    { role: 'general_manager', label: 'General Manager' },
-  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here (send data to backend, etc.)
-    console.log(formData);
-    // Reset form after submission
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      password: '',
-      role: ''
-    });
+
+    for (const key in formData) {
+      if (formData[key] === '') {
+        alert('Please fill in all fields');
+        return;
+      }
+    }
+
+    reqSend.defaultReq("POST", 'api/manager/createaccount', formData,
+        response => {
+          if (response.status === 200 && response.data) {
+            navigate('/general-management/view-managers');
+          } else {
+            console.error("Invalid response format:", response);
+          }
+        },
+        error => {
+          console.error("API request failed:", error);
+        }
+      );
+
+
+
   };
 
   return (
@@ -131,8 +138,8 @@ const AddManager = () => {
 
 
                 <Grid item xs={12}>
-                  <Button type="submit" variant="contained" color="primary">
-                    Sign Up
+                  <Button onClick={handleSubmit} variant="contained" color="primary">
+                    Create Account
                   </Button>
                 </Grid>
               </Grid>

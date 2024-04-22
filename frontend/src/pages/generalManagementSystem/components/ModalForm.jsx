@@ -1,38 +1,34 @@
-// SignUpForm.js
 import React, { useEffect, useState } from 'react';
 import { Grid, TextField, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import '../../../styles/dashboard.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import * as reqSend from '../../../global/reqSender.jsx';
-
-
+import { systemRoles } from '../data/RoleDetails.jsx';
 
 const ModalForm = () => {
-
   const location = useLocation();
-  const [managerDetails, setManagerDetails] = useState();
-
-  const systemRoles = [
-    { role: 'quality_assurance_manager', label: 'General Manager' },
-    { role: 'inventory_manager', label: 'Inventory Manager' },
-    { role: 'customer_order_manager', label: 'Customer Order Manager' },
-    { role: 'financial_manager', label: 'Financial Manager' },
-    { role: 'human_resource_manager', label: 'Human Resource Manager' },
-    { role: 'logistic_manager', label: 'Logistic Manager' },
-    { role: 'manufacturing_manager', label: 'Manufacturing Manager' },
-    { role: 'sales_manager', label: 'Sales Manager' },
-    { role: 'training_development_manager', label: 'Training Development Manager' },
-    { role: 'general_manager', label: 'General Manager' },
-  ];
-
+  const navigate = useNavigate();
+  const [managerDetails, setManagerDetails] = useState({});
+  const [managerIdVariable, setManagerIdVariable] = useState();
+  const [formData, setFormData] = useState({
+    id: '',
+    firstName: '',
+    lastName: '',
+    mobileNumber: '',
+    email: '',
+    role: ''
+  });
 
   useEffect(() => {
     if (location.state && location.state.managerId) {
       const managerId = location.state.managerId;
-
+      setManagerIdVariable(managerId);
       const url = `api/manager/findById?id=${managerId}`;
 
-      reqSend.defaultReq("GET", url, {},
+      reqSend.defaultReq(
+        "GET",
+        url,
+        {},
         response => {
           if (response.status === 200 && response.data && response.data.role) {
             setManagerDetails(response.data);
@@ -48,14 +44,16 @@ const ModalForm = () => {
   }, [location.state]);
 
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    role: ''
-  });
+  useEffect(() => {
+    setFormData({
+      id: managerIdVariable || '',
+      firstName: managerDetails.firstName || '',
+      lastName: managerDetails.lastName || '',
+      email: managerDetails.email || '',
+      mobileNumber: managerDetails.mobileNumber || '',
+      role: managerDetails.role || ''
+    });
+  }, [managerDetails]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,28 +65,45 @@ const ModalForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here (send data to backend, etc.)
-    console.log(formData);
-    // Reset form after submission
+
     setFormData({
+      id: '',
       firstName: '',
       lastName: '',
       email: '',
-      phoneNumber: '',
-      password: '',
+      mobileNumber: '',
       role: ''
     });
-  };
+
+
+    if (formData) {
+      reqSend.defaultReq(
+        "POST",
+        'api/manager/updateById',
+        formData,
+        response => {
+          if (response.status === 200 && response.data) {
+            console.log(response.data);
+            navigate('/general-management/view-managers');
+          } else {
+            console.error("Invalid response format:", response);
+          }
+        },
+        error => {
+          console.error("API request failed:", error);
+        }
+      );
+    };
+  }
+  
 
   return (
-
     <>
       <main>
         <div className="head-title">
           <div className="left">
             <h1>Update Manager Details</h1>
           </div>
-
           <div className="card-theme">
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
@@ -97,7 +112,7 @@ const ModalForm = () => {
                     fullWidth
                     label="First Name"
                     name="firstName"
-                    value={managerDetails && managerDetails.firstName ? managerDetails.firstName : ""}
+                    value={formData.firstName}
                     onChange={handleChange}
                   />
                 </Grid>
@@ -106,7 +121,7 @@ const ModalForm = () => {
                     fullWidth
                     label="Last Name"
                     name="lastName"
-                    value={managerDetails && managerDetails.lastName ? managerDetails.lastName : ""}
+                    value={formData.lastName}
                     onChange={handleChange}
                   />
                 </Grid>
@@ -116,27 +131,25 @@ const ModalForm = () => {
                     label="Email"
                     type="email"
                     name="email"
-                    value={managerDetails && managerDetails.email ? managerDetails.email : ""}
+                    value={formData.email}
                     onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    label="Phone Number"
-                    name="phoneNumber"
-                    value={managerDetails && managerDetails.mobileNumber ? managerDetails.mobileNumber : ""}
+                    label="Mobile Number"
+                    name="mobileNumber"
+                    value={formData.mobileNumber}
                     onChange={handleChange}
                   />
                 </Grid>
-
-
                 <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel>Select Role</InputLabel>
                     <Select
                       onChange={handleChange}
-                      value={managerDetails && managerDetails.role ? managerDetails.role : ""}
+                      value={formData.role}
                       name="role"
                     >
                       {systemRoles.map((roleObject) => (
@@ -145,14 +158,10 @@ const ModalForm = () => {
                         </MenuItem>
                       ))}
                     </Select>
-
                   </FormControl>
                 </Grid>
-
-
-
                 <Grid item xs={12}>
-                  <Button type="submit" variant="contained" color="primary">
+                  <Button onClick={handleSubmit} variant="contained" color="primary">
                     Update
                   </Button>
                 </Grid>
