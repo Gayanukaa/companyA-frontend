@@ -56,7 +56,6 @@ export function ViewManagers(props) {
         if (data != null) {
             settabledata(
                 {
-                    name: "Manager Details",
                     heading: ["Person", "Name", "e-mail", "Role", "edit", ""],
                     body: data.map((tablerow, index) => {
 

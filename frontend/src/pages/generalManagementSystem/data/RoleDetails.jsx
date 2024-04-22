@@ -1,5 +1,5 @@
 export const systemRoles = [
-    { role: 'quality_assurance_manager', label: 'General Manager' },
+    { role: 'quality_assurance_manager', label: 'Quality Assurance Manager' },
     { role: 'inventory_manager', label: 'Inventory Manager' },
     { role: 'customer_order_manager', label: 'Customer Order Manager' },
     { role: 'financial_manager', label: 'Financial Manager' },
