@@ -20,12 +20,15 @@ import NotFound from './pages/generalManagementSystem/NotFound.jsx';
 import LandingPage from './pages/generalManagementSystem/LandingPage.jsx';
 import Unauthorized from './pages/generalManagementSystem/Unauthorized.jsx';
 
+import FetchReportData from './pages/inventoryManagementSystem/FetchReportData.jsx';
+
 
 
 function App() {
 
   return (
     <>
+    {/* <FetchReportData/> */}
       <React.Fragment>
         <Routes>
           <Route path="/login/*" element={<LoginHandle />} />
