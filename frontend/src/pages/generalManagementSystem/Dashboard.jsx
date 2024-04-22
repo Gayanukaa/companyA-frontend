@@ -14,8 +14,6 @@ import AddManager from './components/AddManager';
 
 
 
-
-
 export default function Dashboard() {
 
     const addJs = () => {

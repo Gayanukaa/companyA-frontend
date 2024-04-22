@@ -16,10 +16,12 @@ export function ViewManagers(props) {
     const [tabledata, settabledata] = useState(null)
     const navigate = useNavigate();
 
-    const updateManagerButtonClick = () => {
-        const portalLink = '/general-management/update-managers';
-        navigate(portalLink);
+
+    const updateManagerButtonClick = (managerId) => {
+        navigate('/general-management/update-managers', { state: { managerId: managerId } });
     };
+
+
     const addManagerButtonClick = () => {
         const portalLink = '/general-management/add-managers';
         navigate(portalLink);
@@ -45,7 +47,6 @@ export function ViewManagers(props) {
         // Fetch manager data from API
         axios.get("http://localhost:8090/api/manager/viewAllManagers")
             .then(response => {
-                // console.log(response.data);
                 setData(response.data)
             })
             .catch(error => {
@@ -59,14 +60,14 @@ export function ViewManagers(props) {
                     name: "Manager Details",
                     heading: ["Person", "Name", "e-mail", "Role", "edit", ""],
                     body: data.map((tablerow, index) => {
-                        // console.log(tabledata,index)
+
                         return (
                             <tr key={index}>
                                 <td><img src={avatar} alt="Avatar" /></td>
                                 <td>{tablerow.firstName + " " + tablerow.lastName}</td>
                                 <td >{tablerow.email}</td>
                                 <td>{tablerow.role}</td>
-                                <td><button onClick={updateManagerButtonClick} className="btn btn-dark">Update</button></td>
+                                <td><button onClick={() => updateManagerButtonClick(tablerow.id)} className="btn btn-dark">Update</button></td>
                                 <td><TrashIcon /></td>
                             </tr>
                         )
@@ -77,19 +78,6 @@ export function ViewManagers(props) {
 
 
     }, [data]);
-
-
-    useEffect(() => {
-
-        axios.get('http://localhost:8090/api/manager/viewAllManagers')
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data: ', error);
-            });
-
-    }, [])
 
 
 

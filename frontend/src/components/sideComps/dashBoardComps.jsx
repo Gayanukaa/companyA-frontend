@@ -25,7 +25,6 @@ export function SideNavigation(props) {
 
             <ul className="side-menu top">
                 {props.data && props.data.map((item, index) => {
-                    console.log(location.pathname);
 
                     return (
                         <li key={index} className={getLastPart(location.pathname) === item.to ? "active" : ""}>
