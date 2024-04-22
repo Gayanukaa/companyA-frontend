@@ -4,8 +4,6 @@ import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ModalForm from "./components/ModalForm";
-//import {BsFillTrashFill} from "react-icons/bs";
 import TrashIcon from "./components/TrashIcon";
 import { useNavigate } from 'react-router-dom';
 
@@ -16,23 +14,19 @@ import { useNavigate } from 'react-router-dom';
 export function ViewManagers(props) {
     const [data, setData] = useState(null)
     const [tabledata, settabledata] = useState(null)
-    const [showModal, setShowModal] = useState(false)
-    const [ModalFormOpen, setModalFormOpen] = useState(false);
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
     const navigate = useNavigate();
-    const Buttonclick = () => {
+
+    const updateManagerButtonClick = () => {
         const portalLink = '/general-management/update-managers';
         navigate(portalLink);
     };
-    const Buttonclick2 = () => {
+    const addManagerButtonClick = () => {
         const portalLink = '/general-management/add-managers';
         navigate(portalLink);
     };
 
-   
-    
+
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -45,7 +39,7 @@ export function ViewManagers(props) {
         p: 4,
     };
 
-    
+
 
     useEffect(() => {
         // Fetch manager data from API
@@ -72,15 +66,11 @@ export function ViewManagers(props) {
                                 <td>{tablerow.firstName + " " + tablerow.lastName}</td>
                                 <td >{tablerow.email}</td>
                                 <td>{tablerow.role}</td>
-                                <td><button onClick={Buttonclick} className="btn btn-dark">Update</button></td>
+                                <td><button onClick={updateManagerButtonClick} className="btn btn-dark">Update</button></td>
                                 <td><TrashIcon /></td>
-
-
                             </tr>
                         )
-                    })
-
-                    ,
+                    }),
                 }
             )
         }
@@ -111,20 +101,14 @@ export function ViewManagers(props) {
                         <h1>View Managers</h1>
                     </div>
                     <div className="right">
-                        <button onClick={Buttonclick2} className="btn btn-primary">Add Manager</button>
+                        <button onClick={addManagerButtonClick} className="btn btn-primary">Add Manager</button>
                     </div>
                     {tabledata ?
                         <TableComp data={tabledata} />
                         : null}
-                    
+
                 </div>
-                
-
-
-
-
             </main>
-
         </>
     )
 }
@@ -146,79 +130,79 @@ export function DashboardView(props) {
                 console.error("Error fetching manager data:", error);
             });
     }, []);
-   
-// Inside your functional component
-useEffect(() => {
-  if (data != null) {
-    setCardData(data.map((manager, index) => ({
-      image: avatar,
-      altText: `Avatar ${index + 1}`,
-      name: manager.email,
-      count: manager.lastName
-    })));
-  }
-}, [data]);
+
+    // Inside your functional component
+    useEffect(() => {
+        if (data != null) {
+            setCardData(data.map((manager, index) => ({
+                image: avatar,
+                altText: `Avatar ${index + 1}`,
+                name: manager.email,
+                count: manager.lastName
+            })));
+        }
+    }, [data]);
 
 
-// const dataList = [
-//     {
-//         image: avatar,
-//         altText: "Avatar 1",
-//         count: 5,
-//         name: "John Doe"
-//     },
-//     {
-//         image: avatar,
-//         altText: "Avatar 2",
-//         count: "Malitha Prabashana",
-//         name: "malith@fam.com"
-//     },
-//     {
-//         image: avatar,
-//         altText: "Avatar 3",
-//         count: 7,
-//         name: "Bob Johnson"
-        
-//     },
+    // const dataList = [
+    //     {
+    //         image: avatar,
+    //         altText: "Avatar 1",
+    //         count: 5,
+    //         name: "John Doe"
+    //     },
+    //     {
+    //         image: avatar,
+    //         altText: "Avatar 2",
+    //         count: "Malitha Prabashana",
+    //         name: "malith@fam.com"
+    //     },
+    //     {
+    //         image: avatar,
+    //         altText: "Avatar 3",
+    //         count: 7,
+    //         name: "Bob Johnson"
 
-//     {
-//         image: avatar,
-//         altText: "Avatar 3",
-//         count: 7,
-//         name: "Bob Johnson"
-        
-//     }
-// ];
+    //     },
 
-// const dataList1 = [
-//     {
-//         image: avatar,
-//         altText: "Avatar 1",
-//         count: 5,
-//         name: "John Doe"
-//     },
-//     {
-//         image: avatar,
-//         altText: "Avatar 2",
-//         count: "Malitha Prabashana",
-//         name: "malith@fam.com"
-//     },
-//     {
-//         image: avatar,
-//         altText: "Avatar 3",
-//         count: 7,
-//         name: "Bob Johnson"
-        
-//     },
+    //     {
+    //         image: avatar,
+    //         altText: "Avatar 3",
+    //         count: 7,
+    //         name: "Bob Johnson"
 
-//     {
-//         image: avatar,
-//         altText: "Avatar 3",
-//         count: 7,
-//         name: "Bob Johnson"
-        
-//     }
-// ];
+    //     }
+    // ];
+
+    // const dataList1 = [
+    //     {
+    //         image: avatar,
+    //         altText: "Avatar 1",
+    //         count: 5,
+    //         name: "John Doe"
+    //     },
+    //     {
+    //         image: avatar,
+    //         altText: "Avatar 2",
+    //         count: "Malitha Prabashana",
+    //         name: "malith@fam.com"
+    //     },
+    //     {
+    //         image: avatar,
+    //         altText: "Avatar 3",
+    //         count: 7,
+    //         name: "Bob Johnson"
+
+    //     },
+
+    //     {
+    //         image: avatar,
+    //         altText: "Avatar 3",
+    //         count: 7,
+    //         name: "Bob Johnson"
+
+    //     }
+    // ];
 
     return (
         <>
@@ -241,14 +225,7 @@ useEffect(() => {
                     {listdata ?
                         <CardComp data={listdata} />
                         : null}
-
-                    
                 </div>
-                
-                    
-                    
-                
-                
             </main>
 
         </>

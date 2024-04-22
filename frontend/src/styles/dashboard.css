@@ -600,6 +600,13 @@
 	margin-bottom: 0;
 }
 
+.card-theme {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+
 /* MAIN */
 /* CONTENT */
 
