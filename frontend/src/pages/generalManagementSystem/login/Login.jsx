@@ -34,7 +34,7 @@ const Login = (props) => {
         sales_manager: '/sales-management/dashboard',
         training_development_manager: '/trainingdevelopment-management/dashboard',
         general_manager: '/general-management/dashboard',
-        customer: '/'
+        customer: '/customer/dashboard'
     };
     
 
