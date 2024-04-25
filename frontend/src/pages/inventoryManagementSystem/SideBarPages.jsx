@@ -7,11 +7,7 @@ import * as reqSend from '../../global/reqSender.jsx';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
-<<<<<<< Updated upstream
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
 import DownloadIcon from '@mui/icons-material/Download';
-=======
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlaceShipments from "./PlaceShipments.jsx";
@@ -19,7 +15,6 @@ import Shipment from '../../assets/Shipment.jpg';
 import CardCompInventory from "./CardCompInventory.jsx"
 import Box from '@mui/material/Box';
 import PlaceNewShipment from "./PlaceNewShipment.jsx";
->>>>>>> Stashed changes
 
 export function DashboardView(props) {
     const dataList = [
