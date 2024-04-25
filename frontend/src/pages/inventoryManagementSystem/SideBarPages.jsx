@@ -7,9 +7,19 @@ import * as reqSend from '../../global/reqSender.jsx';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+<<<<<<< Updated upstream
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import DownloadIcon from '@mui/icons-material/Download';
+=======
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PlaceShipments from "./PlaceShipments.jsx";
+import Shipment from '../../assets/Shipment.jpg';
+import CardCompInventory from "./CardCompInventory.jsx"
+import Box from '@mui/material/Box';
+import PlaceNewShipment from "./PlaceNewShipment.jsx";
+>>>>>>> Stashed changes
 
 export function DashboardView(props) {
     const dataList = [
@@ -48,7 +58,7 @@ export function DashboardView(props) {
     }, []);
 
     const fetchData = () => {
-        reqSend.defaultReq("GET", 'api/v1/stock', {},
+        reqSend.defaultReq("GET", 'api/v1/inventory', {},
             response => {
                 if (response.status === 200 && response.data) {
                     const fetchedData = response.data.map(item => (
@@ -122,7 +132,7 @@ export function DashboardView(props) {
             }
         }
 
-        reqSend.defaultReq("POST", 'api/v1/stock/addStock', formData,
+        reqSend.defaultReq("POST", 'api/v1/inventory/addStock', formData,
             response => {
                 if (response.status === 201) {
                     setmsg('Item added successfully');
@@ -216,7 +226,7 @@ export function DashboardView(props) {
     };
 
     const fetchDeleteItemData = () => {
-        reqSend.defaultReq("GET", 'api/v1/stock', {},
+        reqSend.defaultReq("GET", 'api/v1/inventory', {},
             response => {
                 if (response.status === 200 && response.data) {
                     const options = response.data.map(item => ({
@@ -238,7 +248,7 @@ export function DashboardView(props) {
         event.preventDefault();
         const selectedItem = event.target.selectItem.value;
 
-        reqSend.defaultReq("DELETE", `api/v1/stock/deleteStock/${selectedItem}`, {},
+        reqSend.defaultReq("DELETE", `api/v1/inventory/deleteInventory/${selectedItem}`, {},
             response => {
                 if (response.status === 200) {
                     setDelmsg('Item deleted successfully');
@@ -295,8 +305,8 @@ export function DashboardView(props) {
 
                 <div>
                     <Stack direction="row" spacing={2}>
-                        <button onClick={handleAddItemClick} type="button" className="btn btn-primary">Add Item</button>
-                        <button onClick={handleDeleteItemClick} type="button" className="btn btn-danger">Delete Item</button>
+                        <button onClick={handleAddItemClick} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Item</button>
+                        <button onClick={handleDeleteItemClick} type="button" className="btn btn-danger justify-center gap-2"><DeleteIcon/>Delete Item</button>
                     </Stack>
                 </div>
                 
@@ -323,9 +333,38 @@ export function OrderItems(props) {
     const [tableData, setTableData] = useState(null);
     const [showTable, setShowTable] = useState(false);
     const [shipmentButtonDisabled, setShipmentButtonDisabled] = useState(true);
+    const [showShipmentForm, setShowShipmentForm] = useState(false);
+    const [shipmentsData, setShipmentsData] = useState([]);
+    const [showNewShipmentForm, setShowNewShipmentForm] = useState(false);
+    
+    useEffect(() => {
+        fetchShipmentsData();
+    }, []);
+
+    const fetchShipmentsData = () => {
+        reqSend.defaultReq("GET", 'api/v1/shipments/getShipments', {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    setShipmentsData(response.data);
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    };
+
+    const dataList = shipmentsData.map(shipment => ({
+        image: Shipment,
+        altText: shipment.id,
+        count: `${shipment.id} | Tracking Number - ${shipment.trackingNumber}`,
+        name: shipment.supplierId.companyName
+    }));
 
     const fetchData = () => {
-        reqSend.defaultReq("POST", 'api/v1/stock/checkQuantity', {},
+        reqSend.defaultReq("POST", 'api/v1/inventory/checkQuantity', {},
             response => {
                 if (response.status === 200 && response.data) {
                     const fetchedData = response.data.map(item => (
@@ -353,28 +392,46 @@ export function OrderItems(props) {
         );
     };
 
+    const toggleShipmentForm = () => {
+        setShowShipmentForm(!showShipmentForm);
+      };
+
+    const toggleNewShipmentForm = () => {
+        setShowNewShipmentForm(!showNewShipmentForm);
+     };
+
     return (
-        <>
-            <main>
-                <div className="head-title">
-                    <div className="left">
-                        <h1>Order Items</h1>
-                    </div>
-
-                    <Stack direction="row" spacing={2}>
-                        <button onClick={fetchData} type="button" className="btn btn-primary">Show Items to Order</button>
-                        <button disabled={shipmentButtonDisabled} type="button" className="btn btn-primary">Place Shipment</button>
-                        <button type="button" className="btn btn-primary">Show Items to Order</button>
-                    </Stack>
-
-                    {showTable && tableData && (
-                        <TableComp data={tableData} />
-                    )}
+        <main>
+            <div className="head-title">
+                <div className="left">
+                <h1>Order Items</h1>
                 </div>
-            </main>
-        </>
-    )
+        
+                <Stack direction="row" spacing={2}>
+                <button onClick={fetchData} type="button" className="btn btn-primary">Show Items to Order</button>
+                <button disabled={shipmentButtonDisabled} onClick={toggleShipmentForm} type="button" className="btn btn-primary">Place Shipment</button>
+                <button onClick={toggleNewShipmentForm} type="button" className="btn btn-primary">Place New Shipment</button>
+                </Stack>
+        
+                {showShipmentForm && <PlaceShipments onClose={toggleShipmentForm} />}
+                {showNewShipmentForm && <PlaceNewShipment onClose={toggleNewShipmentForm} />}
+        
+                {showTable && tableData && (
+                <TableComp data={tableData} />
+                )}
+            </div>
+            <br></br>
+            <div className="full-width-components">
+                <Box boxShadow={5} borderRadius={8} bgcolor={"white"} padding={2}>
+                    <h2>Placed Shipments</h2>
+                    <CardCompInventory data={dataList} />
+                    <br></br>
+                </Box>
+            </div>
+        </main>
+    );
 }
+
 
 
 export function ViewReports(props) {
