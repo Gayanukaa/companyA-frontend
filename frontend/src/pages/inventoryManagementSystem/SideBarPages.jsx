@@ -7,6 +7,9 @@ import * as reqSend from '../../global/reqSender.jsx';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import DownloadIcon from '@mui/icons-material/Download';
 
 export function DashboardView(props) {
     const dataList = [
@@ -315,6 +318,7 @@ export function DashboardView(props) {
     );
 }
 
+
 export function OrderItems(props) {
     const [tableData, setTableData] = useState(null);
     const [showTable, setShowTable] = useState(false);
@@ -394,17 +398,23 @@ export function ViewReports(props) {
 
     }, [])
 
-    const [val, setVal] = useState("Hello There")
+    const [val, setVal] = useState("")
 
     const change = event => {
-        setVal(event.target.value) 
+        setVal(event.target.value)
+        console.log(val) 
     };
 
     const deleteClick = () => {
-        reqSend.defaultReq("DELETE", 'api/v1/invReports/deleteReports/G0008', {},
+        const reportIds = data.map(jsondata => jsondata.reportId);
+        console.log("DeleteClicked")
+        console.log(reportIds);
+        if (reportIds.includes(val)) {
+        reqSend.defaultReq("DELETE", `api/v1/invReports/deleteReport/${val}`, {},
             response => {
                 if (response.status === 200 && response.data) {
                     console.log(response.data);
+                    window.location.reload();
                 } else {
                     console.error("Invalid response format:", response);
                 }
@@ -413,7 +423,47 @@ export function ViewReports(props) {
                 console.error("API request failed:", error);
             }
     );
+    }
+    else {
+        console.log(val);
+        alert("Please enter a valid ReportId");
+    }
     };
+
+    const [showVal, setShowVal] = useState("")
+
+    const changeShowVal = event => {
+        setShowVal(event.target.value)
+    } 
+
+    const [showReportForm, setReportForm] = useState(false);
+
+    // const handleShowClick = () => {
+    //     setReportForm(true); 
+    // }
+
+    const reportForm = (
+        <div className="addItemForm" style={{ border: "2px solid #ccc", padding: "10px", borderRadius: "10px", position: "relative" }}>
+            <h3>Report Details</h3>
+            <IconButton
+                    aria-label="close"
+                    onClick={() => setReportForm(false)}
+                    style={{ position: "absolute", top: "5px", right: "5px" }}
+                >
+                    <CloseIcon />
+            </IconButton>
+            
+        </div>
+    )
+
+    const showClick = () => {
+        setReportForm(true);
+        console.log("ShowClicked")
+        const report = data.find(report => report.reportId === showVal);
+        console.log(data);
+        console.log(report);
+    }
+
 
     const generateClick = () => {
         reqSend.defaultReq("POST", 'api/v1/invReports/generate', {},
@@ -435,18 +485,26 @@ export function ViewReports(props) {
         <>
             <main>
                 <div className="head-title" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Stack spacing={2} alignItems="center">
-                        <div className="left">
+                    <Stack spacing={3} alignItems="center">
+                    <div className="left">
                             <h1>Report Generation</h1>   
                         </div>
                             <Button onClick={generateClick} maxWidth='40px' variant="contained">Generate Report</Button>
-                            <Stack spacing={2} direction={"row"}>
-                                <Button onClick={deleteClick} size="small" style={{ width: '40%' }} variant="contained" color="error">Delete</Button>
-                                <TextField onChange={change} value={val} size="small" style={{ maxwidth: '500px', width: '100%'}} id="outlined-basic" label="Report ID" variant="outlined" />
-                            </Stack>
+                            <table>
+                            <tr>
+                                <td><Button onClick={deleteClick} size="medium"  variant="contained" endIcon={<DeleteIcon />} color="error">Delete</Button></td>
+                                <td><TextField onChange={change}  size="small" value={val} id="outlined-basic" label="Report ID" variant="outlined" /></td>
+                            </tr>
+                            <tr>
+                                <td><Button onClick={showClick} size="medium"  style={{ width: '30px', minWidth:'105px' }} variant="contained"  color="success" > Show </Button></td>
+                                <td><TextField onChange={changeShowVal} value={showVal} size="small"  id="outlined-basic" label="Report ID" variant="outlined" /></td>
+                                <td align="left"><button style={{ borderRadius: 4, background: 'none', padding: '5.5px 8px' }}><DownloadIcon/></button></td>
+                            </tr>
+                            </table>
                     </Stack>
 
                 </div>
+                <Stack spacing={2}>
                 <div class="container" style={{ textAlign: 'center' }}>
                 <div className="mt-5">
                     <h4 style={{ marginBottom: '20px' }} >Past generated reports:</h4>
@@ -468,66 +526,67 @@ export function ViewReports(props) {
                     </table>
                 </div>
                 </div>
+                <div>
+                    {showReportForm && reportForm}
+                    
+                    
+                </div>
+                </Stack>
+{/* ////////////////////////////////// */}
+                {/* <div>
+                <h1>Report ID: {report.reportId}</h1>
+                <h2>Generated Date and Time: {report.generatedDateAndTime}</h2>
+
+                <h2>Warehouse Details:</h2>
+                <ul>
+                {Object.entries(report.warehouses).map(([warehouseId, warehouseName]) => (
+                    <li key={warehouseId}>
+                    {warehouseName} ({warehouseId})
+                    </li>
+                ))}
+                </ul>
+
+                <h2>Items by Warehouse:</h2>
+                {Object.entries(report.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
+                <div key={warehouseId}>
+                    <h3>{report.warehouses[warehouseId]}</h3>
+                    <ul>
+                    {Object.entries(items).map(([itemId, itemName]) => (
+                        <li key={itemId}>
+                        {itemName} ({itemId})
+                        </li>
+                    ))}
+                    </ul>
+                </div>
+                ))}
+
+                <h2>Most Remaining Items by Warehouse:</h2>
+                {Object.entries(report.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
+                <div key={warehouseId}>
+                    <h3>{report.warehouses[warehouseId]}</h3>
+                    <ul>
+                    {items.map((item, index) => (
+                        <li key={index}>{item}</li>
+                    ))}
+                    </ul>
+                </div>
+                ))}
+
+                <h2>Total Worth by Warehouse:</h2>
+                <ul>
+                {Object.entries(report.totalWorth).map(([warehouseId, total]) => (
+                    <li key={warehouseId}>
+                    {report.warehouses[warehouseId]}: {total}
+                    </li>
+                ))}
+                </ul>
+            </div> */}
 
             </main>
         </>
     )
 }
 
-// export function ViewRepairs(props) {
-
-//     const tableData = {
-//         name: "Sample Table",
-//         heading: ["Column 1", "Column 2", "Column 3"],
-//         body: [
-//             <tr key="row1">
-//                 <td>Data 1</td>
-//                 <td>Data 2</td>
-//                 <td>Data 3</td>
-//             </tr>,
-//             <tr key="row2">
-//                 <td>Data 4</td>
-//                 <td>Data 5</td>
-//                 <td>Data 6</td>
-//             </tr>,
-//             // Add more rows as needed
-//         ],
-//     };
-
-
-//     useEffect(() => {
-        
-//         reqSend.defaultReq("GET", 'api/v1/repair/getDamagedItems', {}, 
-//                 response => {
-//                     if (response.status === 200 && response.data) {
-//                         console.log(response.data);
-//                     } else {
-//                         console.error("Invalid response format:", response);
-//                     }
-//                 },
-//                 error => {
-//                     console.error("API request failed:", error);
-//                 }
-//             );
-
-//     }, [])
-
-//     return (
-//         <>
-//             <main>
-//                 <div className="head-title">
-//                     <div className="left">
-//                         <h1>View Stocks</h1>
-//                     </div>
-
-//                     <TableComp data={tableData} />
-
-//                 </div>
-
-//             </main>
-//         </>
-//     )
-// }
 
 export function ViewRepairs(props) {
 
