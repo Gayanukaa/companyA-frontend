@@ -3,6 +3,8 @@ import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
 
+import GetReport from './reports/GetReport'; 
+import ReportGenerator from './reports/ReportGenerator';
 
 
 export function ViewStocks(props) {
@@ -79,4 +81,16 @@ export function DashboardView(props) {
             </main>
         </>
     )
+}
+
+
+export function Reports(props) {
+    return (
+        <div className="App">
+          <h1>Fetch your report here</h1>
+          <ReportGenerator reportType="sample" buttonText="Generate Sample Report" />
+          <ReportGenerator reportType="prototype" buttonText="Generate Prototype Report" />
+          <GetReport />
+        </div>
+      );
 }
