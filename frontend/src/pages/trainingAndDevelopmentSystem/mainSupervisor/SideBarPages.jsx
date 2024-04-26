@@ -1,7 +1,7 @@
 import React from "react";
-import CardComp from "../../components/sideComps/CardComp";
-import TableComp from '../../components/sideComps/TableComp'
-import avatar from '../../assets/avatar.svg';
+import CardComp from "../../../components/sideComps/CardComp";
+import TableComp from '../../../components/sideComps/TableComp'
+import avatar from '../../../assets/avatar.svg';
 
 
 

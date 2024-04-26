@@ -14,7 +14,7 @@ import LogisticManagement from './pages/logisticsAndMaintenanceSystem/Dashboard.
 import ManufacturingManagement from './pages/manufacturingSystem/Dashboard.jsx';
 import QualityAssuranceManagement from './pages/qualityAssuaranceSystem/Dashboard.jsx';
 import SalesManagement from './pages/salesSystem/Dashboard.jsx';
-import TrainingDevelopmentManagement from './pages/trainingAndDevelopmentSystem/Dashboard.jsx';
+import TrainingDevelopmentManagement from './pages/trainingAndDevelopmentSystem/DashboardController.jsx';
 
 import NotFound from './pages/generalManagementSystem/NotFound.jsx';
 import LandingPage from './pages/generalManagementSystem/LandingPage.jsx';
@@ -65,9 +65,12 @@ function App() {
             <Route path="/sales-management/*" element={<SalesManagement />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRole='training_development_manager' />}>
+          {/* <Route element={<RequireAuth allowedRole='training_development_manager' />}>
             <Route path="/trainingdevelopment-management/*" element={<TrainingDevelopmentManagement />} />
-          </Route>
+          </Route> */}
+
+          <Route path="/trainingdevelopment-management/*" element={<TrainingDevelopmentManagement />} />
+
 
           <Route element={<RequireAuth allowedRole='general_manager' />}>
             <Route path="/general-management/*" element={<GeneralManagement />} />

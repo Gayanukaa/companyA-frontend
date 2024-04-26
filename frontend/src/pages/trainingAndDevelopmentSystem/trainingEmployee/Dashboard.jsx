@@ -1,14 +1,16 @@
-import '../../styles/dashboard.css';
-import '../../styles/style.css';
+import '../../../styles/dashboard.css';
+import '../../../styles/style.css';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import avatar from '../../assets/avatar.svg';
-import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
+import avatar from '../../../assets/avatar.svg';
+import { SideNavigation, TopBar } from '../../../components/sideComps/dashBoardComps';
 import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
 import { DashboardView, ViewStocks } from './SideBarPages';
+import NotFound from '../../generalManagementSystem/NotFound';
+
 
 
 
@@ -70,6 +72,9 @@ export default function Dashboard() {
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
                         <Route path="/view-stocks" element={<ViewStocks />} />
+
+
+                        <Route path="/*" element={<NotFound />}  />
                     </Routes>
                 </section>
                 
