@@ -3,12 +3,11 @@ import {useEffect, useState} from 'react';
 import ProductList from "./components/ProductList.jsx";
 import Modal from "./components/PopupModal.jsx";
 
-
 const ProductPage = () => {
     const get_url = "api/products";
     const get_val = "api/products/validateStock-Muliple";
-    //const navigate = useNavigate()
-    const [isOpen, setIsOpen] = useState(true); // Set initial state to true
+
+   const [isOpen, setIsOpen] = useState(true); // Set initial state to true
     useEffect(() => {
         document.body.classList.add('overflow-hidden');
     }, []);
