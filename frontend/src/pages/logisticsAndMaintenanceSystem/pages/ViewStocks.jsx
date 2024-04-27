@@ -1,7 +1,9 @@
 import React, {useContext, useState} from 'react';
 import TableComp from '../../../components/sideComps/TableComp';
 import {logisticsAndMaintenanceContext} from "../context/logisticsAndMaintenanceContext.jsx";
-import {Box, Button, Input, Modal, Typography} from "@mui/material";
+import {Box, Button, FormControl, Input, InputLabel, Modal, Typography} from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 
 export function ViewStocks(props) {
@@ -62,10 +64,10 @@ export function ViewStocks(props) {
     });
 
 
-    const handleMachineryForm = (e) => {
+    const handleMachineryForm = (name, value) => {
         setMachineryForm({
             ...machineryForm,
-            [e.target.name]: e.target.value
+            [name]:value
         })
     }
 
@@ -94,6 +96,7 @@ export function ViewStocks(props) {
         e.preventDefault();
         if (props.data === "machinery") {
             addMachine(machineryForm);
+            setOpenAdd(false)
         }
         if (props.data === "technician") {
             addTechnician(technicianForm);
@@ -146,7 +149,7 @@ export function ViewStocks(props) {
     }
 
     const getHeading = (data) => {
-        const keys = Object.keys(data);
+        const keys = Object.keys(data || {});
         const heading = [];
         keys.forEach(key => {
             heading.push(key);
@@ -254,14 +257,25 @@ export function ViewStocks(props) {
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Add Machinery
                                 </Typography>
-                                <Input t placeholder="Machine Id" name="machineId" onChange={handleMachineryForm}/>
-                                <Input placeholder="Machine Name" name="machineName" onChange={handleMachineryForm}/>
+                                <Input t placeholder="Machine Id" name="machineId" onChange={(e) => handleMachineryForm(e.target.name, e.target.value)}/>
+                                <Input placeholder="Machine Name" name="machineName" onChange={(e) => handleMachineryForm(e.target.name, e.target.value)}/>
                                 <Input type="number" placeholder="Machine Model" name="machineModel"
-                                       onChange={handleMachineryForm}/>
-                                <Input placeholder="Current Job" name="currentJob" onChange={handleMachineryForm}/>
-                                <Input translate placeholder="Machine Status" name="machineStatus"
-                                       onChange={handleMachineryForm}/>
-                                <Input placeholder="Maintenance" name="maintenance" onChange={handleMachineryForm}/>
+                                       onChange={(e) => handleMachineryForm(e.target.name, parseInt(e.target.value || 0))}/>
+                                <Input placeholder="Current Job" name="currentJob" onChange={(e) => handleMachineryForm(e.target.name, e.target.value)}/>
+
+                                <FormControl variant={"standard"} sx={{ minWidth: "170px"}}>
+                                    <InputLabel>Machine Status</InputLabel>
+
+                                    <Select label={"Machine Satatus"} name="machineStatus" placeholder={"Machine Status"} onChange={(e) =>  handleMachineryForm(e.target.name, e.target.value == 'Active')}>
+                                        <MenuItem value={"Active"}>Active</MenuItem>
+                                        <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+                                <Input placeholder="Maintenance" name="maintenance" onChange={(e) => {
+                                    let values = e.target.value?.split(",").map(v => v.trim())
+                                    handleMachineryForm(e.target.name, values)
+                                }}/>
                                 <Button variant="contained" type="submit">Add</Button>
                             </Box>
                             : props.data === "technician" ?

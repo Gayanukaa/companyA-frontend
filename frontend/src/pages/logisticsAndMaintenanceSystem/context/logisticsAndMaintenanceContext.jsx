@@ -34,7 +34,7 @@ const LogisticsAndMaintenanceProvider = (props) => {
     }, []);
 
     const addMachine = useCallback((data) => {
-        axios.post(ResourcePath.BASE_API + ResourcePath.MACHINE_API + ResourcePath.ADD_MACHINE, data)
+        return axios.post(ResourcePath.BASE_API + ResourcePath.MACHINE_API + ResourcePath.ADD_MACHINE, data)
             .then(res => {
                 console.log(res.data);
             })
