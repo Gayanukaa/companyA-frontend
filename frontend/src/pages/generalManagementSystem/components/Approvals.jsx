@@ -15,6 +15,25 @@ import Stack from '@mui/material/Stack';
 
 
 const ApprovalCard = ({ name, email, message, status }) => {
+  let statusText;
+  let chipColor;
+  switch (status) {
+    case 0:
+      statusText = "New";
+      chipColor = 'warning'; // Assigning color for 'New' status
+      break;
+    case 2:
+      statusText = "Rejected";
+      chipColor = 'error'; // Assigning color for 'Rejected' status
+      break;
+    case 1:
+      statusText = "Approved";
+      chipColor = 'success'; // Assigning color for 'Approved' status
+      break;
+    default:
+      statusText = "Unknown";
+      chipColor = 'default'; // Default color
+  }
   return (
     <Card sx={{
       borderRadius: '20px',
@@ -31,7 +50,7 @@ const ApprovalCard = ({ name, email, message, status }) => {
           <Avatar src={avatar} alt="Avatar" sx={{ mr: 2 }} />
           <div>
             <Stack direction="row" spacing={1}>
-              <Chip label={status} size="medium" variant="filled" color='success' style={{ position: 'relative', top: '-20px', left: '515px', textAlign: 'right' }} />
+              <Chip label={statusText} size="medium" variant="filled" color={chipColor} style={{ marginLeft: 'auto', position: 'relative', top: '-20px', left: '240px', textAlign: 'right' }} />
             </Stack>
             <Typography variant="h5" component="div">
               Request
@@ -74,7 +93,8 @@ const ApprovalSection = () => {
 
     axios.get("http://localhost:8090/api/request/view")
       .then(response => {
-        setApprovalData(response.data);
+        const sortedData = response.data.sort((a, b) => a.status - b.status);
+        setApprovalData(sortedData);
       })
       .catch(error => {
         console.error("Error fetching feedback data:", error);
@@ -84,7 +104,7 @@ const ApprovalSection = () => {
     <main>
       <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
 
-        <h1>Leave Requests</h1><br></br>
+        <h1>Requests</h1><br></br>
         <div className="feedback-container">
           {approvalData.map((request, index) => (
             <ApprovalCard
@@ -97,19 +117,7 @@ const ApprovalSection = () => {
           ))}
 
         </div>
-        <h1>Recruitment Requests</h1><br></br>
-        <div className="request-container">
-          {approvalData.map((request, index) => (
-            <ApprovalCard
-              key={index}
-              name={request.name}
-              email={request.email}
-              message={request.message}
-              status={request.status}
-            />
-          ))}
-
-        </div>
+        
 
       </div>
     </main>
