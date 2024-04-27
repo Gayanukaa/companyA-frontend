@@ -1,28 +1,7 @@
-// CardForm.js
-// import React from 'react';
-// import Box from '@mui/material/Box';
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-
-// const CardForm = ({ children }) => {
-//   return (
-//     <Box sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}>
-//       <Card variant="outlined">
-//         {/* <CardContent>
-//           {children}
-//         </CardContent> */}
-//       </Card>
-//     </Box>
-//   );
-// };
-
-
 import React from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 
 const CardForm = ({ children }) => {
     return (

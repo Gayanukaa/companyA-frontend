@@ -1,16 +1,25 @@
 import '../../styles/dashboard.css';
 import '../../styles/style.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import axios from 'axios';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
-import { dashboardAdminData } from './data/DashBoardData';
+// import {
+//     dashboardAdminData,
+// } from './data/DashBoardData';
+
 import { ViewManagers, DashboardView, ApprovalSection } from './SideBarPages';
 import ModalForm from './components/ModalForm'
 import AddManager from './components/AddManager';
 import FeedBack from './components/FeedbackSection';
 
+
+
 export default function Dashboard() {
+    const [notificationData, setNotificationData] = useState(null);
+
+
     const addJs = () => {
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
@@ -41,8 +50,39 @@ export default function Dashboard() {
         })
     }
     useEffect(() => {
-        addJs()
+        addJs();
     }, [])
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get("http://localhost:8090/api/feedback/view");
+    
+                if (response.data) {
+                    const unreadMessages = response.data.filter(message => message.isRead === 0);
+                    setNotificationData(unreadMessages.length);
+                }
+            } catch (error) {
+                console.error("Error fetching feedback data:", error);
+            }
+        };
+    
+        fetchData();
+    }, []);
+    
+
+
+
+    const dashboardAdminData = [
+        { name: "Dashboard", icon: <i className='bx bxs-dashboard' ></i>, active: true, to: 'dashboard' },
+        { name: "Managers", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-managers' },
+        { name: "Feedbacks", icon: <i className='bx bxs-comment-detail'></i>, active: false, to: 'view-feedback', notification: notificationData ? notificationData : null},
+        { name: "Approvals", icon: <i className='bx bxs-file'></i>, active: false, to: 'approvals' },
+    ]
+
+
+
     return (
         <>
             <div id="dashboardWrapper">

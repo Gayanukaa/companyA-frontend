@@ -10,8 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { systemRoles } from './data/RoleDetails.jsx';
 
 export function ViewManagers(props) {
-    const [data, setData] = useState(null)
-    const [tabledata, settabledata] = useState(null)
+    const [data, setData] = useState(null);
+    const [tabledata, settabledata] = useState(null);
     const navigate = useNavigate();
     const updateManagerButtonClick = (managerId) => {
         navigate('/general-management/update-managers', { state: { managerId: managerId } });
@@ -31,8 +31,8 @@ export function ViewManagers(props) {
         boxShadow: 24,
         p: 4,
     };
+
     useEffect(() => {
-        // Fetch manager data from API
         axios.get("http://localhost:8090/api/manager/viewAllManagers")
             .then(response => {
                 setData(response.data)
@@ -41,6 +41,7 @@ export function ViewManagers(props) {
                 console.error("Error fetching manager data:", error);
             });
     }, []);
+
     useEffect(() => {
         if (data != null) {
             settabledata(
@@ -75,31 +76,33 @@ export function ViewManagers(props) {
                     <div className="right">
                         <button onClick={addManagerButtonClick} className="btn btn-primary">Add Manager</button>
                     </div>
-                    {tabledata ?
-                        <TableComp data={tabledata} />
-                        : null}
-
                 </div>
+
+                {tabledata ?
+                    <TableComp data={tabledata} />
+                    : null
+                }
+
             </main>
         </>
     )
 }
 
+
 export function DashboardView(props) {
     const [data, setData] = useState(null)
     const [listdata, setCardData] = useState(null)
     useEffect(() => {
-        // Fetch manager data from API
         axios.get("http://localhost:8090/api/manager/viewAllManagers")
             .then(response => {
-                // console.log(response.data);
                 setData(response.data)
             })
             .catch(error => {
                 console.error("Error fetching manager data:", error);
             });
     }, []);
-    // Inside your functional component
+
+
     useEffect(() => {
         if (data != null) {
             setCardData(data.map((manager, index) => ({
@@ -113,8 +116,6 @@ export function DashboardView(props) {
     return (
         <>
             <main>
-
-                <br></br>
                 <div className="head-title">
                     <div className="left">
                         <h1>Vehicle</h1>

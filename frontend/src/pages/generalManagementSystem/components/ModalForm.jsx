@@ -4,6 +4,7 @@ import '../../../styles/dashboard.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as reqSend from '../../../global/reqSender.jsx';
 import { systemRoles } from '../data/RoleDetails.jsx';
+import Swal from 'sweetalert2';
 
 const ModalForm = () => {
   const location = useLocation();
@@ -76,26 +77,44 @@ const ModalForm = () => {
     });
 
 
-    if (formData) {
-      reqSend.defaultReq(
-        "POST",
-        'api/manager/updateById',
-        formData,
-        response => {
-          if (response.status === 200 && response.data) {
-            console.log(response.data);
-            navigate('/general-management/view-managers');
-          } else {
-            console.error("Invalid response format:", response);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!"
+    }).then((result) => {
+      if (result.isConfirmed && formData) {
+        Swal.fire({
+          title: "Updated!",
+          text: "Manager has been updated.",
+          icon: "success"
+        });
+
+        reqSend.defaultReq(
+          "POST",
+          'api/manager/updateById',
+          formData,
+          response => {
+            if (response.status === 200 && response.data) {
+              navigate('/general-management/view-managers');
+            } else {
+              console.error("Invalid response format:", response);
+            }
+          },
+          error => {
+            console.error("API request failed:", error);
           }
-        },
-        error => {
-          console.error("API request failed:", error);
-        }
-      );
-    };
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        navigate('/general-management/view-managers');
+    }
+    });
+
   }
-  
+
 
   return (
     <>
