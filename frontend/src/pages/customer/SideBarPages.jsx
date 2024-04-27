@@ -163,38 +163,51 @@ export function PlaceOrder(props) {
     );
 }
 
-function OrderHistory() {
-    const [orders, setOrders] = useState([]);
-  
+export function OrderHistory() {
+    const [salesRecords, setSalesRecords] = useState([]);
+
     useEffect(() => {
-      // Fetch order history from backend API
-      fetch('/api/orders')
-        .then(response => response.json())
-        .then(data => setOrders(data))
-        .catch(error => console.error('Error fetching order history:', error));
+        // Fetch data from backend when component mounts
+        fetchSalesRecords();
     }, []);
-  
+
+    const fetchSalesRecords = async () => {
+        try {
+            const response = await fetch('/sales-records');
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const data = await response.json();
+            setSalesRecords(data);
+        } catch (error) {
+            console.error('Error fetching sales records:', error);
+        }
+    };
+
     return (
-      <div>
-        <h2>Order History</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map(order => (
-              <tr key={order._id}>
-                <td>{order.orderId}</td>
-                <td>{order.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        <div>
+            <h2>Order History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Components</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {salesRecords.map(record => (
+                        <tr key={record.order_ID}>
+                            <td>{record.order_ID}</td>
+                            <td>{record.order_date}</td>
+                            <td>{record.order_amount}</td>
+                            <td>{record.components.join(', ')}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
   }
   
-  export default OrderHistory;
