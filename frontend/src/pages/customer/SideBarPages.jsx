@@ -47,45 +47,52 @@ export function ViewStocks(props) {
 
 
 export function DashboardView(props) {
+    // User detail connect with backend
+    const [userData, setUserData] = useState(null);
+    const [error, setError] = useState(null);
 
-    const dataList = [
-        {
-            image: avatar,
-            altText: "Avatar 1",
-            count: 5,
-            name: "John Doe"
-        },
-        {
-            image: avatar,
-            altText: "Avatar 2",
-            count: 3,
-            name: "Jane Smith"
-        },
-        {
-            image: avatar,
-            altText: "Avatar 3",
-            count: 7,
-            name: "Bob Johnson"
-        }
-    ];
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch('/api/user-details');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user details');
+                }
+                const data = await response.json();
+                setUserData(data);
+            } catch (error) {
+                setError(error.message);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     return (
-        <>
-            <main>
-                <div className="head-title">
-                    <div className="left">
-                        <h1>Dashboard</h1>
-                    </div>
-
-                    <CardComp data={dataList} />
+        <main>
+            <div className="head-title">
+                <div className="left">
+                    <h1>Dashboard</h1>
                 </div>
-            </main>
-        </>
-    )
+                {userData ? (
+                    <div>
+                        <h2>User Details</h2>
+                        <p>Name: {userData.name}</p>
+                        <p>Contact Number: {userData.contactNumber}</p>
+                        <p>Email: {userData.email}</p>
+                    </div>
+                ) : (
+                    <p>Loading user data...</p>
+                )}
+                {error && <p>Error: {error}</p>}
+            </div>
+        </main>
+    );
 }
 
 
 export function PlaceOrder(props) {
+    // send the shipping data to backend
 
     const [houseNumber, setHouseNumber] = useState("");
     const [streetName, setStreetName] = useState("");
