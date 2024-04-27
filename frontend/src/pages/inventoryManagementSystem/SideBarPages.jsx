@@ -15,6 +15,9 @@ import Shipment from '../../assets/Shipment.jpg';
 import CardCompInventory from "./CardCompInventory.jsx"
 import Box from '@mui/material/Box';
 import PlaceNewShipment from "./PlaceNewShipment.jsx";
+import CreateItemForm from "./CreateItemForm.jsx";
+import DeleteItemForm from "./DeleteItemForm.jsx";
+import AddWarehouseForm from "./AddWarehouseForm.jsx";
 
 export function DashboardView(props) {
     const dataList = [
@@ -41,15 +44,10 @@ export function DashboardView(props) {
     const [tableData, setTableData] = useState(null);
     const [showAddItemForm, setShowAddItemForm] = useState(false);
     const [showDeleteItemForm, setShowDeleteItemForm] = useState(false);
-    const [msg, setmsg] = useState('');
-    const [delmsg, setDelmsg] = useState('');
-    const [warehouseOptions, setWarehouseOptions] = useState([]);
-    const [stockOptions, setStockOptions] = useState([]);
+    const [showAddWarehouseForm, setShowAddWarehouseForm] = useState(false);
 
     useEffect(() => {
         fetchData();
-        fetchWarehouseOptions();
-        fetchDeleteItemData();
     }, []);
 
     const fetchData = () => {
@@ -81,215 +79,17 @@ export function DashboardView(props) {
         );
     };
 
-    const fetchWarehouseOptions = () => {
-        reqSend.defaultReq("GET", 'api/v1/warehouse', {},
-            response => {
-                if (response.status === 200 && response.data) {
-                    const options = response.data.map(warehouse => ({
-                        id: warehouse.warehouseId,
-                        name: warehouse.name
-                    }));
-                    setWarehouseOptions(options);
-                } else {
-                    console.error("Invalid response format:", response);
-                }
-            },
-            error => {
-                console.error("API request failed:", error);
-            }
-        );
-    };
+    const toggleAddItemForm = () => {
+        setShowAddItemForm(!showAddItemForm);
+     };
 
-    const handleAddItemClick = () => {
-        setShowAddItemForm(true);
-    };
+    const toggleDeleteItemForm = () => {
+        setShowDeleteItemForm(!showDeleteItemForm);
+     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        
-        const formData = {
-            name: event.target.inputItemName.value,
-            quantity: event.target.inputQuantity.value,
-            thresholdQuantity: event.target.inputThresholdQuantity.value,
-            reorderQuantity: event.target.inputReorderQuantity.value,
-            weight: event.target.inputWeight.value,
-            size: event.target.inputSize.value,
-            price: event.target.inputPrice.value,
-            warehouseId: event.target.inputWarehouse.value,
-            stateOfProduct: event.target.inputStateOfProduct.value,
-            inventoryType: event.target.inputInventoryType.value
-        };
-
-        for (const key in formData) {
-            if (!formData[key]) {
-                setmsg("Please fill in all fields");
-                return;
-            }
-        }
-
-        reqSend.defaultReq("POST", 'api/v1/inventory/addStock', formData,
-            response => {
-                if (response.status === 201) {
-                    setmsg('Item added successfully');
-                    fetchData();
-                } else {
-                    console.error("Error adding item:", response);
-                    setmsg("Error adding item. Please try again later.");
-                }
-            },
-            error => {
-                console.error("Error adding item:", error);
-                setmsg("Error adding item. Please try again later.");
-            }
-        );
-    };
-
-    const formAddItem = (
-        <div className="addItemForm" style={{ border: "2px solid #ccc", padding: "10px", borderRadius: "10px", position: "relative" }}>
-            <form onSubmit={handleSubmit}>
-                <h2>Add Item</h2>
-                <IconButton
-                    aria-label="close"
-                    onClick={() => setShowAddItemForm(false)}
-                    style={{ position: "absolute", top: "5px", right: "5px" }}
-                >
-                    <CloseIcon />
-                </IconButton>
-                <table>
-                <tr>
-                            <td colSpan="3"><label className="form-label">Item Name</label></td>
-                            <td colSpan="2"><input type="text" className="form-control" id="inputItemName"/></td>
-                        </tr>
-                        <tr>
-                            <td><label className="form-label">Quantity</label></td>
-                            <td><input type="number" className="form-control" id="inputQuantity" min="0" step="1" /></td>
-                            <td><label className="form-label">Threshold Quantity</label></td>
-                            <td><input type="number" className="form-control" id="inputThresholdQuantity" min="0" step="1" /></td>
-                            <td><label className="form-label">Reorder Quantity</label></td>
-                            <td><input type="number" className="form-control" id="inputReorderQuantity" min="10" step="1" /></td>
-                        </tr>
-                        <tr>
-                            <td><label className="form-label">Weight</label></td>
-                            <td><input type="number" className="form-control" id="inputWeight" min="0" step="1" /></td>
-                            <td><label className="form-label">Size</label></td>
-                            <td><input type="number" className="form-control" id="inputSize" min="0" step="1" /></td>
-                            <td><label className="form-label">Price</label></td>
-                            <td><input type="number" className="form-control" id="inputPrice" min="0" step="0.1" /></td>
-                        </tr>
-                        <tr>
-                            <td><label className="form-label">Warehouse</label></td>
-                            <td>
-                                <select className="form-select" id="inputWarehouse">
-                                    {warehouseOptions.map(option => (
-                                        <option key={option.id} value={option.id}>{option.name}</option>
-                                    ))}
-                                </select>
-                            </td>
-
-                            <td><label className="form-label">State of Item</label></td>
-                            <td>
-                                <select className="form-select" id="inputStateOfProduct">
-                                    <option value="NEW">New</option>
-                                    <option value="ORDERED">Ordered</option>
-                                    <option value="IN_STOCK">In Stock</option>
-                                    <option value="LOW_STOCK">Low Stock</option>
-                                    <option value="DAMAGED">Damaged</option>
-                                </select>
-                            </td>
-                            <td><label className="form-label">Inventory Type</label></td>
-                            <td>
-                                <select className="form-select" id="inputInventoryType">
-                                    <option value="STOCKS">Stocks</option>
-                                    <option value="SUPPLIES">Supplies</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button type="submit" className="btn btn-primary">Submit</button>
-                            </td>
-                        </tr>
-
-                </table>
-                {msg && <p style={{ color: "red" }}>{msg}</p>}
-            </form>
-        </div>
-    );
-
-    const handleDeleteItemClick = () => {
-        setShowDeleteItemForm(true);
-    };
-
-    const fetchDeleteItemData = () => {
-        reqSend.defaultReq("GET", 'api/v1/inventory', {},
-            response => {
-                if (response.status === 200 && response.data) {
-                    const options = response.data.map(item => ({
-                        id: item.id,
-                        name: item.name
-                    }));
-                    setStockOptions(options);
-                } else {
-                    console.error("Invalid response format:", response);
-                }
-            },
-            error => {
-                console.error("API request failed:", error);
-            }
-        );
-    };
-    
-    const handleDeleteItemSubmit = (event) => {
-        event.preventDefault();
-        const selectedItem = event.target.selectItem.value;
-
-        reqSend.defaultReq("DELETE", `api/v1/inventory/deleteInventory/${selectedItem}`, {},
-            response => {
-                if (response.status === 200) {
-                    setDelmsg('Item deleted successfully');
-                    fetchData();
-                } else {
-                    setDelmsg("Error deleting item. Please try again later.");
-                }
-            },
-            error => {
-                setDelmsg("Error deleting item. Please try again later.");
-            }
-        );
-    };
-
-    const formDeleteItem = (
-        <div className="deleteItemForm" style={{ border: "2px solid #ccc", padding: "10px", borderRadius: "10px", position: "relative" }}>
-            <form onSubmit={handleDeleteItemSubmit}>
-                <h2>Delete Item</h2>
-                <IconButton
-                    aria-label="close"
-                    onClick={() => setShowDeleteItemForm(false)}
-                    style={{ position: "absolute", top: "5px", right: "5px" }}
-                >
-                    <CloseIcon />
-                </IconButton>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td><label htmlFor="selectItem">Select Item to Delete:</label></td>
-                            <td>
-                                <select id="selectItem" name="selectItem">
-                                    {stockOptions.map(option => (
-                                        <option key={option.id} value={option.id}>{option.id} - {option.name}</option>
-                                    ))}
-                                </select>
-                            </td>
-                            <td>
-                                <button type="submit" className="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> 
-                {delmsg && <p style={{ color: "red" }}>{delmsg}</p>}
-            </form>
-        </div>
-    );
+    const toggleAddWarehouseForm = () => {
+        setShowAddWarehouseForm(!showAddWarehouseForm);
+     };
 
     return (
         <main>
@@ -298,21 +98,35 @@ export function DashboardView(props) {
                     <h1>Dashboard</h1>
                 </div>
 
+                <div className="full-width-components"><hr class="border border-secondary border-2 opacity-75"></hr></div>
+
                 <div>
+                    
                     <Stack direction="row" spacing={2}>
-                        <button onClick={handleAddItemClick} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Item</button>
-                        <button onClick={handleDeleteItemClick} type="button" className="btn btn-danger justify-center gap-2"><DeleteIcon/>Delete Item</button>
+                        <h2>Inventory Details</h2>
+                        <button onClick={toggleAddItemForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Item</button>
+                        <button onClick={toggleDeleteItemForm} type="button" className="btn btn-danger justify-center gap-2"><DeleteIcon/>Delete Item</button>
                     </Stack>
+
+                    {showAddItemForm && <CreateItemForm onClose={toggleAddItemForm} />}
+                    {showDeleteItemForm && <DeleteItemForm onClose={toggleDeleteItemForm} />}
                 </div>
                 
                 <div className="full-width-components">
-                    {showAddItemForm && formAddItem}
-                    {showDeleteItemForm && formDeleteItem}
-
                     { tableData && (
                         <TableComp data={tableData} />
                     )}
                 </div>      
+                
+                <div className="full-width-components"><hr class="border border-secondary border-2 opacity-75"></hr></div>
+
+                <div>
+                    <Stack direction="row" spacing={87}>
+                        <h2>Warehouse Details</h2>
+                        <button onClick={toggleAddWarehouseForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Warehouse</button>
+                    </Stack>
+                    {showAddWarehouseForm && <AddWarehouseForm onClose={toggleAddWarehouseForm} />}
+                </div>
                 
                 <div className="full-width-components">
                     <CardComp data={dataList} />
@@ -331,22 +145,27 @@ export function OrderItems(props) {
     const [showShipmentForm, setShowShipmentForm] = useState(false);
     const [shipmentsData, setShipmentsData] = useState([]);
     const [showNewShipmentForm, setShowNewShipmentForm] = useState(false);
+    const [loading, setLoading] = useState(false); 
     
     useEffect(() => {
         fetchShipmentsData();
     }, []);
 
     const fetchShipmentsData = () => {
+        setLoading(true); 
         reqSend.defaultReq("GET", 'api/v1/shipments/getShipments', {},
             response => {
                 if (response.status === 200 && response.data) {
                     setShipmentsData(response.data);
-                } else {
+                    setLoading(false); } 
+                    else {
                     console.error("Invalid response format:", response);
+                    setLoading(false); 
                 }
             },
             error => {
                 console.error("API request failed:", error);
+                setLoading(false); 
             }
         );
     };
@@ -359,6 +178,7 @@ export function OrderItems(props) {
     }));
 
     const fetchData = () => {
+        setLoading(true); 
         reqSend.defaultReq("POST", 'api/v1/inventory/checkQuantity', {},
             response => {
                 if (response.status === 200 && response.data) {
@@ -377,12 +197,15 @@ export function OrderItems(props) {
                     });
                     setShowTable(true);
                     setShipmentButtonDisabled(false);
+                    setLoading(false); 
                 } else {
                     console.error("Invalid response format:", response);
+                    setLoading(false); 
                 }
             },
             error => {
                 console.error("API request failed:", error);
+                setLoading(false); 
             }
         );
     };
@@ -399,20 +222,37 @@ export function OrderItems(props) {
         <main>
             <div className="head-title">
                 <div className="left">
-                <h1>Order Items</h1>
+                <h1>Orders & Shipments</h1>
                 </div>
-        
+                
                 <Stack direction="row" spacing={2}>
-                <button onClick={fetchData} type="button" className="btn btn-primary">Show Items to Order</button>
-                <button disabled={shipmentButtonDisabled} onClick={toggleShipmentForm} type="button" className="btn btn-primary">Place Shipment</button>
-                <button onClick={toggleNewShipmentForm} type="button" className="btn btn-primary">Place New Shipment</button>
+                    <button onClick={fetchData} type="button" className="btn btn-primary">Show Items to Order</button>
+                    <button disabled={shipmentButtonDisabled} onClick={toggleShipmentForm} type="button" class="btn btn-primary">Place Shipment</button>
+                    <button onClick={toggleNewShipmentForm} type="button" className="btn btn-primary">Place New Shipment</button>
                 </Stack>
         
                 {showShipmentForm && <PlaceShipments onClose={toggleShipmentForm} />}
                 {showNewShipmentForm && <PlaceNewShipment onClose={toggleNewShipmentForm} />}
-        
-                {showTable && tableData && (
-                <TableComp data={tableData} />
+            </div>
+            <br></br>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>                   
+                {loading ? (
+                    <div> 
+                        <div className="spinner-grow text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <div className="spinner-grow text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <div className="spinner-grow text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    
+                ) : (
+                    showTable && tableData && ( 
+                        <TableComp data={tableData} />
+                    )
                 )}
             </div>
             <br></br>
@@ -426,7 +266,6 @@ export function OrderItems(props) {
         </main>
     );
 }
-
 
 
 export function ViewReports(props) {
