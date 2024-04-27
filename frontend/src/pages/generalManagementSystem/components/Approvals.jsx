@@ -7,7 +7,14 @@ import axios from 'axios';
 import avatar from '../../../assets/avatar.svg';
 import '../../../styles/dashboard.css';
 
-const ApprovalCard = ({ name, email, message }) => {
+import Badge from '@mui/material/Badge';
+import MailIcon from '@mui/icons-material/Mail';
+
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+
+
+const ApprovalCard = ({ name, email, message, status }) => {
   return (
     <Card sx={{
       borderRadius: '20px',
@@ -23,6 +30,9 @@ const ApprovalCard = ({ name, email, message }) => {
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Avatar src={avatar} alt="Avatar" sx={{ mr: 2 }} />
           <div>
+            <Stack direction="row" spacing={1}>
+              <Chip label={status} size="medium" variant="filled" color='success' style={{ position: 'relative', top: '-20px', left: '515px', textAlign: 'right' }} />
+            </Stack>
             <Typography variant="h5" component="div">
               Request
             </Typography>
@@ -44,8 +54,14 @@ const ApprovalCard = ({ name, email, message }) => {
             <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
               Dismiss
             </Button>
+
           </div>
+          <Button variant="contained" color="primary" style={{ position: 'absolute', top: '10px', right: '10px' }}>
+            Action
+          </Button>
+
         </div>
+
       </CardContent>
     </Card>
   )
@@ -70,42 +86,34 @@ const ApprovalSection = () => {
 
         <h1>Leave Requests</h1><br></br>
         <div className="feedback-container">
-          {approvalData.map((feedback, index) => (
+          {approvalData.map((request, index) => (
             <ApprovalCard
               key={index}
-              name={feedback.name}
-              email={feedback.email}
-              message={feedback.message}
+              name={request.name}
+              email={request.email}
+              message={request.message}
+              status={request.status}
             />
           ))}
-          {/* <ApprovalCard
-                            key={"skdjnsdjn"}
-                            name={"skdjnsdjn"}
-                            email={"skdjnsdjn"}
-                            message={"skdjnsdjn"}
-                        /> */}
+
         </div>
         <h1>Recruitment Requests</h1><br></br>
-        <div className="feedback-container">
-          {approvalData.map((feedback, index) => (
+        <div className="request-container">
+          {approvalData.map((request, index) => (
             <ApprovalCard
               key={index}
-              name={feedback.name}
-              email={feedback.email}
-              message={feedback.message}
+              name={request.name}
+              email={request.email}
+              message={request.message}
+              status={request.status}
             />
           ))}
-          {/* <ApprovalCard
-                            key={"skdjnsdjn"}
-                            name={"skdjnsdjn"}
-                            email={"skdjnsdjn"}
-                            message={"skdjnsdjn"}
-                        /> */}
+
         </div>
 
       </div>
     </main>
-    
+
   )
 
 }
