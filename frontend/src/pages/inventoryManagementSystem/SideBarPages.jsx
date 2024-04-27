@@ -15,6 +15,7 @@ import Shipment from '../../assets/Shipment.jpg';
 import CardCompInventory from "./CardCompInventory.jsx"
 import Box from '@mui/material/Box';
 import PlaceNewShipment from "./PlaceNewShipment.jsx";
+import './invReport.css';
 
 export function DashboardView(props) {
     const dataList = [
@@ -433,6 +434,7 @@ export function ViewReports(props) {
 
     const [data, setData] = useState([])
 
+    // Responsible for getting data for the main table
     useEffect(() => {
         
         reqSend.defaultReq("GET", 'api/v1/invReports/details', {}, 
@@ -450,6 +452,7 @@ export function ViewReports(props) {
 
     }, [])
 
+    // Reads the value given to the 'delete report' text field
     const [val, setVal] = useState("")
 
     const change = event => {
@@ -474,6 +477,8 @@ export function ViewReports(props) {
             error => {
                 console.error("API request failed:", error);
             }
+
+            
     );
     }
     else {
@@ -482,21 +487,90 @@ export function ViewReports(props) {
     }
     };
 
+    // Shows the report when show is clicked
+    const [showReportForm, setReportForm] = useState(false);
     const [showVal, setShowVal] = useState("")
+    const [invReport, setInvReport] = useState([])
 
     const changeShowVal = event => {
         setShowVal(event.target.value)
     } 
 
-    const [showReportForm, setReportForm] = useState(false);
+    // const showClick = () => {
+    //     setReportForm(true);
+    //     console.log("ShowClicked")
+    //     const report = data.find(report => report.reportId === showVal);
+    //     console.log(data);
+    //     console.log(report);
+    //     setCurrentReport(report);
+    // };
+
+    const showClick = () => {
+        setReportForm(true);
+        console.log(data)
+        console.log("ShowClicked")
+        console.log(showVal)
+        const reportIds = data.map(jsondata => jsondata.reportId);
+        console.log(reportIds)
+        console.log(reportIds.includes(showVal))
+        if (reportIds.includes(showVal)) {
+            console.log('Inside the if statement')
+            console.log(data)
+            reqSend.defaultReq("GET", `api/v1/invReports/getReport/${showVal}`, {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    setInvReport(response.data);
+                    // console.log(response.data)
+                    console.log(data)
+                    console.log(Object.keys(jsonData).length)
+                    console.log("get invReport success")
+                } else {
+                    console.error("Invalid response format:", response);
+                    console.log("Inside the else statement")
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+    );
+    }
+    else {
+        console.log(val);
+        alert("Please enter a valid ReportId");
+    }
+        console.log(invReport);
+    };
+
+
+    const fetchReport = () => {
+        reqSend.defaultReq("GET", 'api/v1/warehouse', {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    const options = response.data.map(warehouse => ({
+                        id: warehouse.warehouseId,
+                        name: warehouse.name
+                    }));
+                    setWarehouseOptions(options);
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    };
+    
+    
+    const [currentReport, setCurrentReport] = useState(null);
 
     // const handleShowClick = () => {
     //     setReportForm(true); 
     // }
 
     const reportForm = (
-        <div className="addItemForm" style={{ border: "2px solid #ccc", padding: "10px", borderRadius: "10px", position: "relative" }}>
-            <h3>Report Details</h3>
+        <div className="addItemForm" style={{maxWidth: "750px", margin: "0 auto", border: "2px solid #ccc", padding: "10px", borderRadius: "10px", position: "relative" }}>
+            <h2 style={{ textAlign: 'center' }}>Report Details</h2>
             <IconButton
                     aria-label="close"
                     onClick={() => setReportForm(false)}
@@ -504,19 +578,281 @@ export function ViewReports(props) {
                 >
                     <CloseIcon />
             </IconButton>
+            {Object.keys(invReport).length !== 0 && (
+                        // <div>
+                        // <h1>Report ID: {invReport.reportId}</h1>
+                        //     <h2>Generated Date and Time: {invReport.generatedDateAndTime}</h2>
+            
+                        //     <h2>Warehouse Details:</h2>
+                        //     <ul>
+                        //     {Object.entries(invReport.warehouses).map(([warehouseId, warehouseName]) => (
+                        //         <li key={warehouseId}>
+                        //         {warehouseName} ({warehouseId})
+                        //         </li>
+                        //     ))}
+                        //     </ul>
+            
+                        //     <h2>Items by Warehouse:</h2>
+                        //     {Object.entries(invReport.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
+                        //     <div key={warehouseId}>
+                        //         <h3>{invReport.warehouses[warehouseId]}</h3>
+                        //         <ul>
+                        //         {Object.entries(items).map(([itemId, itemName]) => (
+                        //             <li key={itemId}>
+                        //             {itemName} ({itemId})
+                        //             </li>
+                        //         ))}
+                        //         </ul>
+                        //     </div>
+                        //     ))}
+            
+                        //     <h2>Most Remaining Items by Warehouse:</h2>
+                        //     {Object.entries(invReport.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
+                        //     <div key={warehouseId}>
+                        //         <h3>{invReport.warehouses[warehouseId]}</h3>
+                        //         <ul>
+                        //         {items.map((item, index) => (
+                        //             <li key={index}>{item}</li>
+                        //         ))}
+                        //         </ul>
+                        //     </div>
+                        //     ))}
+            
+                        //     <h2>Total Worth by Warehouse:</h2>
+                        //     <ul>
+                        //     {Object.entries(invReport.totalWorth).map(([warehouseId, total]) => (
+                        //         <li key={warehouseId}>
+                        //         {invReport.warehouses[warehouseId]}: {total}
+                        //         </li>
+                        //     ))}
+                        //     </ul>
+                        // </div>
+                        <div className="report-container">
+                        <h4>Report ID: {invReport.reportId}</h4>
+                        <Stack spacing={3}>
+                            <h7>Generated Date and Time: {invReport.generatedDateAndTime}</h7>
+                            <div className="section">
+                                <h2>Warehouse Details:</h2>
+                                <ul>
+                                    {Object.entries(invReport.warehouses).map(([warehouseId, warehouseName]) => (
+                                        <li key={warehouseId}>
+                                            <span className="custom-bullet">&#8226;</span>
+                                            {warehouseName} ({warehouseId})
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </Stack>
+
+                        <div className="section">
+                            <h2>Items by Warehouse:</h2>
+                            {Object.entries(invReport.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
+                                <div key={warehouseId}>
+                                    <h3>{invReport.warehouses[warehouseId]}</h3>
+                                    <ul>
+                                        {Object.entries(items).map(([itemId, itemName]) => (
+                                            <li key={itemId}>
+                                                <span className="custom-bullet">&#8226;</span>
+                                                {itemName} ({itemId})
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="section">
+                            <h2>Most Remaining Items by Warehouse:</h2>
+                            {Object.entries(invReport.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
+                                <div key={warehouseId}>
+                                    <h3>{invReport.warehouses[warehouseId]}</h3>
+                                    <ul>
+                                        {items.map((item, index) => (
+                                            <li key={index}>
+                                                <span className="custom-bullet">&#8226;</span>
+                                                {item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="section">
+                            <h2>Total Worth by Warehouse:</h2>
+                            <ul>
+                                {Object.entries(invReport.totalWorth).map(([warehouseId, total]) => (
+                                    <li key={warehouseId}>
+                                        <span className="custom-bullet">&#8226;</span>
+                                        {invReport.warehouses[warehouseId]}: {total}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                    )}
+            {/* <div>
+            <h1>Report ID: {invReport.reportId}</h1>
+                <h2>Generated Date and Time: {invReport.generatedDateAndTime}</h2>
+
+                <h2>Warehouse Details:</h2>
+                <ul>
+                {Object.entries(invReport.warehouses).map(([warehouseId, warehouseName]) => (
+                    <li key={warehouseId}>
+                    {warehouseName} ({warehouseId})
+                    </li>
+                ))}
+                </ul>
+
+                <h2>Items by Warehouse:</h2>
+                {Object.entries(invReport.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
+                <div key={warehouseId}>
+                    <h3>{invReport.warehouses[warehouseId]}</h3>
+                    <ul>
+                    {Object.entries(items).map(([itemId, itemName]) => (
+                        <li key={itemId}>
+                        {itemName} ({itemId})
+                        </li>
+                    ))}
+                    </ul>
+                </div>
+                ))}
+
+                <h2>Most Remaining Items by Warehouse:</h2>
+                {Object.entries(invReport.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
+                <div key={warehouseId}>
+                    <h3>{invReport.warehouses[warehouseId]}</h3>
+                    <ul>
+                    {items.map((item, index) => (
+                        <li key={index}>{item}</li>
+                    ))}
+                    </ul>
+                </div>
+                ))}
+
+                <h2>Total Worth by Warehouse:</h2>
+                <ul>
+                {Object.entries(invReport.totalWorth).map(([warehouseId, total]) => (
+                    <li key={warehouseId}>
+                    {invReport.warehouses[warehouseId]}: {total}
+                    </li>
+                ))}
+                </ul>
+            </div> */}
+            
             
         </div>
     )
 
-    const showClick = () => {
-        setReportForm(true);
-        console.log("ShowClicked")
-        const report = data.find(report => report.reportId === showVal);
-        console.log(data);
-        console.log(report);
-    }
+    const displayReport = () => {
+        return (
+            <div>
+                <h1>Report ID: {invReport.reportId}</h1>
+                <h2>Generated Date and Time: {invReport.generatedDateAndTime}</h2>
 
+                <h2>Warehouse Details:</h2>
+                <ul>
+                    {Object.entries(invReport.warehouses).map(([warehouseId, warehouseName]) => (
+                        <li key={warehouseId}>
+                            {warehouseName} ({warehouseId})
+                        </li>
+                    ))}
+                </ul>
 
+                <h2>Items by Warehouse:</h2>
+                {Object.entries(invReport.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
+                    <div key={warehouseId}>
+                        <h3>{invReport.warehouses[warehouseId]}</h3>
+                        <ul>
+                            {Object.entries(items).map(([itemId, itemName]) => (
+                                <li key={itemId}>
+                                    {itemName} ({itemId})
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+
+                <h2>Most Remaining Items by Warehouse:</h2>
+                {Object.entries(invReport.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
+                    <div key={warehouseId}>
+                        <h3>{invReport.warehouses[warehouseId]}</h3>
+                        <ul>
+                            {items.map((item, index) => (
+                                <li key={index}>{item}</li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+
+                <h2>Total Worth by Warehouse:</h2>
+                <ul>
+                    {Object.entries(invReport.totalWorth).map(([warehouseId, total]) => (
+                        <li key={warehouseId}>
+                            {invReport.warehouses[warehouseId]}: {total}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    };
+    
+    const createForm = () => {
+        console.log("createForm function is running")
+        return (
+            <div>
+                <h1>Report ID: {invReport.reportId}</h1>
+                <h2>Generated Date and Time: {invReport.generatedDateAndTime}</h2>
+
+                <h2>Warehouse Details:</h2>
+                <ul>
+                {Object.entries(invReport.warehouses).map(([warehouseId, warehouseName]) => (
+                    <li key={warehouseId}>
+                    {warehouseName} ({warehouseId})
+                    </li>
+                ))}
+                </ul>
+
+                <h2>Items by Warehouse:</h2>
+                {Object.entries(invReport.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
+                <div key={warehouseId}>
+                    <h3>{invReport.warehouses[warehouseId]}</h3>
+                    <ul>
+                    {Object.entries(items).map(([itemId, itemName]) => (
+                        <li key={itemId}>
+                        {itemName} ({itemId})
+                        </li>
+                    ))}
+                    </ul>
+                </div>
+                ))}
+
+                <h2>Most Remaining Items by Warehouse:</h2>
+                {Object.entries(invReport.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
+                <div key={warehouseId}>
+                    <h3>{invReport.warehouses[warehouseId]}</h3>
+                    <ul>
+                    {items.map((item, index) => (
+                        <li key={index}>{item}</li>
+                    ))}
+                    </ul>
+                </div>
+                ))}
+
+                <h2>Total Worth by Warehouse:</h2>
+                <ul>
+                {Object.entries(invReport.totalWorth).map(([warehouseId, total]) => (
+                    <li key={warehouseId}>
+                    {invReport.warehouses[warehouseId]}: {total}
+                    </li>
+                ))}
+                </ul>
+            </div>
+        );
+      };
+
+    
+
+    // Responsible for generating new
     const generateClick = () => {
         reqSend.defaultReq("POST", 'api/v1/invReports/generate', {},
             response => {
@@ -539,7 +875,8 @@ export function ViewReports(props) {
                 <div className="head-title" style={{ display: 'flex', justifyContent: 'center' }}>
                     <Stack spacing={3} alignItems="center">
                     <div className="left">
-                            <h1>Report Generation</h1>   
+                            <h1>Report Generation</h1>  
+
                         </div>
                             <Button onClick={generateClick} maxWidth='40px' variant="contained">Generate Report</Button>
                             <table>
@@ -556,10 +893,10 @@ export function ViewReports(props) {
                     </Stack>
 
                 </div>
-                <Stack spacing={2}>
+                <Stack spacing={4}>
                 <div class="container" style={{ textAlign: 'center' }}>
                 <div className="mt-5">
-                    <h4 style={{ marginBottom: '20px' }} >Past generated reports:</h4>
+                    <h3 style={{ marginBottom: '20px' }} >Past generated reports:</h3>
                     <table class="table table-bordered table-hover table-sm" style={{ width: '70%', margin: 'auto' }} >
                         <thead class="thead-light">
                             <tr>
@@ -568,20 +905,29 @@ export function ViewReports(props) {
                             </tr>
                         </thead>
                     <tbody>
-                        {data.map((report, index) => (
+                        {data.map((reports, index) => (
                             <tr key={index}>
-                                <td>{report.reportId}</td>
-                                <td>{report.generatedDateAndTime}</td>
+                                <td>{reports.reportId}</td>
+                                <td>{reports.generatedDateAndTime}</td>
                             </tr>
                         ))}
                     </tbody>
                     </table>
                 </div>
+                
                 </div>
                 <div>
-                    {showReportForm && reportForm}
+                    {showReportForm && reportForm} 
                     
-                    
+                    <p>
+                    {/* {report.map((item, index) => (
+                        <div key={index}>
+                            Report ID: {item.reportId}
+                        </div>
+                     ))} */}
+                    </p>
+
+                    {/* <p>Report ID: {currentReport.reportId}</p>                                        */}
                 </div>
                 </Stack>
 {/* ////////////////////////////////// */}
