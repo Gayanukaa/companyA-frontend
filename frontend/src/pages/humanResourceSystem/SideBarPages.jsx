@@ -3,6 +3,10 @@ import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
 
+import { BugReportOutlined } from "@mui/icons-material";
+import DashboardCard from "./ButtonCard";
+
+
 
 
 export function ViewStocks(props) {
@@ -31,9 +35,12 @@ export function ViewStocks(props) {
                 <div className="head-title">
                     <div className="left">
                         <h1>View Stocks</h1>
-                    </div>
 
+                    </div>
+                
                     <TableComp data={tableData} />
+                    
+
 
                 </div>
 
@@ -61,22 +68,28 @@ export function DashboardView(props) {
         {
             image: avatar,
             altText: "Avatar 3",
-            count: 7,
+            count: 8,
             name: "Bob Johnson"
         }
     ];
 
+    
     return (
         <>
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <h1>Dashboard</h1>
+                        <h1>Dashboard</h1> 
                     </div>
-
-                    <CardComp data={dataList} />
+                    {/*<CardComp data={dataList} />*/}
+                </div>
+                <div>
+                    <DashboardCard name='Attendence Details'/>
+                    <DashboardCard name='Employee Settings'/>
                 </div>
             </main>
         </>
     )
 }
+
+
