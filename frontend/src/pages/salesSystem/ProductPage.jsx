@@ -5,7 +5,7 @@ import Modal from "./components/PopupModal.jsx";
 
 const ProductPage = () => {
     const get_url = "api/products";
-    const get_val = "api/products/validateStock-Muliple";
+    const get_val = "api/products/validateStock-Multiple";
 
    const [isOpen, setIsOpen] = useState(true); // Set initial state to true
     useEffect(() => {

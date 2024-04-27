@@ -4,7 +4,7 @@ import ProductList from "./components/ProductList.jsx";
 
 const ExistingProductsPage = () => {
     const get_url = "api/existingProducts";
-    const get_val = "api/existingProducts/validateStock-Muliple";
+    const get_val = "api/existingProducts/validateStock-Multiple";
 
     return (
         <div>
