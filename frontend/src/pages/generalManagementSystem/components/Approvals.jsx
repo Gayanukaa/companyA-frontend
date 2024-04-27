@@ -1,0 +1,115 @@
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, Button } from '@mui/material';
+
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import axios from 'axios';
+import avatar from '../../../assets/avatar.svg';
+import '../../../styles/dashboard.css';
+
+const ApprovalCard = ({ name, email, message }) => {
+  return (
+    <Card sx={{
+      borderRadius: '20px',
+      background: 'var(--light)',
+      padding: '24px',
+      overflowX: 'auto',
+      width: 'calc(50% - 30px)',
+      marginBottom: '20px',
+      marginLeft: '20px',
+      display: 'inline-block'
+    }}>
+      <CardContent>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar src={avatar} alt="Avatar" sx={{ mr: 2 }} />
+          <div>
+            <Typography variant="h5" component="div">
+              Request
+            </Typography>
+            <Typography variant="body1" color="textSecondary">
+              Name: {name}
+            </Typography>
+            <Typography variant="body1" color="textSecondary">
+              E-mail: {email}
+            </Typography>
+            <Typography variant="body1" color="textSecondary">
+              Message: {message}
+            </Typography>
+            <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
+              Approve
+            </Button>
+            <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
+              Reject
+            </Button>
+            <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
+              Dismiss
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+const ApprovalSection = () => {
+  const [approvalData, setApprovalData] = useState([]);
+
+  useEffect(() => {
+
+    axios.get("http://localhost:8090/api/request/view")
+      .then(response => {
+        setApprovalData(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching feedback data:", error);
+      });
+  }, []);
+  return (
+    <main>
+      <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
+
+        <h1>Leave Requests</h1><br></br>
+        <div className="feedback-container">
+          {approvalData.map((feedback, index) => (
+            <ApprovalCard
+              key={index}
+              name={feedback.name}
+              email={feedback.email}
+              message={feedback.message}
+            />
+          ))}
+          {/* <ApprovalCard
+                            key={"skdjnsdjn"}
+                            name={"skdjnsdjn"}
+                            email={"skdjnsdjn"}
+                            message={"skdjnsdjn"}
+                        /> */}
+        </div>
+        <h1>Recruitment Requests</h1><br></br>
+        <div className="feedback-container">
+          {approvalData.map((feedback, index) => (
+            <ApprovalCard
+              key={index}
+              name={feedback.name}
+              email={feedback.email}
+              message={feedback.message}
+            />
+          ))}
+          {/* <ApprovalCard
+                            key={"skdjnsdjn"}
+                            name={"skdjnsdjn"}
+                            email={"skdjnsdjn"}
+                            message={"skdjnsdjn"}
+                        /> */}
+        </div>
+
+      </div>
+    </main>
+    
+  )
+
+}
+
+
+
+export default ApprovalSection;

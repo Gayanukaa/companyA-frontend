@@ -12,6 +12,7 @@ import { ViewManagers, DashboardView } from './SideBarPages';
 import ModalForm from './components/ModalForm'
 import AddManager from './components/AddManager';
 import FeedBack from './components/FeedBack';
+import Approvals from './components/Approvals'
 
 
 
@@ -74,6 +75,7 @@ export default function Dashboard() {
                         <Route path="/update-managers" element={<ModalForm />} />
                         <Route path="/add-managers" element={<AddManager />} />
                         <Route path="/view-feedback" element={<FeedBack />} />
+                        <Route path="/approvals" element={<Approvals />} />
                     </Routes>
                 </section>
                 
