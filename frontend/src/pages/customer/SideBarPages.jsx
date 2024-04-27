@@ -173,8 +173,7 @@ export function OrderHistory() {
 
     const fetchSalesRecords = async () => {
         try {
-            // Add fetching sales record data here
-            const response = await fetch('/salesRecord/');
+            const response = await fetch('/sales-records');
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -183,6 +182,11 @@ export function OrderHistory() {
         } catch (error) {
             console.error('Error fetching sales records:', error);
         }
+    };
+
+    const handleRefundRequest = (orderId) => {
+        // Implement refund request logic here
+        console.log('Requesting refund for order:', orderId);
     };
 
     return (
@@ -195,6 +199,7 @@ export function OrderHistory() {
                         <th>Date</th>
                         <th>Amount</th>
                         <th>Components</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -204,6 +209,9 @@ export function OrderHistory() {
                             <td>{record.order_date}</td>
                             <td>{record.order_amount}</td>
                             <td>{record.components.join(', ')}</td>
+                            <td>
+                                <button onClick={() => handleRefundRequest(record.order_ID)}>Request Refund</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
