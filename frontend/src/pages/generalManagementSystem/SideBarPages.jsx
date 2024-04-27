@@ -1,6 +1,7 @@
 import React from "react";
 import CardComp from "../../components/sideComps/CardComp";
-import TableComp from '../../components/sideComps/TableComp'
+import TableComp from '../../components/sideComps/TableComp';
+import ApprovalCard from "./components/Approvals.jsx"
 import avatar from '../../assets/avatar.svg';
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -14,19 +15,13 @@ export function ViewManagers(props) {
     const [data, setData] = useState(null)
     const [tabledata, settabledata] = useState(null)
     const navigate = useNavigate();
-
-
     const updateManagerButtonClick = (managerId) => {
         navigate('/general-management/update-managers', { state: { managerId: managerId } });
     };
-
-
     const addManagerButtonClick = () => {
         const portalLink = '/general-management/add-managers';
         navigate(portalLink);
     };
-
-
     const style = {
         position: 'absolute',
         top: '50%',
@@ -38,9 +33,6 @@ export function ViewManagers(props) {
         boxShadow: 24,
         p: 4,
     };
-
-
-
     useEffect(() => {
         // Fetch manager data from API
         axios.get("http://localhost:8090/api/manager/viewAllManagers")
@@ -74,12 +66,7 @@ export function ViewManagers(props) {
                 }
             )
         }
-
-
     }, [data]);
-
-
-
     return (
         <>
             <main>
@@ -99,8 +86,6 @@ export function ViewManagers(props) {
         </>
     )
 }
-
-
 
 export function DashboardView(props) {
     const [data, setData] = useState(null)
@@ -150,3 +135,43 @@ export function DashboardView(props) {
         </>
     )
 }
+
+export function ApprovalSection(props) {
+    const [approvalData, setApprovalData] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8090/api/request/view")
+            .then(response => {
+                const sortedData = response.data.sort((a, b) => a.status - b.status);
+                setApprovalData(sortedData);
+            })
+            .catch(error => {
+                console.error("Error fetching approval data:", error);
+            });
+    }, []);
+
+    return (
+        <main>
+            <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
+                <h1>Reequests</h1><br></br>
+                <div className="feedback-container">
+                    {approvalData.length > 0 ? (
+                        approvalData.map((request, index) => (
+                            <ApprovalCard
+                                key={index}
+                                name={request.name}
+                                email={request.email}
+                                message={request.message}
+                                status={request.status}
+                            />
+                        ))
+                    ) : (
+                        <p>No approval requests found.</p>
+                    )}
+                </div>
+            </div>
+        </main>
+    );
+}
+
+

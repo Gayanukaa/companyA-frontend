@@ -86,46 +86,5 @@ const ApprovalCard = ({ name, email, message, status }) => {
   )
 }
 
-const ApprovalSection = () => {
-  const [approvalData, setApprovalData] = useState([]);
 
-  useEffect(() => {
-
-    axios.get("http://localhost:8090/api/request/view")
-      .then(response => {
-        const sortedData = response.data.sort((a, b) => a.status - b.status);
-        setApprovalData(sortedData);
-      })
-      .catch(error => {
-        console.error("Error fetching feedback data:", error);
-      });
-  }, []);
-  return (
-    <main>
-      <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
-
-        <h1>Requests</h1><br></br>
-        <div className="feedback-container">
-          {approvalData.map((request, index) => (
-            <ApprovalCard
-              key={index}
-              name={request.name}
-              email={request.email}
-              message={request.message}
-              status={request.status}
-            />
-          ))}
-
-        </div>
-        
-
-      </div>
-    </main>
-
-  )
-
-}
-
-
-
-export default ApprovalSection;
+export default ApprovalCard;
