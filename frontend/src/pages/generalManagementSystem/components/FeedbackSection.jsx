@@ -135,7 +135,7 @@ const FeedbackSection = () => {
                             feedbackData && value === 0 && feedbackData.map((feedback, index) => (
                                 feedback.isRead === 0 && (
                                     <Accordion key={index}>
-                                        <AccordionSummary expandIcon={<ArrowForwardIosSharpIcon />}>
+                                        <AccordionSummary expandIcon={<i class='bx bxs-chevron-down' ></i>}>
                                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                                     <Avatar src={feedback.avatar} alt="Avatar" sx={{ mr: 2 }} />
@@ -161,7 +161,7 @@ const FeedbackSection = () => {
                         {feedbackData && value === 1 && feedbackData.map((feedback, index) => (
                             feedback.isRead === 1 && (
                                 <Accordion>
-                                    <AccordionSummary expandIcon={<ArrowForwardIosSharpIcon />}>
+                                    <AccordionSummary expandIcon={<i class='bx bxs-chevron-down' ></i>}>
                                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                                 <Avatar src={feedback.avatar} alt="Avatar" sx={{ mr: 2 }} />
