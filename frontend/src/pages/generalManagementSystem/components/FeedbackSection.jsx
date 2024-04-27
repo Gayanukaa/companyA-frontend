@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, CardContent, Box, Button, IconButton } from '@mui/material';
+import { Grid, Card, CardContent, Box, Button, IconButton,Alert } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import avatar from '../../../assets/avatar.svg';
 import '../../../styles/dashboard.css';
+import * as reqSend from '../../../global/reqSender.jsx';
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -76,18 +77,31 @@ const FeedbackSection = () => {
     };
 
 
-    const handleMarkAsReadClick = (event) => {
+    const handleMarkAsReadClick = (event, id) => {
         event.stopPropagation();
-        markAsRead();
+        markAsRead(id);
     };
 
-    const markAsRead = () => {}
+    const markAsRead = (id) => {
+        reqSend.defaultReq("PUT", `api/feedback/mark-as-read?id=${id}`, {},
+            response => {
+                if (response.status === 200 && response.data) {
+
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    }
 
     const handleDeleteClick = (event) => {
         event.stopPropagation();
         deleteFeedback();
     };
-    
+
 
 
     useEffect(() => {
@@ -99,7 +113,8 @@ const FeedbackSection = () => {
             .catch(error => {
                 console.error("Error fetching feedback data:", error);
             });
-    }, []);
+    }, [handleMarkAsReadClick]);
+
 
     return (
         <main>
@@ -114,28 +129,33 @@ const FeedbackSection = () => {
                         </Tabs>
 
 
-                        {feedbackData && value === 0 && feedbackData.map((feedback, index) => (
-                            feedback.isRead === 0 && (
-                                <Accordion key={index}>
-                                    <AccordionSummary expandIcon={<ArrowForwardIosSharpIcon />}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                <Avatar src={feedback.avatar} alt="Avatar" sx={{ mr: 2 }} />
-                                                <Grid>
-                                                    <Typography variant="h6">{feedback.subject}</Typography>
-                                                    <Typography variant="body1" >{feedback.name}</Typography>
-                                                    <Typography variant="caption">{new Date(feedback.timestamp).toLocaleString()}</Typography>
-                                                </Grid>
-                                            </Box>
-                                            <Button onClick={handleMarkAsReadClick} variant='contained' className='markAsRead'>Mark as Read</Button>                                    </Box>
-                                    </AccordionSummary>
+                        {feedbackData && value === 0 && feedbackData.filter(feedback => feedback.isRead === 0).length === 0 ? (
+                            <Alert severity="info">No Unread Messages</Alert>
+                        ) : (
+                            feedbackData && value === 0 && feedbackData.map((feedback, index) => (
+                                feedback.isRead === 0 && (
+                                    <Accordion key={index}>
+                                        <AccordionSummary expandIcon={<ArrowForwardIosSharpIcon />}>
+                                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <Avatar src={feedback.avatar} alt="Avatar" sx={{ mr: 2 }} />
+                                                    <Grid>
+                                                        <Typography variant="h6">{feedback.subject}</Typography>
+                                                        <Typography variant="body1" >{feedback.name}</Typography>
+                                                        <Typography variant="caption">{new Date(feedback.timestamp).toLocaleString()}</Typography>
+                                                    </Grid>
+                                                </Box>
+                                                <Button onClick={(e) => handleMarkAsReadClick(e, feedback.id)} variant='contained' className='markAsRead'>Mark as Read</Button>                                    </Box>
+                                        </AccordionSummary>
 
-                                    <AccordionDetails>
-                                        <Typography variant="body1">{feedback.message}</Typography>
-                                    </AccordionDetails>
-                                </Accordion>
-                            )
-                        ))}
+                                        <AccordionDetails>
+                                            <Typography variant="body1">{feedback.message}</Typography>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                )
+                            ))
+                        )}
+
 
 
                         {feedbackData && value === 1 && feedbackData.map((feedback, index) => (
