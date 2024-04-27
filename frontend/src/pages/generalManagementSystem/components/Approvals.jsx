@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Button } from '@mui/material';
-
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import avatar from '../../../assets/avatar.svg';
 import '../../../styles/dashboard.css';
-
-import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import * as reqSend from '../../../global/reqSender.jsx';
 
-
-const ApprovalCard = ({ name, email, message, status }) => {
+const ApprovalCard = ({ name, email, message, status, id, onApprove }) => {
   let statusText;
   let chipColor;
   switch (status) {
@@ -34,13 +29,34 @@ const ApprovalCard = ({ name, email, message, status }) => {
       statusText = "Unknown";
       chipColor = 'default'; // Default color
   }
+
+  const approveRequest = (id) => {
+    reqSend.defaultReq("PUT", `api/request/approve?id=${id}`, {},
+            response => {
+                if (response.status === 200 && response.data) {
+
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+  }
+
+  const handleApproveClick = () => {
+    approveRequest(id); // Assuming approveRequest is defined elsewhere
+    onApprove(id); // Call the callback function with the request ID
+};
+
   return (
     <Card sx={{
       borderRadius: '20px',
       background: 'var(--light)',
       padding: '24px',
       overflowX: 'auto',
-      width: 'calc(50% - 30px)',
+      width: 'calc(90% - 30px)',
       marginBottom: '20px',
       marginLeft: '20px',
       display: 'inline-block'
@@ -64,7 +80,7 @@ const ApprovalCard = ({ name, email, message, status }) => {
             <Typography variant="body1" color="textSecondary">
               Message: {message}
             </Typography>
-            <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
+            <Button onClick={handleApproveClick} variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
               Approve
             </Button>
             <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
@@ -73,18 +89,14 @@ const ApprovalCard = ({ name, email, message, status }) => {
             <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
               Dismiss
             </Button>
-
           </div>
           <Button variant="contained" color="primary" style={{ position: 'absolute', top: '10px', right: '10px' }}>
             Action
           </Button>
-
         </div>
-
       </CardContent>
     </Card>
   )
 }
-
 
 export default ApprovalCard;

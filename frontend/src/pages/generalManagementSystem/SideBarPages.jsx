@@ -9,8 +9,6 @@ import TrashIcon from "./components/TrashIcon";
 import { useNavigate } from 'react-router-dom';
 import { systemRoles } from './data/RoleDetails.jsx';
 
-
-
 export function ViewManagers(props) {
     const [data, setData] = useState(null)
     const [tabledata, settabledata] = useState(null)
@@ -90,7 +88,6 @@ export function ViewManagers(props) {
 export function DashboardView(props) {
     const [data, setData] = useState(null)
     const [listdata, setCardData] = useState(null)
-
     useEffect(() => {
         // Fetch manager data from API
         axios.get("http://localhost:8090/api/manager/viewAllManagers")
@@ -102,7 +99,6 @@ export function DashboardView(props) {
                 console.error("Error fetching manager data:", error);
             });
     }, []);
-
     // Inside your functional component
     useEffect(() => {
         if (data != null) {
@@ -114,8 +110,6 @@ export function DashboardView(props) {
             })));
         }
     }, [data]);
-
-
     return (
         <>
             <main>
@@ -138,7 +132,9 @@ export function DashboardView(props) {
 
 export function ApprovalSection(props) {
     const [approvalData, setApprovalData] = useState([]);
-
+    const handleApproveClick = (id) => {
+        console.log("Approving request with id:", id);
+    };
     useEffect(() => {
         axios.get("http://localhost:8090/api/request/view")
             .then(response => {
@@ -148,21 +144,22 @@ export function ApprovalSection(props) {
             .catch(error => {
                 console.error("Error fetching approval data:", error);
             });
-    }, []);
-
+    }, [handleApproveClick]);
     return (
         <main>
             <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
-                <h1>Reequests</h1><br></br>
+                <h1>Requests</h1><br></br>
                 <div className="feedback-container">
                     {approvalData.length > 0 ? (
                         approvalData.map((request, index) => (
                             <ApprovalCard
                                 key={index}
+                                id={request.id}
                                 name={request.name}
                                 email={request.email}
                                 message={request.message}
                                 status={request.status}
+                                onApprove={() => handleApproveClick(request.id)}
                             />
                         ))
                     ) : (
@@ -173,5 +170,3 @@ export function ApprovalSection(props) {
         </main>
     );
 }
-
-

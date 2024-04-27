@@ -4,20 +4,13 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
-import {
-    dashboardAdminData,
-} from './data/DashBoardData';
-
-import { ViewManagers, DashboardView } from './SideBarPages';
+import { dashboardAdminData } from './data/DashBoardData';
+import { ViewManagers, DashboardView, ApprovalSection } from './SideBarPages';
 import ModalForm from './components/ModalForm'
 import AddManager from './components/AddManager';
 import FeedBack from './components/FeedbackSection';
-import Approvals from './components/Approvals'
-
-
 
 export default function Dashboard() {
-
     const addJs = () => {
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
@@ -31,20 +24,14 @@ export default function Dashboard() {
                 li.classList.add('active');
             })
         });
-
         // TOGGLE SIDEBAR
         const menuBar = document.querySelector('#content nav .bx.bx-menu');
         const sidebar = document.getElementById('sidebar');
-
         menuBar.addEventListener('click', function () {
             sidebar.classList.toggle('hideSidebar');
         })
-
-
         const switchMode = document.getElementById('switch-mode');
         const wrapper = document.getElementById('dashboardWrapper');
-
-
         switchMode.addEventListener('change', function () {
             if (this.checked) {
                 wrapper.classList.add('dark');
@@ -53,34 +40,25 @@ export default function Dashboard() {
             }
         })
     }
-
     useEffect(() => {
         addJs()
     }, [])
-
-
-
     return (
         <>
             <div id="dashboardWrapper">
-
                 <SideNavigation data={dashboardAdminData} />
-
-                <section id="content" style={{height: '100vh'}}>
+                <section id="content" style={{ height: '100vh' }}>
                     <TopBar avatar={avatar} />
-
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
                         <Route path="/view-managers" element={<ViewManagers />} />
                         <Route path="/update-managers" element={<ModalForm />} />
                         <Route path="/add-managers" element={<AddManager />} />
                         <Route path="/view-feedback" element={<FeedBack />} />
-                        <Route path="/approvals" element={<Approvals />} />
+                        <Route path="/approvals" element={<ApprovalSection />} />
                     </Routes>
                 </section>
-                
             </div>
-
         </>
     )
 }
