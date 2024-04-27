@@ -7,6 +7,8 @@ import GetReport from './reports/GetReport';
 import ReportGenerator from './reports/ReportGenerator';
 import PrototypeOperations from './testSubjectOperations/PrototypeOperations';
 import SampleOperations from './testSubjectOperations/SampleOperations';
+import TestOperations from './tests/TestOperations';
+
 
 
 export function ViewStocks(props) {
@@ -111,6 +113,15 @@ export function SampleOps(props) {
         <div className="Prototypes">
           <h1>Samples</h1>
           <SampleOperations />
+        </div>
+      );
+}
+
+export function TestOps(props) {
+    return (
+        <div className="Tests">
+          <h1>Tests</h1>
+          <TestOperations/>
         </div>
       );
 }
