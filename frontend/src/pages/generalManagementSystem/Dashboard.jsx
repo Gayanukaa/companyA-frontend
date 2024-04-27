@@ -11,7 +11,7 @@ import {
 import { ViewManagers, DashboardView } from './SideBarPages';
 import ModalForm from './components/ModalForm'
 import AddManager from './components/AddManager';
-import FeedBack from './components/FeedBack';
+import FeedBack from './components/FeedbackSection';
 import Approvals from './components/Approvals'
 
 

@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import TrashIcon from "./components/TrashIcon";
 import { useNavigate } from 'react-router-dom';
 import { systemRoles } from './data/RoleDetails.jsx';
-import * as reqSend from '../../global/reqSender.jsx';
 
 
 
