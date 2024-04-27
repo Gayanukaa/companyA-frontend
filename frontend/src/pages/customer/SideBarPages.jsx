@@ -3,7 +3,7 @@ import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
 
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 
 
 
@@ -162,3 +162,39 @@ export function PlaceOrder(props) {
         </>
     );
 }
+
+function OrderHistory() {
+    const [orders, setOrders] = useState([]);
+  
+    useEffect(() => {
+      // Fetch order history from backend API
+      fetch('/api/orders')
+        .then(response => response.json())
+        .then(data => setOrders(data))
+        .catch(error => console.error('Error fetching order history:', error));
+    }, []);
+  
+    return (
+      <div>
+        <h2>Order History</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map(order => (
+              <tr key={order._id}>
+                <td>{order.orderId}</td>
+                <td>{order.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+  
+  export default OrderHistory;

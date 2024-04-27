@@ -8,7 +8,7 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView, PlaceOrder, ViewStocks } from './SideBarPages';
+import { DashboardView, OrderHistory, PlaceOrder, ViewStocks } from './SideBarPages';
 
 
 
@@ -71,6 +71,7 @@ export default function Dashboard() {
                         <Route path="/dashboard" element={<DashboardView />} />
                         <Route path="/place-order" element={<PlaceOrder />} />
                         <Route path="/view-stocks" element={<ViewStocks />} />
+                        <Route path="/order-history" element={<OrderHistory />} />
                     </Routes>
                 </section>
                 
