@@ -5,6 +5,7 @@ import avatar from '../../assets/avatar.svg';
 
 import GetReport from './reports/GetReport'; 
 import ReportGenerator from './reports/ReportGenerator';
+import ReportDelete from './reports/ReportDelete';
 import PrototypeOperations from './testSubjectOperations/PrototypeOperations';
 import SampleOperations from './testSubjectOperations/SampleOperations';
 import TestOperations from './tests/TestOperations';
@@ -95,6 +96,7 @@ export function Reports(props) {
           <ReportGenerator reportType="sample" buttonText="Generate Sample Report" />
           <ReportGenerator reportType="prototype" buttonText="Generate Prototype Report" />
           <GetReport />
+          <ReportDelete />
         </div>
       );
 }

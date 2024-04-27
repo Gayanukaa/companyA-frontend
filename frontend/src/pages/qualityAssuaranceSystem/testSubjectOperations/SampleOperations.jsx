@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const SampleOperations = () => {
   const [samples, setSamples] = useState([]);
   const [selectedSample, setSelectedSample] = useState(null);
-  const [inputId, setInputId] = useState('');
+  const [getSampleId, setGetSampleId] = useState('');
+  const [deleteSampleId, setDeleteSampleId] = useState('');
   const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    getAllSamples();
+  }, []);
 
   const getAllSamples = async () => {
     try {
@@ -18,10 +23,21 @@ const SampleOperations = () => {
 
   const getSampleById = async () => {
     try {
-      const response = await axios.get(`http://localhost:8090/api/v1/samples/getSample/${inputId}`);
+      const response = await axios.get(`http://localhost:8090/api/v1/samples/getSample/${getSampleId}`);
       setSelectedSample(response.data);
     } catch (error) {
       console.error('Error fetching sample by ID:', error);
+    }
+  };
+
+  const deleteSampleById = async () => {
+    try {
+      await axios.delete(`http://localhost:8090/api/v1/samples/delete/${deleteSampleId}`);
+      getAllSamples();
+      setDeleteSampleId('');
+      setSelectedSample(null);
+    } catch (error) {
+      console.error('Error deleting sample by ID:', error);
     }
   };
 
@@ -44,9 +60,9 @@ const SampleOperations = () => {
       <div>
         <input
           type="text"
-          value={inputId}
-          onChange={(e) => setInputId(e.target.value)}
-          placeholder="Enter Sample ID"
+          value={getSampleId}
+          onChange={(e) => setGetSampleId(e.target.value)}
+          placeholder="Enter Sample ID to Get"
         />
         <button onClick={getSampleById}>Get Sample by ID</button>
       </div>
@@ -65,6 +81,15 @@ const SampleOperations = () => {
           )}
         </div>
       )}
+        <div>
+        <input
+          type="text"
+          value={deleteSampleId}
+          onChange={(e) => setDeleteSampleId(e.target.value)}
+          placeholder="Enter Sample ID to Delete"
+        />
+        <button onClick={deleteSampleById}>Delete Sample by ID</button>
+      </div>
     </div>
   );
 };

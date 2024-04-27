@@ -5,6 +5,7 @@ const PrototypeOperations = () => {
   const [prototypes, setPrototypes] = useState([]);
   const [selectedPrototype, setSelectedPrototype] = useState(null);
   const [inputId, setInputId] = useState('');
+  const [deletePrototypeId, setDeletePrototypeId] = useState('');
   const [showAll, setShowAll] = useState(false);
 
   const getAllPrototypes = async () => {
@@ -22,6 +23,17 @@ const PrototypeOperations = () => {
       setSelectedPrototype(response.data);
     } catch (error) {
       console.error('Error fetching prototype by ID:', error);
+    }
+  };
+
+  const deletePrototypeById = async () => {
+    try {
+      await axios.delete(`http://localhost:8090/api/v1/prototypes/delete/${deletePrototypeId}`);
+      getAllPrototypes();
+      setDeletePrototypeId('');
+      setSelectedPrototype(null);
+    } catch (error) {
+      console.error('Error deleting prototype by ID:', error);
     }
   };
 
@@ -63,9 +75,19 @@ const PrototypeOperations = () => {
               <p>Name: {selectedPrototype.allocatedTest.name}</p>
             </div>
           )}
-        </div>
+        </div>  
       )}
+      <div>
+        <input
+          type="text"
+          value={deletePrototypeId}
+          onChange={(e) => setDeletePrototypeId(e.target.value)}
+          placeholder="Enter Prototype ID to Delete"
+        />
+        <button onClick={deletePrototypeById}>Delete Prototype by ID</button>
+      </div>
     </div>
+    
   );
 };
 
