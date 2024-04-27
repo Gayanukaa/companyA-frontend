@@ -73,6 +73,7 @@ export default function Dashboard() {
                         <Route path="/reports" element={<Reports />} />
                         <Route path="/prototypes" element={<PrototypeOps />} />
                         <Route path="/samples" element={<SampleOps />} />
+                        <Route path="/tests" element={<ViewStocks />} />
                     </Routes>
                 </section>
                 

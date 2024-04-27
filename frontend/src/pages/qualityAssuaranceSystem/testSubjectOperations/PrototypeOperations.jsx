@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const PrototypeOperations = () => {
   const [prototypes, setPrototypes] = useState([]);
   const [selectedPrototype, setSelectedPrototype] = useState(null);
   const [inputId, setInputId] = useState('');
+  const [showAll, setShowAll] = useState(false);
 
   const getAllPrototypes = async () => {
     try {
@@ -24,18 +25,22 @@ const PrototypeOperations = () => {
     }
   };
 
-  useEffect(() => {
+  const handleShowAllClick = () => {
     getAllPrototypes();
-  }, []);
+    setShowAll(true);
+  };
 
   return (
     <div>
       <h2>All Prototypes</h2>
-      <ul>
-        {prototypes.map(prototype => (
-          <li key={prototype.id}>{prototype.id} - {prototype.receivedDate}</li>
-        ))}
-      </ul>
+      <button onClick={handleShowAllClick}>Show All Prototypes</button>
+      {showAll && (
+        <ul>
+          {prototypes.map(prototype => (
+            <li key={prototype.id}>{prototype.id} - {prototype.receivedDate}</li>
+          ))}
+        </ul>
+      )}
       <div>
         <input
           type="text"

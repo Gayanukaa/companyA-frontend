@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const SampleOperations = () => {
   const [samples, setSamples] = useState([]);
   const [selectedSample, setSelectedSample] = useState(null);
   const [inputId, setInputId] = useState('');
+  const [showAll, setShowAll] = useState(false);
 
   const getAllSamples = async () => {
     try {
@@ -24,18 +25,22 @@ const SampleOperations = () => {
     }
   };
 
-  useEffect(() => {
+  const handleShowAllClick = () => {
     getAllSamples();
-  }, []);
+    setShowAll(true);
+  };
 
   return (
     <div>
       <h2>All Samples</h2>
-      <ul>
-        {samples.map(sample => (
-          <li key={sample.id}>{sample.id} - {sample.receivedDate}</li>
-        ))}
-      </ul>
+      <button onClick={handleShowAllClick}>Show All Samples</button>
+      {showAll && (
+        <ul>
+          {samples.map(sample => (
+            <li key={sample.id}>{sample.id} - {sample.receivedDate}</li>
+          ))}
+        </ul>
+      )}
       <div>
         <input
           type="text"
