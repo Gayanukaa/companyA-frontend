@@ -91,19 +91,27 @@ export function DashboardView(props) {
 
 export function Reports(props) {
     return (
-        <div className="Reports">
-          <h1>Fetch your report here</h1>
-          <ReportGenerator reportType="sample" buttonText="Generate Sample Report" />
-          <ReportGenerator reportType="prototype" buttonText="Generate Prototype Report" />
-          <GetReport />
-          <ReportDelete />
+        <div className="Reports" style={{ marginLeft: '20px' }}>
+          <h1>Reports</h1>
+          <div style={{ margin: '20px 0' }}>
+            <ReportGenerator reportType="sample" buttonText="Generate Sample Report" />
+          </div>
+          <div style={{ marginBottom: '20px' }}>
+            <ReportGenerator reportType="prototype" buttonText="Generate Prototype Report" />
+          </div>
+          <div style={{ marginBottom: '20px' }}>
+            <GetReport />
+          </div>
+          <div style={{ marginBottom: '20px' }}>
+            <ReportDelete />
+          </div>
         </div>
       );
 }
 
 export function PrototypeOps(props) {
     return (
-        <div className="Prototypes">
+        <div className="Prototypes" style={{ marginLeft: '20px' }}>
           <h1>Prototypes</h1>
           <PrototypeOperations />
         </div>
@@ -112,7 +120,7 @@ export function PrototypeOps(props) {
 
 export function SampleOps(props) {
     return (
-        <div className="Prototypes">
+        <div className="Samples" style={{ marginLeft: '20px' }}>
           <h1>Samples</h1>
           <SampleOperations />
         </div>
@@ -121,7 +129,7 @@ export function SampleOps(props) {
 
 export function TestOps(props) {
     return (
-        <div className="Tests">
+        <div className="Tests" style={{ marginLeft: '20px' }}>
           <h1>Tests</h1>
           <TestOperations/>
         </div>

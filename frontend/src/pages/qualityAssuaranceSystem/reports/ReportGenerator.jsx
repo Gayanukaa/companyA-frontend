@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button, Typography } from '@mui/material';
 
 const ReportGenerator = ({ reportType, buttonText }) => {
   const [report, setReport] = useState(null);
@@ -24,17 +25,17 @@ const ReportGenerator = ({ reportType, buttonText }) => {
 
   return (
     <div>
-      <button onClick={generateReport} disabled={loading}>
+      <Button variant="contained" onClick={generateReport} disabled={loading} style={{ marginBottom: '10px' }}>
         {buttonText}
-      </button>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      </Button>
+      {loading && <Typography>Loading...</Typography>}
+      {error && <Typography>{error}</Typography>}
       {report && (
         <div>
-          <p>Report ID: {report.id}</p>
-          <p>Report Type: {report.reportType}</p>
-          <p>Generated Date and Time: {report.generatedDateAndTime}</p>
-          <table style={{ margin: '0 auto', borderCollapse: 'collapse', border: '1px solid black' }}>
+          <Typography>Report ID: {report.id}</Typography>
+          <Typography>Report Type: {report.reportType}</Typography>
+          <Typography>Generated Date and Time: {report.generatedDateAndTime}</Typography>
+          <table>
             <thead>
               <tr>
                 <th>ID</th>
@@ -58,5 +59,4 @@ const ReportGenerator = ({ reportType, buttonText }) => {
     </div>
   );
 };
-
 export default ReportGenerator;

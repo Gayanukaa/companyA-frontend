@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button, Typography, TextField } from '@mui/material';
 
 const ReportDelete = () => {
   const [deleteReportId, setDeleteReportId] = useState('');
@@ -27,15 +28,19 @@ const ReportDelete = () => {
 
   return (
     <div>
-      <input
+      <TextField
         type="text"
         value={deleteReportId}
         onChange={handleInputChange}
         placeholder="Enter Report ID"
+        variant="outlined"
+        style={{ marginBottom: '10px' }}
       />
-      <button onClick={deleteReport}>Delete Report</button>
-      {responseMessage && <p>{responseMessage}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <Button variant="contained" color="secondary" onClick={deleteReport} style={{ marginRight: '10px' }}>
+        Delete Report
+      </Button>
+      {responseMessage && <Typography variant="body1">{responseMessage}</Typography>}
+      {error && <Typography variant="body1" style={{ color: 'red' }}>{error}</Typography>}
     </div>
   );
 };

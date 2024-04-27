@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container, Typography, TextField, Button } from '@mui/material';
 
 const TestOperations = () => {
   const [tests, setTests] = useState([]);
@@ -59,76 +60,59 @@ const TestOperations = () => {
 
   return (
     <div>
-      <h1>All Available Tests</h1>
-      <ul>
+      <div style={{ margin: '30px 0' }}>
+        <Typography variant="h6" gutterBottom>All Available Tests</Typography>
         {tests.map((test) => (
-          <li key={test.testId}>
-            {test.name}
-          </li>
+          <Typography key={test.testId} gutterBottom>{test.name}</Typography>
         ))}
-      </ul>
-      <div>
-        {/*<input
-          type="text"
-          placeholder="Enter test ID"
-          value={newTestId}
-          onChange={(e) => setNewTestId(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Enter test name"
-          value={newTestName}
-          onChange={(e) => setNewTestName(e.target.value)}
-        />
-  <button onClick={handleAddTest}>Add Test</button>*/}
-  <h2>Add New Test</h2>
-      <form onSubmit={handleAddTest}>
-        <label>
-          Test ID:
-          <input
-            type="text"
+      </div>
+      <div style={{ margin: '30px 0' }}>
+        <Typography variant="h6" gutterBottom>Add New Test</Typography>
+        <form onSubmit={handleAddTest}>
+          <TextField
+            label="Test ID"
+            variant="outlined"
             value={newTestId}
             onChange={(e) => setNewTestId(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Test Name:
-          <input
-            type="text"
+          <TextField
+            label="Test Name"
+            variant="outlined"
             value={newTestName}
             onChange={(e) => setNewTestName(e.target.value)}
             required
           />
-        </label>
-        <button type="submit">Add Test</button>
+          <Button type="submit" variant="contained" color="primary">Add Test</Button>
         </form>
       </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Enter test ID to fetch"
+      <div style={{ margin: '30px 0' }}>
+        <Typography variant="h6" gutterBottom>Enter the ID to get a specific test</Typography>
+        <TextField
+          label="Test ID to fetch"
+          variant="outlined"
           value={fetchTestId}
           onChange={(e) => setFetchTestId(e.target.value)}
         />
-        <button onClick={handleFetchTest}>Fetch Test</button>
+        <Button onClick={handleFetchTest} variant="contained" color="primary">Fetch Test</Button>
         {fetchedTest && (
           <div>
-            <h2>Fetched Test</h2>
-            <p>ID: {fetchedTest.testId}</p>
-            <p>Name: {fetchedTest.name}</p>
+            <Typography variant="h6" gutterBottom>Fetched Test</Typography>
+            <Typography>ID: {fetchedTest.testId}</Typography>
+            <Typography>Name: {fetchedTest.name}</Typography>
           </div>
         )}
       </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Enter test ID to delete"
+      <div style={{ margin: '30px 0' }}>
+        <Typography variant="h6" gutterBottom>Enter the ID to delete a specific test</Typography>
+        <TextField
+          label="Test ID to delete"
+          variant="outlined"
           value={deleteTestId}
           onChange={(e) => setDeleteTestId(e.target.value)}
         />
-        <button onClick={handleDeleteTest}>Delete Test</button>
-        {deleteResponse && <p>{deleteResponse}</p>}
+        <Button onClick={handleDeleteTest} variant="contained" color="secondary">Delete Test</Button>
+        {deleteResponse && <Typography>{deleteResponse}</Typography>}
       </div>
     </div>
   );

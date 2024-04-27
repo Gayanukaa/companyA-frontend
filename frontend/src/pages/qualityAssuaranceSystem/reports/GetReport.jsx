@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button, Typography, TextField } from '@mui/material';
 
 const GetReport = () => {
   const [report, setReport] = useState(null);
@@ -22,20 +23,24 @@ const GetReport = () => {
 
   return (
     <div>
-      <input
+      <TextField
         type="text"
         value={id}
         onChange={handleInputChange}
         placeholder="Enter Report ID"
+        variant="outlined"
+        style={{ marginBottom: '10px' }}
       />
-      <button onClick={fetchReport}>Fetch Report</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>} 
+      <Button variant="contained" onClick={fetchReport} style={{ marginRight: '10px' }}>
+        Fetch Report
+      </Button>
+      {error && <Typography variant="body1" style={{ color: 'red', marginBottom: '10px' }}>{error}</Typography>}
       {report && (
         <div>
-          <p>Report ID: {report.id}</p>
-          <p>Report Type: {report.reportType}</p>
-          <p>Generated Date and Time: {report.generatedDateAndTime}</p>
-          <table  style={{ margin: '0 auto', borderCollapse: 'collapse', border: '1px solid black' }}>
+          <Typography variant="body1">Report ID: {report.id}</Typography>
+          <Typography variant="body1">Report Type: {report.reportType}</Typography>
+          <Typography variant="body1">Generated Date and Time: {report.generatedDateAndTime}</Typography>
+          <table>
             <thead>
               <tr>
                 <th>ID</th>
