@@ -7,7 +7,7 @@ const ProductPage = () => {
     const get_url = "api/products";
     const get_val = "api/products/validateStock-Multiple";
 
-   const [isOpen, setIsOpen] = useState(true); // Set initial state to true
+    const [isOpen, setIsOpen] = useState(true); // Set initial state to true
     useEffect(() => {
         document.body.classList.add('overflow-hidden');
     }, []);
@@ -19,7 +19,7 @@ const ProductPage = () => {
 
     return (
         <div>
-            <Modal isOpen= {isOpen} close={closePopup} />
+            <Modal isOpen={isOpen} close={closePopup}/>
             <ProductList get_url={get_url} get_val={get_val}/>
         </div>
     );

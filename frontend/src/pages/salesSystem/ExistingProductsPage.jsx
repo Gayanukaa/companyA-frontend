@@ -9,7 +9,7 @@ const ExistingProductsPage = () => {
     return (
         <div>
 
-            <ProductList get_url={get_url} get_val={get_val} />
+            <ProductList get_url={get_url} get_val={get_val}/>
         </div>
     );
 };
