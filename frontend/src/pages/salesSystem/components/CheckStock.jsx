@@ -10,7 +10,7 @@ function CheckStock({ showUnavailable, items, data, count, get_val }) {
     };
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" mt={2} mb={2}>
+        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" mt={2} mb={4}>
             <Button
                 variant="contained"
                 color="primary"

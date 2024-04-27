@@ -8,7 +8,8 @@ import payBills from './payBills.jsx';
 const modalStyle = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex:'2002'
 };
 
 const modalContentStyle = {

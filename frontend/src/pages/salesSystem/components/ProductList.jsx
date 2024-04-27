@@ -28,8 +28,7 @@ function ProductList({ get_url, get_val }) {
             price += getPriceByItemId(item.itemId) * itemCounts[item.itemId] - getPriceByItemId(item.itemId) * getQuantityByItemId(item.itemId);
         });
 
-        let finalPrice = totalPrice - price;
-        console.log(finalPrice);
+        let finalPrice = (totalPrice - price).toFixed(2);
         setUnavailableItems(unavailableItems);
         setFinalPrice(finalPrice);
         setShowUnavailable(true);
@@ -56,7 +55,7 @@ function ProductList({ get_url, get_val }) {
 
             <NavBar totalPrice={totalPrice} itemCount={itemCount} onEmptyCart={handleEmptyCart} />
 
-            <Container maxWidth="lg" >
+            <Container maxWidth="lg" className="mt-3" >
                 <Box display="flex" justifyContent="center">
                     <Box display="flex" flexDirection="column" alignItems="center" width="100%" sx={{ gap: 2 }}>
                         {data.map(item => (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Modal from '@mui/material/Modal';
@@ -8,7 +8,8 @@ import Button from '@mui/material/Button';
 const modalStyle = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex:'2002'
 };
 
 const modalContentStyle = {
@@ -33,25 +34,32 @@ const closeButtonStyle = {
     padding: '8px'
 };
 
-const PopupModal = ({ isOpen, close }) => {
+const PopupModal = () => {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(true); // Set initial state to true
+    useEffect(() => {
+        document.body.classList.add('overflow-hidden');
+    }, []);
+    const closePopup = () => {
+        setIsOpen(false);
+        document.body.classList.remove('overflow-hidden');
 
+    };
     const handleNavigate = () => {
-        close();
-        navigate('/customer/existingproducts');
+        closePopup();
+        navigate('/sales-management/existingproducts');
     };
 
     return (
         <Modal
             open={isOpen}
-            onClose={close}
+            onClose={closePopup}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             style={modalStyle}
-
         >
-            <div style={modalContentStyle}>
-                <button style={closeButtonStyle} onClick={close}>
+            <div style={modalContentStyle} >
+                <button style={closeButtonStyle} onClick={closePopup}>
                     <CancelIcon sx={{ fontSize: 36, color: 'white' }} />
                 </button>
                 <Button
