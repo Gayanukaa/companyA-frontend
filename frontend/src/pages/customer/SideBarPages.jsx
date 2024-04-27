@@ -173,7 +173,8 @@ export function OrderHistory() {
 
     const fetchSalesRecords = async () => {
         try {
-            const response = await fetch('/sales-records');
+            // Add fetching sales record data here
+            const response = await fetch('/salesRecord/');
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
