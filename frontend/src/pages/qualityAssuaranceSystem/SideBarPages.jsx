@@ -5,6 +5,8 @@ import avatar from '../../assets/avatar.svg';
 
 import GetReport from './reports/GetReport'; 
 import ReportGenerator from './reports/ReportGenerator';
+import PrototypeOperations from './testSubjectOperations/PrototypeOperations';
+import SampleOperations from './testSubjectOperations/SampleOperations';
 
 
 export function ViewStocks(props) {
@@ -86,7 +88,7 @@ export function DashboardView(props) {
 
 export function Reports(props) {
     return (
-        <div className="App">
+        <div className="Reports">
           <h1>Fetch your report here</h1>
           <ReportGenerator reportType="sample" buttonText="Generate Sample Report" />
           <ReportGenerator reportType="prototype" buttonText="Generate Prototype Report" />
@@ -94,3 +96,22 @@ export function Reports(props) {
         </div>
       );
 }
+
+export function PrototypeOps(props) {
+    return (
+        <div className="Prototypes">
+          <h1>Prototypes</h1>
+          <PrototypeOperations />
+        </div>
+      );
+}
+
+export function SampleOps(props) {
+    return (
+        <div className="Prototypes">
+          <h1>Samples</h1>
+          <SampleOperations />
+        </div>
+      );
+}
+
