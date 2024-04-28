@@ -9,10 +9,11 @@ import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComp
 //     dashboardAdminData,
 // } from './data/DashBoardData';
 
-import { ViewManagers, DashboardView, ApprovalSection } from './SideBarPages';
+import { ViewManagers, ApprovalSection } from './SideBarPages';
 import ModalForm from './components/ModalForm'
 import AddManager from './components/AddManager';
 import FeedBack from './components/FeedbackSection';
+import DashboardView from './components/DashboardView';
 
 
 

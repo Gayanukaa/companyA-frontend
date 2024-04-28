@@ -1,7 +1,6 @@
 // SignUpForm.js
 import React, { useState } from 'react';
 import { Grid, TextField, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import CardForm from './CardForm';
 // import "../../../styles/styles.css";
 import '../../../styles/dashboard.css';
 import * as reqSend from '../../../global/reqSender.jsx';
