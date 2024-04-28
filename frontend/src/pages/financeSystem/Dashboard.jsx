@@ -7,7 +7,9 @@ import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComp
 import {dashboardAdminData} from './data/DashBoardData';
 import { DashboardView,  ViewStocks} from './SideBarPages';
 import { ViewEmployee } from './EmployeeSalary.jsx';
+import { OrderHistory } from './OrderHistory.jsx';
 import AllEmployeeSalary from './TotalSalary.jsx';
+import AllOrders from './AllOrders.jsx'
 import AddOrUpdateEmployeeSalary from './AddUpdateSalary.jsx';
 
 
@@ -71,8 +73,9 @@ export default function Dashboard() {
                         <Route path="/view-salary-details" element={<ViewEmployee />}/>
                         <Route path="/view-all-salary-details" element={<AllEmployeeSalary />}/>
                         <Route path="/add-update-salary-details" element={< AddOrUpdateEmployeeSalary/>}/>
+                        <Route path="/view-order-history" element={<OrderHistory />} />
+                        <Route path="/view-all-order-details" element={<AllOrders />}/>
                         
-                            
                     </Routes>
                 </section>
                 
