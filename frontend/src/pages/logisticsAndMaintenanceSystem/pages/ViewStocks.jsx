@@ -71,24 +71,24 @@ export function ViewStocks(props) {
         })
     }
 
-    const handleTechnicianForm = (e) => {
+    const handleTechnicianForm =  (name, value) => {
         setTechnicianForm({
             ...technicianForm,
-            [e.target.name]: e.target.value
+            [name]:value
         })
     }
 
-    const handleVendorForm = (e) => {
+    const handleVendorForm = (name, value) => {
         setVendorForm({
             ...vendorForm,
-            [e.target.name]: e.target.value
+            [name]:value
         })
     }
 
-    const handleVehicleForm = (e) => {
+    const handleVehicleForm = (name, value) => {
         setVehicleForm({
             ...vehicleForm,
-            [e.target.name]: e.target.value
+            [name]:value
         })
     }
 
@@ -100,12 +100,15 @@ export function ViewStocks(props) {
         }
         if (props.data === "technician") {
             addTechnician(technicianForm);
+            setOpenAdd(false)
         }
         if (props.data === "vendor") {
             addVendor(vendorForm);
+            setOpenAdd(false)
         }
         if (props.data === "vehicle") {
             addVehicle(vehicleForm);
+            setOpenAdd(false)
         }
         // window.location.href = "/logistic-management/dashboard";
     }
@@ -283,15 +286,20 @@ export function ViewStocks(props) {
                                     <Typography id="modal-modal-title" variant="h6" component="h2">
                                         Add Technician
                                     </Typography>
-                                    <Input placeholder="Technician Id" name="technicianId"
-                                           onChange={handleTechnicianForm}/>
-                                    <Input placeholder="Technician Name" name="name" onChange={handleTechnicianForm}/>
-                                    <Input placeholder="Speciality" name="specialty" onChange={handleTechnicianForm}/>
-                                    <Input placeholder="Years of Experience" name="yearsOfExperience"
-                                           onChange={handleTechnicianForm}/>
-                                    <Input placeholder="Current Job" name="currentJob" onChange={handleTechnicianForm}/>
-                                    <Input placeholder="Availability" name="availability"
-                                           onChange={handleTechnicianForm}/>
+                                    <Input t placeholder="Technician Id" name="technicianId" onChange={(e) => handleTechnicianForm(e.target.name, e.target.value)}/>
+                                    <Input t placeholder="Technician name" name="name" onChange={(e) => handleTechnicianForm(e.target.name, e.target.value)}/>
+                                    <Input t placeholder="Speciality" name="specialty" onChange={(e) => handleTechnicianForm(e.target.name, e.target.value)}/>
+                                    <Input type="number" placeholder="Years of Experience" name="yearsOfExperience"
+                                                                           onChange={(e) => handleTechnicianForm(e.target.name, parseInt(e.target.value || 0))}/>
+                                    <Input placeholder="Current Job" name="currentJob" onChange={(e) => handleTechnicianForm(e.target.name, e.target.value)}/>
+                                     <FormControl variant={"standard"} sx={{ minWidth: "170px"}}>
+                                                                        <InputLabel>Availability</InputLabel>
+
+                                                                        <Select label={"Availability"} name="availability" placeholder={"Availability"} onChange={(e) =>  handleTechnicianForm(e.target.name, e.target.value == 'Active')}>
+                                                                            <MenuItem value={"Active"}>Active</MenuItem>
+                                                                            <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
                                     <Button variant="contained" type="submit">Add</Button>
                                 </Box>
                                 : props.data === "vendor" ?
@@ -299,14 +307,18 @@ export function ViewStocks(props) {
                                         <Typography id="modal-modal-title" variant="h6" component="h2">
                                             Add Vendor
                                         </Typography>
-                                        <Input placeholder="Vendor Id" name="vendorId" onChange={handleVendorForm}/>
-                                        <Input placeholder="Name" name="name" onChange={handleVendorForm}/>
-                                        <Input placeholder="Contact Number" name="contactNumber"
-                                               onChange={handleVendorForm}/>
-                                        <Input placeholder="Address" name="address" onChange={handleVendorForm}/>
-                                        <Input placeholder="Email" name="email" onChange={handleVendorForm}/>
-                                        <Input placeholder="Vendor Items" name="vendorItems"
-                                               onChange={handleVendorForm}/>
+                                        <Input t placeholder="Vendor Id" name="vendorId" onChange={(e) => handleVendorForm(e.target.name, e.target.value)}/>
+                                        <Input t placeholder="Name" name="name" onChange={(e) => handleVendorForm(e.target.name, e.target.value)}/>
+                                        <Input t placeholder="Contact Number" name="contactNumber" onChange={(e) => handleVendorForm(e.target.name, e.target.value)}/>
+
+                                        <Input t placeholder="Address" name="address" onChange={(e) => handleVendorForm(e.target.name, e.target.value)}/>
+
+                                        <Input t placeholder="E-mail" name="email" onChange={(e) => handleVendorForm(e.target.name, e.target.value)}/>
+
+                                        <Input placeholder="Vendor Items" name="vendorItems" onChange={(e) => {
+                                            let values = e.target.value?.split(",").map(v => v.trim())
+                                            handleVendorForm(e.target.name, values)
+                                        }}/>
                                         <Button variant="contained" type="submit">Add</Button>
                                     </Box>
                                     : props.data === "vehicle" ?
@@ -314,16 +326,19 @@ export function ViewStocks(props) {
                                             <Typography id="modal-modal-title" variant="h6" component="h2">
                                                 Add Vehicle
                                             </Typography>
-                                            <Input placeholder="Vehicle Id" name="vehicleId"
-                                                   onChange={handleVehicleForm}/>
-                                            <Input placeholder="Model" name="model" onChange={handleVehicleForm}/>
-                                            <Input placeholder="Location" name="location" onChange={handleVehicleForm}/>
-                                            <Input placeholder="Vehicle Status" name="vehicleStatus"
-                                                   onChange={handleVehicleForm}/>
-                                            <Input placeholder="Maintenance Date" name="maintenanceDate"
-                                                   onChange={handleVehicleForm}/>
-                                            <Input placeholder="Fuel Level" name="fuelLevel"
-                                                   onChange={handleVehicleForm}/>
+                                            <Input t placeholder="Vehicle Id" name="vehicleId" onChange={(e) => handleVehicleForm(e.target.name, e.target.value)}/>
+                                            <Input t placeholder="Model" name="model" onChange={(e) => handleVehicleForm(e.target.name, e.target.value)}/>
+                                            <Input t placeholder="Location" name="location" onChange={(e) => handleVehicleForm(e.target.name, e.target.value)}/>
+                                            <FormControl variant={"standard"} sx={{ minWidth: "170px"}}>
+                                                <InputLabel>Vehicle Status</InputLabel>
+
+                                                <Select label={"Vehicle Status"} name="vehicleStatus" placeholder={"Vehicle Status"} onChange={(e) =>  handleVehicleForm(e.target.name, e.target.value == 'Active')}>
+                                                    <MenuItem value={"Active"}>Active</MenuItem>
+                                                    <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                                                    </Select>
+                                            </FormControl>
+                                            <Input t placeholder="Maintenance Date" name="maintenanceDate" onChange={(e) => handleVehicleForm(e.target.name, e.target.value)}/>
+                                            <Input t placeholder="Fuel Level" name="fuelLevel" onChange={(e) => handleVehicleForm(e.target.name, e.target.value)}/>
                                             <Button variant="contained" type="submit">Add</Button>
                                         </Box>
                                         : null
