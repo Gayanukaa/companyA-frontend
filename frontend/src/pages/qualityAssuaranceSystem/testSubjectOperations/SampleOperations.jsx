@@ -8,6 +8,10 @@ const SampleOperations = () => {
   const [deleteSampleId, setDeleteSampleId] = useState('');
   const [showAll, setShowAll] = useState(false);
 
+  const [updatingSampleId, setUpdatingSampleId] = useState('');
+  const [newTestName, setNewTestName] = useState('');
+  const [updatingMessage, setUpdatingMessage] = useState('');
+
   useEffect(() => {
     getAllSamples();
   }, []);
@@ -29,6 +33,21 @@ const SampleOperations = () => {
       console.error('Error fetching sample by ID:', error);
     }
   };
+
+  const changeTest = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put('http://localhost:8090/api/v1/samples/changeTest', null, {
+        params: {
+          sampleId: updatingSampleId, 
+          newTestName: newTestName
+        }
+      });
+      setUpdatingMessage(response.data);
+    } catch (error) {
+      setUpdatingMessage('Error occurred. Please try again.');
+    }
+};
 
   const deleteSampleById = async () => {
     try {
@@ -72,6 +91,7 @@ const SampleOperations = () => {
           <p>ID: {selectedSample.id}</p>
           <p>Received Date: {selectedSample.receivedDate}</p>
           <p>Test Status: {selectedSample.testStatus}</p>
+          <p>Expected Test: {selectedSample.expectedTest}</p>
           {selectedSample.allocatedTest && (
             <div>
               <h3>Allocated Test</h3>
@@ -90,6 +110,31 @@ const SampleOperations = () => {
         />
         <button onClick={deleteSampleById}>Delete Sample by ID</button>
       </div>
+      <div>
+      <h2>Update Test Method</h2>
+      <form onSubmit={changeTest}>
+        <div>
+          <label>Updating Sample ID:</label>
+          <input
+            type="text"
+            value={updatingSampleId}
+            onChange={(e) => setUpdatingSampleId(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>New Test Name:</label>
+          <input
+            type="text"
+            value={newTestName}
+            onChange={(e) => setNewTestName(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Update Test Method</button>
+      </form>
+      {updatingMessage && <p>{updatingMessage}</p>}
+    </div>
     </div>
   );
 };
