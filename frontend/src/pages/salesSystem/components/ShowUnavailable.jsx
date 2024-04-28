@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CancelIcon from "@mui/icons-material/Cancel";
-import payBills from './payBills.jsx';
+
 const modalStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -31,17 +31,18 @@ const closeButtonStyle = {
     padding: '8px'
 };
 
-const PopupModal = ({ data,unavailableItems, isOpen, close, finalPrice }) => {
+//Popup modal to show unavailable items and total price of available items,
+// customer can proceed to checkout with available items or cancel the order
+const PopupModal = ({ data,unavailableItems, isOpen, close, finalPrice,payBills }) => {
 
     const handleNavigate = () => {
         close();
-        payBills();
+        payBills(finalPrice);
     };
     function getNameByItemId(itemId){
         const item= data.find(item=> item.id ===itemId);
         return item? item.name: null;
     }
-
 
     return (
         <Modal

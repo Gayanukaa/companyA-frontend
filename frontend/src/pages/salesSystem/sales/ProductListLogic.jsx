@@ -7,6 +7,7 @@ function useProductListLogic(get_url) {
     const [totalPrice, setTotalPrice] = useState(0);
     const [itemCount, setItemCount] = useState(0);
 
+    //get all the products from the database
     useEffect(() => {
         reqSend.defaultReq("GET", get_url, null, response => {
                 if (response.status === 200 && response.data) {
@@ -25,6 +26,7 @@ function useProductListLogic(get_url) {
             });
     }, [get_url]);
 
+    //empty the cart
     const handleEmptyCart = () => {
         setTotalPrice(0);
         setItemCount(0);
@@ -37,6 +39,7 @@ function useProductListLogic(get_url) {
         });
     };
 
+    //add an item to the cart, increment the item count, total price and individual item counts
     const handleAddToCart = (itemId, price) => {
         setItemCounts(prevCounts => ({
             ...prevCounts,
@@ -46,6 +49,7 @@ function useProductListLogic(get_url) {
         setItemCount(itemCount + 1);
     };
 
+    //remove an item from the cart, decrement the item count, total price and individual item counts
     const handleRemoveFromCart = (itemId, price) => {
         if (itemCounts[itemId] > 0) {
             setItemCounts(prevCounts => ({
