@@ -3,9 +3,14 @@ import StatisticsCard from './StatisticsCard';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { BarGraphComponent, SimpleLineChart, BasicPie } from './Graphs';
 import { Card, CardContent, Grid } from '@mui/material';
+import * as reqSend from '../../../global/reqSender.jsx';
+
 
 
 const DashboardView = () => {
+    const [graphData, setGraphData] = useState([]);
+
+
     const data = [
         {
             name: 'Total Managers',
@@ -33,6 +38,23 @@ const DashboardView = () => {
         }
     ];
 
+
+    useEffect(() => {
+        reqSend.defaultReq("GET", "api/dashboard/graphs", {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    setGraphData(response.data);
+                    console.log(response.data);
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    }, [])
+
     return (
         <main>
             <div className="head-title">
@@ -47,21 +69,23 @@ const DashboardView = () => {
                     <h3>Analysis</h3>
                 </div>
 
-                <Grid container spacing={6} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <Grid container spacing={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                     <Grid item xs={12} lg={6}>
                         <Card variant="outlined">
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <BarGraphComponent />
+                                <SimpleLineChart lineGraphData={graphData.salesData} />
                             </CardContent>
                         </Card>
                     </Grid>
+
                     <Grid item xs={12} lg={6}>
                         <Card variant="outlined">
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <SimpleLineChart />
+                                <BarGraphComponent barGraphData={graphData.inventoryData} />
                             </CardContent>
                         </Card>
                     </Grid>
+
                     <Grid item xs={12} lg={6}>
                         <Card variant="outlined">
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
