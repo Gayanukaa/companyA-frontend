@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Card, CardContent, Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import axios from 'axios';
 import avatar from '../../../assets/avatar.svg';
-import '../../../styles/dashboard.css';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import * as reqSend from '../../../global/reqSender.jsx';
 
-const ApprovalCard = ({ name, email, message, status, id, onApprove }) => {
+const ApprovalCard = ({ name, email, message, status, id, onApprove, onReject }) => {
   let statusText;
   let chipColor;
   switch (status) {
@@ -31,43 +29,61 @@ const ApprovalCard = ({ name, email, message, status, id, onApprove }) => {
   }
 
   const approveRequest = (id) => {
-    reqSend.defaultReq("PUT", `api/request/approve?id=${id}`, {},
-            response => {
-                if (response.status === 200 && response.data) {
+    reqSend.defaultReq("POST", `api/request/approve?id=${id}`, {},
+      response => {
+        if (response.status === 200 && response.data) {
 
-                } else {
-                    console.error("Invalid response format:", response);
-                }
-            },
-            error => {
-                console.error("API request failed:", error);
-            }
-        );
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      },
+      error => {
+        console.error("API request failed:", error);
+      }
+    );
+  }
+
+  const rejectRequest = (id) => {
+    reqSend.defaultReq("POST", `api/request/reject?id=${id}`, {},
+      response => {
+        if (response.status === 200 && response.data) {
+
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      },
+      error => {
+        console.error("API request failed:", error);
+      }
+    );
   }
 
   const handleApproveClick = () => {
     approveRequest(id); // Assuming approveRequest is defined elsewhere
     onApprove(id); // Call the callback function with the request ID
-};
+  };
+
+  const handleRejectClick = () => {
+    rejectRequest(id); // Assuming approveRequest is defined elsewhere
+    onReject(id); // Call the callback function with the request ID
+  };
 
   return (
     <Card sx={{
       borderRadius: '20px',
       background: 'var(--light)',
-      padding: '24px',
+      padding: '5px',
       overflowX: 'auto',
-      width: 'calc(90% - 30px)',
-      marginBottom: '20px',
-      marginLeft: '20px',
-      display: 'inline-block'
+      width: 'calc(100% - 30px)',
+      marginBottom: '5px',
+      marginLeft: '5px',
+      display: 'inline-block',
+      position: 'relative', // Add relative positioning to the card container
     }}>
       <CardContent>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Avatar src={avatar} alt="Avatar" sx={{ mr: 2 }} />
           <div>
-            <Stack direction="row" spacing={1}>
-              <Chip label={statusText} size="medium" variant="filled" color={chipColor} style={{ marginLeft: 'auto', position: 'relative', top: '-20px', left: '240px', textAlign: 'right' }} />
-            </Stack>
             <Typography variant="h5" component="div">
               Request
             </Typography>
@@ -80,19 +96,22 @@ const ApprovalCard = ({ name, email, message, status, id, onApprove }) => {
             <Typography variant="body1" color="textSecondary">
               Message: {message}
             </Typography>
-            <Button onClick={handleApproveClick} variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
-              Approve
-            </Button>
-            <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
-              Reject
-            </Button>
-            <Button variant="contained" color="primary" style={{ marginTop: '10px', marginRight: '10px' }}>
-              Dismiss
-            </Button>
           </div>
-          <Button variant="contained" color="primary" style={{ position: 'absolute', top: '10px', right: '10px' }}>
-            Action
-          </Button>
+          <div style={{ position: 'absolute', right: '10px', top: '10px' }}>
+            <Stack direction="row" spacing={1}>
+              <Chip label={statusText} size="medium" variant="filled" color={chipColor} />
+            </Stack>
+          </div>
+          {status === 0 && (
+            <div style={{ position: 'absolute', bottom: '10px', right: '10px' }}>
+              <Button onClick={handleApproveClick} variant="contained" color="primary" style={{ marginRight: '10px' }}>
+                Approve
+              </Button>
+              <Button onClick={handleRejectClick} variant="contained" color="primary">
+                Reject
+              </Button>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

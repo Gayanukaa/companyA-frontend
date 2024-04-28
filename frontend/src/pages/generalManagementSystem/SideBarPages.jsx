@@ -136,6 +136,9 @@ export function ApprovalSection(props) {
     const handleApproveClick = (id) => {
         console.log("Approving request with id:", id);
     };
+    const handleRejectClick = (id) => {
+        console.log("Approving request with id:", id);
+    };
     useEffect(() => {
         axios.get("http://localhost:8090/api/request/view")
             .then(response => {
@@ -146,6 +149,16 @@ export function ApprovalSection(props) {
                 console.error("Error fetching approval data:", error);
             });
     }, [handleApproveClick]);
+    useEffect(() => {
+        axios.get("http://localhost:8090/api/request/view")
+            .then(response => {
+                const sortedData = response.data.sort((a, b) => a.status - b.status);
+                setApprovalData(sortedData);
+            })
+            .catch(error => {
+                console.error("Error fetching approval data:", error);
+            });
+    }, [handleRejectClick]);
     return (
         <main>
             <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
