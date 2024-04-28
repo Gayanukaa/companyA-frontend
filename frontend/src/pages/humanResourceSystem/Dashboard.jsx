@@ -1,6 +1,5 @@
 import '../../styles/dashboard.css';
 import '../../styles/style.css';
-import './hr.css';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
@@ -11,6 +10,7 @@ import {
 
 import { DashboardView, ViewStocks } from './SideBarPages';
 import NotFound from '../generalManagementSystem/NotFound';
+
 
 
 
@@ -62,11 +62,11 @@ export default function Dashboard() {
 
     return (
         <>
-            <div id="dashboardHrWrapper">
+            <div id="dashboardWrapper" >
 
                 <SideNavigation data={dashboardAdminData} />
 
-                <section id="content" style={{height: '100vh'}}>
+                <section id="content" style={{height: '100vh'}} className='dashboard-wallpaper'>
                     <TopBar avatar={avatar} />
 
                     <Routes>
