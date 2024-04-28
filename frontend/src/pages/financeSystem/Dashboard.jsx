@@ -11,6 +11,7 @@ import { OrderHistory } from './OrderHistory.jsx';
 import AllEmployeeSalary from './TotalSalary.jsx';
 import AllOrders from './AllOrders.jsx'
 import AddOrUpdateEmployeeSalary from './AddUpdateSalary.jsx';
+import ViewLoanDetails from './ViewLoanDetails.jsx';
 
 
 export default function Dashboard() {
@@ -75,7 +76,7 @@ export default function Dashboard() {
                         <Route path="/add-update-salary-details" element={< AddOrUpdateEmployeeSalary/>}/>
                         <Route path="/view-order-history" element={<OrderHistory />} />
                         <Route path="/view-all-order-details" element={<AllOrders />}/>
-                        
+                        <Route path="/view-loan-details" element={<ViewLoanDetails />} />
                     </Routes>
                 </section>
                 

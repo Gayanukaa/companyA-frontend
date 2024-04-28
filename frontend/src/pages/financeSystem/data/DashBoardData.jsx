@@ -16,5 +16,6 @@ export const dashboardAdminData = [
     { name: "View Stocks", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-stocks' },
     { name: "View Salary Details", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-salary-details' },
     { name: "Add/Update Salary Details", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'add-update-salary-details' },
-    { name: "View Order History", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-order-history' }
+    { name: "View Order History", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-order-history' },
+    { name: "View Loan Details", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-loan-details' }
 ]
