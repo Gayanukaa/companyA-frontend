@@ -1,5 +1,6 @@
 import '../../styles/dashboard.css';
 import '../../styles/style.css';
+import './hr.css';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
@@ -61,7 +62,7 @@ export default function Dashboard() {
 
     return (
         <>
-            <div id="dashboardWrapper">
+            <div id="dashboardHrWrapper">
 
                 <SideNavigation data={dashboardAdminData} />
 
