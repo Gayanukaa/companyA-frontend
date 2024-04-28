@@ -1,4 +1,6 @@
 
+
+
 .cardStyle{
     border: 4px solid hsl(234, 87%, 54%);
     border-radius: 10px;
@@ -21,4 +23,8 @@
 
 }
 
-
+.dashboard-wallpaper{
+    background-image: url(C:\Users\user\Documents\GitHub\companyA-frontend\frontend\src\assets\shutterstock_1934950961-scaled.jpg);
+    background-size: cover;
+    
+}
