@@ -1,69 +1,24 @@
-import React from "react";
+//import React from "react";
 import CardComp from "../../../components/sideComps/CardComp";
 import TableComp from '../../../components/sideComps/TableComp'
 import avatar from '../../../assets/avatar.svg';
-
-
-
-export function ViewStocks(props) {
-
-    const tableData = {
-        name: "Sample Table",
-        heading: ["Column 1", "Column 2", "Column 3"],
-        body: [
-            <tr key="row1">
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-            </tr>,
-            <tr key="row2">
-                <td>Data 4</td>
-                <td>Data 5</td>
-                <td>Data 6</td>
-            </tr>,
-            // Add more rows as needed
-        ],
-    };
-
-    return (
-        <>
-            <main>
-                <div className="head-title">
-                    <div className="left">
-                        <h1>View Stocks</h1>
-                    </div>
-
-                    <TableComp data={tableData} />
-
-                </div>
-
-            </main>
-        </>
-    )
-}
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { Link, useParams,useNavigate ,useLocation} from 'react-router-dom';
+import * as reqSend from '../../../global/reqSender';
 
 
 export function DashboardView(props) {
+    
 
     const dataList = [
         {
             image: avatar,
             altText: "Avatar 1",
-            count: 5,
-            name: "John Doe"
+            count: 58,
+            name: "Unit Supervisor"
         },
-        {
-            image: avatar,
-            altText: "Avatar 2",
-            count: 3,
-            name: "Jane Smith"
-        },
-        {
-            image: avatar,
-            altText: "Avatar 3",
-            count: 7,
-            name: "Bob Johnson"
-        }
+        
     ];
 
     return (
@@ -75,8 +30,112 @@ export function DashboardView(props) {
                     </div>
 
                     <CardComp data={dataList} />
+                    
                 </div>
             </main>
+        </>
+    )
+}
+
+export function UpdateStages() {
+    const { id } = useParams();
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        loadUsers();
+    }, []);
+
+    const loadUsers = async () => {
+        reqSend.defaultReq('GET', 'api/tms/product-developments', null, handleLoadSuccess, handleLoadError);
+    };
+
+    const handleLoadSuccess = (response) => {
+        const updatedUsers = response.data.map(user => {
+            user.progress = calculateProgress(user);
+            return user;
+        });
+        setUsers(updatedUsers);
+    };
+
+    const handleLoadError = (error) => {
+        console.error("Error loading users:", error);
+    };
+
+    const calculateProgress = (user) => {
+        let progress = 0;
+        if (user.stageOne) progress += 30;
+        if (user.stageTwo) progress += 40;
+        if (user.stageThree) progress += 30;
+        return progress;
+    };
+
+    const updateStage = async (userId, stage) => {
+        const updatedUser = { ...users.find(user => user.id === userId) };
+        updatedUser[stage] = true;
+        updatedUser.progress = calculateProgress(updatedUser);
+        reqSend.defaultReq('PUT', `api/tms/product-development/${userId}`, updatedUser, handleUpdateSuccess, handleUpdateError);
+    };
+
+    const handleUpdateSuccess = () => {
+        loadUsers();
+    };
+
+    const handleUpdateError = (error) => {
+        console.error("Error updating stage:", error);
+    };
+
+    const renderButton = (user, stage) => {
+        if (user[stage]) {
+            return <button className="btn btn-success-outline mx-2" disabled>Completed</button>;
+        } else {
+            const isCurrentStage = (stage === 'stageOne' && !user.stageOne) ||
+                                   (stage === 'stageTwo' && user.stageOne && !user.stageTwo) ||
+                                   (stage === 'stageThree' && user.stageTwo && !user.stageThree);
+            return <button className={`btn btn-success mx-2 ${isCurrentStage ? '' : 'disabled'}`} 
+                           onClick={() => isCurrentStage && updateStage(user.id, stage)}>Complete</button>;
+        }
+    };
+
+    return (
+        <>
+            <div></div>
+            <div className='container'>
+                <div className="py-4">
+                    <table className="table border shadow">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Project Name</th>
+                                <th scope="col">Project Code</th>
+                                <th scope="col">Project Manager</th>
+                                <th scope="col">Stage 1</th>
+                                <th scope="col">Stage 2</th>
+                                <th scope="col">Stage 3</th>
+                                <th scope="col">Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {users.map((user, index) => (
+                                <tr key={index}>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{user.projectName}</td>
+                                    <td>{user.projectCode}</td>
+                                    <td>{user.projectManager}</td>
+                                    <td>{renderButton(user, 'stageOne')}</td>
+                                    <td>{renderButton(user, 'stageTwo')}</td>
+                                    <td>{renderButton(user, 'stageThree')}</td>
+                                    <td>
+                                        <div className="progress">
+                                            <div className="progress-bar" role="progressbar" style={{ width: `${user.progress}%` }}>{user.progress}%</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </>
     )
 }
