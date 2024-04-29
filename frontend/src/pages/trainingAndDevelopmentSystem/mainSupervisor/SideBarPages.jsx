@@ -1,4 +1,3 @@
-//import React from "react";
 import CardComp from "../../../components/sideComps/CardComp";
 import TableComp from '../../../components/sideComps/TableComp'
 import avatar from '../../../assets/avatar.svg';
@@ -40,9 +39,9 @@ export function DashboardView(props) {
           const timer = setTimeout(() => {
             localStorage.removeItem('message');
             setMessage('');
-          }, 300000); // 60000 milliseconds = 5 minutes
+          }, 300000); // 60000 milliseconds = 1 minute
     
-          // Clean up the timer to avoid memory leaks
+          // Clean up the timer 
           return () => clearTimeout(timer);
         }
       }, []);
@@ -82,6 +81,7 @@ export function DashboardView(props) {
     )
 }
 
+//add prototype table
 export function Prototype(props) {
 
 
@@ -148,6 +148,7 @@ export function Prototype(props) {
     )
 }
 
+//add form to add prototype 
 export function AddPrototype(props) {
 
     let navigate = useNavigate();
@@ -218,6 +219,7 @@ export function AddPrototype(props) {
     );
 }
 
+//add form to edit prototype 
 export function EditPrototype(props) {
     let navigate = useNavigate();
     const { id } = useParams();
@@ -304,6 +306,7 @@ export function EditPrototype(props) {
     );
 }
 
+//add table to product develoment
 export function ProductDevelopment(props) {
     const { id } = useParams();
 
@@ -340,7 +343,7 @@ export function ProductDevelopment(props) {
     }
 
     const updateStage = async (userId, stage) => {
-        // Your updateStage function implementation goes here
+        // updateStage function implementation goes here
     }
 
     const tableData = {
@@ -381,6 +384,7 @@ export function ProductDevelopment(props) {
     )
 }
 
+//add form to send prototype to development
 export function AddDevelop(props) {
     let navigate = useNavigate();
     const { id } = useParams();
@@ -453,25 +457,7 @@ export function AddDevelop(props) {
                             <label htmlFor="Name" className='form-label'>Project Name</label>
                             <input type={"text"} className='form-control' name='projectName' placeholder='Enter project name' value={prototypeName} onChange={onInputChange} />
                         </div>
-                        {/* <div className="mb-3">
-                            <label htmlFor="Username" className='form-label'>Prototype ID</label>
-                            <input type={"text"} className='form-control' name='prototypeId' placeholder='Enter prototype id' value={prototypeId} onChange={onInputChange} />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="Email" className='form-label'>Prototype Type</label>
-                            <div className="form-check">
-                                <input className="form-check-input" type="radio" name="prototypeType" id="flexRadioDefault1" value="IC" required checked={prototypeType === "IC"} onChange={onInputChange} />
-                                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                    IC
-                                </label>
-                            </div>
-                            <div className="form-check">
-                                <input className="form-check-input" type="radio" name="prototypeType" id="flexRadioDefault2" required checked={prototypeType === "Sensor"} value="Sensor" onChange={onInputChange} />
-                                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                    Sensor
-                                </label>
-                            </div>
-                        </div> */}
+                        
                         <div className="mb-3">
                             <label htmlFor="projectManager" className='form-label'>Project Manager</label>
                             <input type="text" className='form-control' name='projectManager' required placeholder='Enter project manager' value={projectManager} onChange={onInputChange} />
@@ -491,6 +477,7 @@ export function AddDevelop(props) {
     );
 }
 
+//add form to send prototype to QA for tests
 export function SendToQA(props) {
 
     let navigate = useNavigate();
@@ -551,6 +538,7 @@ export function SendToQA(props) {
     );
 }
 
+//add table to products
 export function Products(props) {
     const [products, setProducts] = useState([]);
 
@@ -601,6 +589,7 @@ export function Products(props) {
     );
 }
 
+//add form to add prototype to product
 export function AddProducts(props) {
     let navigate=useNavigate();
     const {id}=useParams();
@@ -622,17 +611,6 @@ export function AddProducts(props) {
             loadUser();
         },[])
         
-        // const onSubmit=async(e)=>{
-        //     e.preventDefault()
-        //     const userData = { ...user, productId: parseInt(productId),productName: projectName };
-        //     await axios.post(`http://localhost:8090/api/tms/products`,userData)
-        //     navigate("/trainingdevelopment-management/main-supervisor/products")
-        // }
-
-        // const loadUser =async()=>{
-        //     const result=await axios.get(`http://localhost:8090/api/tms/product-development/${id}`)
-        //     setUser(result.data)
-        // }
         const onSubmit = async (e) => {
             e.preventDefault();
             const userData = { ...user,  productName: projectName };
