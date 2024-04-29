@@ -150,7 +150,7 @@ export default function PlaceShipments({ onClose }) {
                 <div className="modal-dialog modal-lg modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title">Select Item to Place Shipments</h5>
+                            <h2 className="modal-title">Select Item to Place Shipments</h2>
                             <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
@@ -223,7 +223,7 @@ export default function PlaceShipments({ onClose }) {
                             </table>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
+                            <button type="button" className="btn btn-primary" onClick={handleSubmit}>Place Shipments</button>
                         </div>
                     </div>
                 </div>

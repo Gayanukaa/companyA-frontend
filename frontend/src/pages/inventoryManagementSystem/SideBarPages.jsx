@@ -11,7 +11,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlaceShipments from "./PlaceShipments.jsx";
-import Shipment from '../../assets/Shipment.jpg';
+import Shipment from '../../assets/Shipment.png';
 import CardCompInventory from "./CardCompInventory.jsx"
 import Box from '@mui/material/Box';
 import PlaceNewShipment from "./PlaceNewShipment.jsx";
@@ -22,37 +22,21 @@ import AddWarehouseForm from "./AddWarehouseForm.jsx";
 import SendForRepairsForm from "./SendForRepairsForm.jsx"
 import BuildIcon from '@mui/icons-material/Build';
 import './custom.css'
+import Warehouse from '../../assets/Warehouse.png';
+import SearchIcon from '@mui/icons-material/Search';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 export function DashboardView(props) {
-    const dataList = [
-        {
-            image: avatar,
-            altText: "Avatar 1",
-            count: 5,
-            name: "John Doe"
-        },
-        {
-            image: avatar,
-            altText: "Avatar 2",
-            count: 3,
-            name: "Jane Smith"
-        },
-        {
-            image: avatar,
-            altText: "Avatar 3",
-            count: 7,
-            name: "Bob Johnson"
-        }
-    ];
-
     const [tableData, setTableData] = useState(null);
     const [showAddItemForm, setShowAddItemForm] = useState(false);
     const [showDeleteItemForm, setShowDeleteItemForm] = useState(false);
     const [showSendForRepairsForm, setShowSendForRepairsForm] = useState(false);
     const [showAddWarehouseForm, setShowAddWarehouseForm] = useState(false);
+    const [warehouseData, setWarehouseData] = useState([]);
 
     useEffect(() => {
         fetchData();
+        fetchWarehouseData();
     }, []);
 
     const fetchData = () => {
@@ -84,6 +68,30 @@ export function DashboardView(props) {
         );
     };
 
+    const fetchWarehouseData = () => {
+        reqSend.defaultReq("GET", 'api/v1/warehouse', {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    setWarehouseData(response.data);
+                    console.log(response);
+                    } 
+                    else {
+                    console.error("Invalid response format:", response); 
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    };
+
+    const dataList = warehouseData.map(warehouse => ({
+        image: Warehouse,
+        altText: warehouse.warehouseId,
+        count: `${warehouse.warehouseId} | ${warehouse.name}`,
+        name: `Location - ${warehouse.location}`
+    }));
+
     const toggleAddItemForm = () => {
         setShowAddItemForm(!showAddItemForm);
      };
@@ -107,7 +115,7 @@ export function DashboardView(props) {
                     <h1>Dashboard</h1>
                 </div>
 
-                <div className="full-width-components"><hr class="border border-secondary border-2 opacity-75"></hr></div>
+                <div className="full-width-components"><hr class="border border-secondary border-2 opacity-50"></hr></div>
 
                 <div>
                     
@@ -129,18 +137,23 @@ export function DashboardView(props) {
                     )}
                 </div>      
                 
-                <div className="full-width-components"><hr class="border border-secondary border-2 opacity-75"></hr></div>
+                <div className="full-width-components"><hr class="border border-secondary border-2 opacity-50"></hr></div>
 
                 <div>
                     <Stack direction="row" spacing={87}>
                         <h2>Warehouse Details</h2>
                         <button onClick={toggleAddWarehouseForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Warehouse</button>
                     </Stack>
+                    <br></br>
                     {showAddWarehouseForm && <AddWarehouseForm onClose={toggleAddWarehouseForm} />}
                 </div>
                 
                 <div className="full-width-components">
-                    <CardComp data={dataList} />
+                    <Box boxShadow={5} borderRadius={8} bgcolor={"white"} padding={2}>
+                        <h2>Excisting Warehouses</h2>
+                        <CardCompInventory data={dataList} />
+                        <br></br>
+                    </Box>
                 </div>
                 
             </div>
@@ -233,19 +246,17 @@ export function OrderItems(props) {
         <main>
             <div className="head-title">
                 <div className="left">
-                <h1>Orders & Shipments</h1>
+                    <h1>Orders & Shipments</h1>
                 </div>
-                
-                <Stack direction="row" spacing={2}>
-                    <button onClick={fetchData} type="button" className="btn btn-primary">Show Items to Order</button>
-                    <button disabled={shipmentButtonDisabled} onClick={toggleShipmentForm} type="button" class="btn btn-primary">Place Shipment</button>
-                    <button onClick={toggleNewShipmentForm} type="button" className="btn btn-primary">Place New Shipment</button>
-                </Stack>
-        
-                {showShipmentForm && <PlaceShipments onClose={toggleShipmentForm} />}
-                {showNewShipmentForm && <PlaceNewShipment onClose={toggleNewShipmentForm} />}
             </div>
             <br></br>
+            <div>
+                <Stack direction="row" spacing={55}>
+                    <button onClick={fetchData} type="button" className="btn btn-primary"><SearchIcon />View Items Whose Quantity Is Less Than Treshold</button>
+                    <button disabled={shipmentButtonDisabled} onClick={toggleShipmentForm} type="button" class="btn btn-primary"><LocalShippingIcon /> Place Shipment For These Items</button>
+                </Stack>
+                {showShipmentForm && <PlaceShipments onClose={toggleShipmentForm} />}
+            </div>
             <div style={{ display: 'flex', justifyContent: 'center' }}>                   
                 {loading ? (
                     <div> 
@@ -267,9 +278,16 @@ export function OrderItems(props) {
                 )}
             </div>
             <br></br>
+            
             <div className="full-width-components">
                 <Box boxShadow={5} borderRadius={8} bgcolor={"white"} padding={2}>
-                    <h2>Placed Shipments</h2>
+                    <Stack direction="row" spacing={81}>
+                        <h2>Placed Shipments</h2>
+                        <button onClick={toggleNewShipmentForm} type="button" className="btn btn-primary"><AddIcon/>Place New Shipment</button>        
+                    </Stack>
+                    <br></br>
+                    {showNewShipmentForm && <PlaceNewShipment onClose={toggleNewShipmentForm} />}
+                    
                     <CardCompInventory data={dataList} />
                     <br></br>
                 </Box>
