@@ -3,7 +3,6 @@ import CardComp from "../../../components/sideComps/CardComp";
 import TableComp from '../../../components/sideComps/TableComp'
 import avatar from '../../../assets/avatar.svg';
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { Link, useParams,useNavigate } from 'react-router-dom';
 import * as reqSend from '../../../global/reqSender';
 
@@ -70,14 +69,7 @@ export function Training(props){
         }
     };
 
-    // const loadUsers1 = async () => {
-    //     try {
-    //         const result = await axios.get("http://localhost:8090/api/tms/overseas");
-    //         setUsers1(result.data);
-    //     } catch (error) {
-    //         console.error('Error loading overseas experiences:', error);
-    //     }
-    // }
+
 
     const loadUsers1 = async () => {
         try {
@@ -91,18 +83,11 @@ export function Training(props){
         }
     };
 
-    // const loadEnrolledCourses = async () => {
-    //     try {
-    //         const result = await axios.get(`http://localhost:8090/api/tms/${email}/enrolledCourses`);
-    //         setEnrolledCourses(result.data);
-    //     } catch (error) {
-    //         console.error('Error loading enrolled courses:', error);
-    //     }
-    // }
+    
 
     const loadEnrolledCourses = async () => {
         try {
-            const result = reqSend.defaultReq('GET', `api/tms/${email}/enrolledCourses`, null, (response) => {
+            const result = reqSend.defaultReq('GET', `api/tms/tm2@gmail.com/enrolledCourses`, null, (response) => {
                 setEnrolledCourses(response.data);
             }, (error) => {
                 console.error("Error loading enrolled courses:", error);
@@ -112,19 +97,11 @@ export function Training(props){
         }
     };
 
-    // const loadCompletedCourses = async () => {
-    //     try {
-    //         const result = await axios.get(`http://localhost:8090/api/tms/${email}/completedCourses`);
-    //         setCompletedCourses(result.data);
-    //         setLoadingCompletedCourses(false);
-    //     } catch (error) {
-    //         console.error('Error loading completed courses:', error);
-    //     }
-    // }
+    
 
     const loadCompletedCourses = async () => {
         try {
-            const result = await reqSend.defaultReq('GET', `api/tms/${email}/completedCourses`, null, (response) => {
+            const result = await reqSend.defaultReq('GET', `api/tms/tm2@gmail.com/completedCourses`, null, (response) => {
                 setCompletedCourses(response.data);
                 setLoadingCompletedCourses(false);
             }, (error) => {
@@ -135,20 +112,11 @@ export function Training(props){
         }
     };
 
-    // const enrollUser = async (courseId) => {
-    //     try {
-    //         await axios.put(`http://localhost:8090/api/tms/${email}/enroll/${courseId}`);
-    //         setEnrolledCourses([...enrolledCourses, courseId]);
-    //         alert('Enrollment successful');
-    //     } catch (error) {
-    //         console.error('Error enrolling user:', error);
-    //         alert('Enrollment failed. Please try again.');
-    //     }
-    // }
-
+    
+    // once enroll button will disable
     const enrollUser = async (courseId) => {
         try {
-            await reqSend.defaultReq('PUT', `api/tms/${email}/enroll/${courseId}`, null, (response) => {
+            await reqSend.defaultReq('PUT', `api/tms/tm2@gmail.com/enroll/${courseId}`, null, (response) => {
                 setEnrolledCourses([...enrolledCourses, courseId]);
                 alert('Enrollment successful');
             }, (error) => {
@@ -162,10 +130,10 @@ export function Training(props){
     };
 
     
-
+    // once complete button will disable
     const completeCourse = async (courseId) => {
         try {
-            await reqSend.defaultReq('PUT', `api/tms/${email}/complete/${courseId}`, null, (response) => {
+            await reqSend.defaultReq('PUT', `api/tms/tm2@gmail.com/complete/${courseId}`, null, (response) => {
                 setCompletedCourses([...completedCourses, courseId]);
                 alert('Course completed successfully');
             }, (error) => {
@@ -282,7 +250,7 @@ export function Training(props){
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <h1 style={{ fontSize: '1.5rem' }}>Welcome, {email}</h1>
+                        <h1 style={{ fontSize: '1.5rem' }}>Welcome, tm2@gmail.com</h1>
                     </div>
                 </div>
 
