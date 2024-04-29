@@ -53,7 +53,6 @@ export default function CreateItemForm({onClose}) {
             response => {
                 if (response.status === 201) {
                     setMessage('Item added successfully.');
-                    //onClose(); // Close the modal after successful submission
                     fetchData();
                 } else {
                     console.error("Error adding item:", response);
@@ -133,7 +132,7 @@ export default function CreateItemForm({onClose}) {
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Item</h5>
+                    <h2 class="modal-title">Add Item</h2>
                     <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -141,8 +140,7 @@ export default function CreateItemForm({onClose}) {
                     {formAddItem}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button onClick={handleSubmit} type="button" class="btn btn-primary">Submit</button>
+                    <button onClick={handleSubmit} type="button" class="btn btn-primary">Add Item</button>
                 </div>
             </div>
         </div>
