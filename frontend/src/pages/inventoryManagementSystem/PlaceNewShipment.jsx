@@ -110,12 +110,12 @@ export default function PlaceNewShipment({ onClose }) {
                     </div>
                     <div className="modal-body">
                         {message && <div className={`alert ${message.includes('Error') ? 'alert-danger' : 'alert-success'}`}>{message}</div>}
-                        <table>
+                        <table style={{ border: "2px solid #ccc", padding: "10px", borderRadius: "10px", position: "relative" }}>
                             <tbody>
                                 <tr>
                                     <td>Item</td>
                                     <td>
-                                        <select id="selectItem" name="selectItem">
+                                        <select id="selectItem" name="selectItem" style={{ width: '250px'}}>
                                             {stockOptions.map(option => (
                                                 <option key={option.id} value={option.id}>{option.id} - {option.name}</option>
                                             ))}
@@ -124,14 +124,14 @@ export default function PlaceNewShipment({ onClose }) {
                                 </tr>
                                 <tr>
                                     <td>Quantity</td>
-                                    <td>
-                                        <input type="number" className="form-control" id="inputQuantity" min="0" step="1" />
+                                    <td style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                        <input type="number" className="form-control" id="inputQuantity" min="0" step="1" style={{ borderWidth: '2px', width: '250px'}}/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Supplier</td>
                                     <td>
-                                        <select id="selectSupplier">
+                                        <select id="selectSupplier" style={{ width: '250px'}}>
                                             {supplier.map(option => (
                                                 <option key={option.id} value={option.id}>{option.id}-{option.companyName}</option>
                                             ))}
@@ -141,7 +141,7 @@ export default function PlaceNewShipment({ onClose }) {
                                 <tr>
                                     <td>Inventory Manager</td>
                                     <td>
-                                        <select id="selectManager">
+                                        <select id="selectManager" style={{ width: '250px'}}>
                                             {manager.map(option => (
                                                 <option key={option.id} value={option.id}>{option.id}-{option.managerName}</option>
                                             ))}

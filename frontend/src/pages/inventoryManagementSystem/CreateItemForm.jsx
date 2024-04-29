@@ -74,23 +74,23 @@ export default function CreateItemForm({onClose}) {
                     <tbody>
                         <tr>
                             <td colSpan="3"><label className="form-label">Item Name</label></td>
-                            <td colSpan="2"><input type="text" className="form-control" id="inputItemName"/></td>
+                            <td colSpan="2"><input type="text" className="form-control" id="inputItemName" style={{ borderWidth: '2px' }}/></td>
                         </tr>
                         <tr>
                             <td><label className="form-label">Quantity</label></td>
-                            <td><input type="number" className="form-control" id="inputQuantity" min="0" step="1" /></td>
+                            <td><input type="number" className="form-control" id="inputQuantity" min="0" step="1" style={{ borderWidth: '2px' }} /></td>
                             <td><label className="form-label">Threshold Quantity</label></td>
-                            <td><input type="number" className="form-control" id="inputThresholdQuantity" min="0" step="1" /></td>
+                            <td><input type="number" className="form-control" id="inputThresholdQuantity" min="0" step="1" style={{ borderWidth: '2px' }}/></td>
                             <td><label className="form-label">Reorder Quantity</label></td>
-                            <td><input type="number" className="form-control" id="inputReorderQuantity" min="10" step="1" /></td>
+                            <td><input type="number" className="form-control" id="inputReorderQuantity" min="10" step="1" style={{ borderWidth: '2px' }} value="0" readOnly /></td>
                         </tr>
                         <tr>
                             <td><label className="form-label">Weight</label></td>
-                            <td><input type="number" className="form-control" id="inputWeight" min="0" step="1" /></td>
+                            <td><input type="number" className="form-control" id="inputWeight" min="0" step="1" style={{ borderWidth: '2px' }} /></td>
                             <td><label className="form-label">Size</label></td>
-                            <td><input type="number" className="form-control" id="inputSize" min="0" step="1" /></td>
+                            <td><input type="number" className="form-control" id="inputSize" min="0" step="1"  style={{ borderWidth: '2px' }}/></td>
                             <td><label className="form-label">Price</label></td>
-                            <td><input type="number" className="form-control" id="inputPrice" min="0" step="0.1" /></td>
+                            <td><input type="number" className="form-control" id="inputPrice" min="0" step="0.1" style={{ borderWidth: '2px' }}/></td>
                         </tr>
                         <tr>
                             <td><label className="form-label">Warehouse</label></td>
