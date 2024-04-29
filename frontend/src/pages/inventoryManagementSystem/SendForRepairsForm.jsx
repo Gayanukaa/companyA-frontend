@@ -2,23 +2,21 @@ import * as reqSend from '../../global/reqSender.jsx';
 import React, { useState, useEffect } from 'react';
 
 export default function DeleteItemForm({ onClose }) {
-    const [stockOptions, setStockOptions] = useState([]);
+    const [repairItems, setRepairItems] = useState([]);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        fetchDeleteItemData();
+        fetchDamageItem();
     }, []);
 
-    const fetchDeleteItemData = () => {
-        reqSend.defaultReq("GET", 'api/v1/inventory', {},
+    const fetchDamageItem = () => {
+        reqSend.defaultReq("GET", 'api/v1/repair/getDamagedItems', {},
             response => {
                 if (response.status === 200 && response.data) {
-                    const options = response.data.map(item => ({
-                        id: item.id,
-                        name: item.name
-                    }));
-                    setStockOptions(options);
-                    console.log(options)
+                    setRepairItems(response.data);
+                    console.log(response.data);
+                    console.log(repairItems);
+                    console.log("Inside the if statement")
                 } else {
                     console.error("Invalid response format:", response);
                 }
@@ -29,20 +27,21 @@ export default function DeleteItemForm({ onClose }) {
         );
     };
 
-    const handleDeleteItemSubmit = (event) => {
+    console.log(repairItems);
+
+    const handleSendItemForRepairs = (event) => {
         event.preventDefault();
         const selectedItem = document.getElementById('selectItem').value;
-
-        reqSend.defaultReq("DELETE", `api/v1/inventory/deleteInventory/${selectedItem}`, {},
+        reqSend.defaultReq("GET", `api/v1/repair/sendForRepairs/${selectedItem}`, {},
             response => {
                 if (response.status === 200) {
-                    setMessage('Item Deleted Successfully');
+                    setMessage('Item has been sent for repairs');
                 } else {
-                    setMessage('Error Deleting the Item. Try Again');
+                    setMessage('Error sending the item for repairs. Try Again');
                 }
             },
             error => {
-                setMessage('Error Deleting the Item :',error);
+                setMessage('Error sending the item for repairs :',error);
             }
         );
     };
@@ -53,11 +52,11 @@ export default function DeleteItemForm({ onClose }) {
                 <table>
                     <tbody>
                         <tr>
-                            <td><label htmlFor="selectItem">Select Item to Delete:</label></td>
+                            <td><label htmlFor="selectItem">Select Item to send for repairs:</label></td>
                             <td>
                                 <select id="selectItem" name="selectItem">
-                                    {stockOptions.map(option => (
-                                        <option key={option.id} value={option.id}>{option.id} - {option.name}</option>
+                                    {repairItems.map(option => (
+                                        <option key={option} value={option}>{option}</option>
                                     ))}
                                 </select>
                             </td>
@@ -73,7 +72,7 @@ export default function DeleteItemForm({ onClose }) {
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Delete Item</h5>
+                        <h5 class="modal-title">Repairs</h5>
                         <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -81,7 +80,7 @@ export default function DeleteItemForm({ onClose }) {
                         {formDeleteItem}
                     </div>
                     <div class="modal-footer">
-                        <button onClick={handleDeleteItemSubmit} class="btn btn-danger">Delete</button>
+                        <button onClick={handleSendItemForRepairs} class="btn btn-success">Send</button>
                     </div>
                 </div>
             </div>

@@ -19,6 +19,9 @@ import './invReport.css';
 import CreateItemForm from "./CreateItemForm.jsx";
 import DeleteItemForm from "./DeleteItemForm.jsx";
 import AddWarehouseForm from "./AddWarehouseForm.jsx";
+import SendForRepairsForm from "./SendForRepairsForm.jsx"
+import BuildIcon from '@mui/icons-material/Build';
+import './custom.css'
 
 export function DashboardView(props) {
     const dataList = [
@@ -45,6 +48,7 @@ export function DashboardView(props) {
     const [tableData, setTableData] = useState(null);
     const [showAddItemForm, setShowAddItemForm] = useState(false);
     const [showDeleteItemForm, setShowDeleteItemForm] = useState(false);
+    const [showSendForRepairsForm, setShowSendForRepairsForm] = useState(false);
     const [showAddWarehouseForm, setShowAddWarehouseForm] = useState(false);
 
     useEffect(() => {
@@ -88,6 +92,10 @@ export function DashboardView(props) {
         setShowDeleteItemForm(!showDeleteItemForm);
      };
 
+     const toggleSendForRepairsForm = () => {
+        setShowSendForRepairsForm(!showSendForRepairsForm);
+     };
+
     const toggleAddWarehouseForm = () => {
         setShowAddWarehouseForm(!showAddWarehouseForm);
      };
@@ -107,10 +115,12 @@ export function DashboardView(props) {
                         <h2>Inventory Details</h2>
                         <button onClick={toggleAddItemForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Item</button>
                         <button onClick={toggleDeleteItemForm} type="button" className="btn btn-danger justify-center gap-2"><DeleteIcon/>Delete Item</button>
+                        <button onClick={toggleSendForRepairsForm} type="button" className="btn btn-success justify-center gap-2"><BuildIcon/>Send For Repairs</button>
                     </Stack>
 
                     {showAddItemForm && <CreateItemForm onClose={toggleAddItemForm} />}
                     {showDeleteItemForm && <DeleteItemForm onClose={toggleDeleteItemForm} />}
+                    {showSendForRepairsForm && <SendForRepairsForm onClose={toggleSendForRepairsForm} />}
                 </div>
                 
                 <div className="full-width-components">
@@ -729,12 +739,33 @@ export function ViewReports(props) {
                                 <td align="left"><button style={{ borderRadius: 4, background: 'none', padding: '5.5px 8px' }}><DownloadIcon/></button></td>
                             </tr>
                             </table>
+                            {/* <div class="container square-box d-flex justify-content-center align-items-center"> */}
+                            <div class="container">
+                                <Stack spacing={2} direction="column" >
+                                <h3 style={{ marginBottom: '20px' }} >Past generated reports:</h3>
+                                <table class="table table-bordered table-hover table-sm" style={{ width: '70%', margin: 'auto' }} >
+                                    <thead class="thead-light">
+                                        <tr>
+                                        <th>Report ID</th>
+                                        <th>Date & Time</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                    {data.map((reports, index) => (
+                                        <tr key={index}>
+                                            <td>{reports.reportId}</td>
+                                            <td>{reports.generatedDateAndTime}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                                </table>
+                                </Stack>
+                            </div> 
                     </Stack>
-
                 </div>
                 <Stack spacing={4}>
-                <div class="container" style={{ textAlign: 'center' }}>
-                <div className="mt-5">
+                <div class="container">
+                {/* <div className="mt-5" >
                     <h3 style={{ marginBottom: '20px' }} >Past generated reports:</h3>
                     <table class="table table-bordered table-hover table-sm" style={{ width: '70%', margin: 'auto' }} >
                         <thead class="thead-light">
@@ -752,21 +783,10 @@ export function ViewReports(props) {
                         ))}
                     </tbody>
                     </table>
-                </div>
-                
+                </div> */}
                 </div>
                 <div>
                     {showReportForm && reportForm} 
-                    
-                    <p>
-                    {/* {report.map((item, index) => (
-                        <div key={index}>
-                            Report ID: {item.reportId}
-                        </div>
-                     ))} */}
-                    </p>
-
-                    {/* <p>Report ID: {currentReport.reportId}</p>                                        */}
                 </div>
                 </Stack>
 {/* ////////////////////////////////// */}
@@ -826,33 +846,37 @@ export function ViewReports(props) {
 
 
 export function ViewRepairs(props) {
+    const [repairsTableData, setRepairsTableData] = useState(null);
 
-    const tableData = {
-        name: "Information on repairs",
-        heading: ["Column 1", "Column 2", "Column 3"],
-        body: [
-            <tr key="row1">
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-            </tr>,
-            <tr key="row2">
-                <td>Data 4</td>
-                <td>Data 5</td>
-                <td>Data 6</td>
-            </tr>,
-            <tr key="row3">
-                <td>Data 7</td>
-                <td>Data 8</td>
-                <td>Data 9</td>
-            </tr>,
-            <tr key="row4">
-                <td>Data 10</td>
-                <td>Data 11</td>
-                <td>Data 12</td>
-            </tr>,
-            // Add more rows as needed
-        ],
+    useEffect(() => {
+        fetchRepairsData();
+    }, []);
+
+    const fetchRepairsData = () => {
+        reqSend.defaultReq("GET", 'api/v1/repair/getAllRepairs', {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    const fetchedRepairsData = response.data.map(item => (
+                        <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>{item.inventoryId}</td>
+                            <td>{item.name}</td>
+                            <td>{item.quantity}</td>
+                        </tr>
+                    ));
+                    setRepairsTableData({
+                        name: "Repairs Table",
+                        heading: ["Repair ID", "Inventory ID", "Name", "Quantity"],
+                        body: fetchedRepairsData,
+                    });
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
     };
 
     return (
@@ -862,9 +886,11 @@ export function ViewRepairs(props) {
                     <div className="left">
                         <h1>Repairs</h1>
                     </div>
-
-                    <TableComp data={tableData} />
-
+                    <div className="full-width-components">
+                    { repairsTableData && (
+                        <TableComp data={repairsTableData} />
+                    )}
+                    </div>  
                 </div>
 
             </main>
