@@ -25,6 +25,10 @@ import './custom.css'
 import Warehouse from '../../assets/Warehouse.png';
 import SearchIcon from '@mui/icons-material/Search';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import TaskAlt from '@mui/icons-material/TaskAlt';
+import Summarize from '@mui/icons-material/Summarize';
+import RepairCompleteForm from "./RepairCompleteForm.jsx";
+
 
 export function DashboardView(props) {
     const [tableData, setTableData] = useState(null);
@@ -748,11 +752,11 @@ export function ViewReports(props) {
                             <Button onClick={generateClick} maxWidth='40px' variant="contained">Generate Report</Button>
                             <table>
                             <tr>
-                                <td><Button onClick={deleteClick} size="medium"  variant="contained" endIcon={<DeleteIcon />} color="error">Delete</Button></td>
+                                <td><Button onClick={deleteClick} size="medium"  variant="contained" startIcon={<DeleteIcon />} color="error">Delete</Button></td>
                                 <td><TextField onChange={change}  size="small" value={val} id="outlined-basic" label="Report ID" variant="outlined" /></td>
                             </tr>
                             <tr>
-                                <td><Button onClick={showClick} size="medium"  style={{ width: '30px', minWidth:'105px' }} variant="contained"  color="success" > Show </Button></td>
+                                <td><Button onClick={showClick} size="medium"  style={{ width: '30px', minWidth:'105px' }} variant="contained" startIcon={<Summarize />} color="success" > Show </Button></td>
                                 <td><TextField onChange={changeShowVal} value={showVal} size="small"  id="outlined-basic" label="Report ID" variant="outlined" /></td>
                                 <td align="left"><button style={{ borderRadius: 4, background: 'none', padding: '5.5px 8px' }}><DownloadIcon/></button></td>
                             </tr>
@@ -865,10 +869,15 @@ export function ViewReports(props) {
 
 export function ViewRepairs(props) {
     const [repairsTableData, setRepairsTableData] = useState(null);
+    const [showRepairForm, setShowRepairForm] = useState(false);
 
     useEffect(() => {
         fetchRepairsData();
     }, []);
+
+    const toggleShowRepairForm = () => {
+        setShowRepairForm(!showRepairForm);
+     };
 
     const fetchRepairsData = () => {
         reqSend.defaultReq("GET", 'api/v1/repair/getAllRepairs', {},
@@ -903,6 +912,8 @@ export function ViewRepairs(props) {
                 <div className="head-title">
                     <div className="left">
                         <h1>Repairs</h1>
+                        <button onClick={toggleShowRepairForm} type="button" className="btn btn-success justify-center gap-2"><TaskAlt/>Complete Repair</button>
+                        {showRepairForm && <RepairCompleteForm onClose={toggleShowRepairForm} />}
                     </div>
                     <div className="full-width-components">
                     { repairsTableData && (
