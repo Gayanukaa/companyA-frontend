@@ -537,3 +537,247 @@ export function EditCourse(props){
     </div>
   )
 }
+
+export function Ose(props) {
+    const [oses, setOses] = useState([]);
+
+    useEffect(() => {
+        loadOses();
+    }, []);
+
+    const loadOses = async () => {
+        try {
+            const result =reqSend.defaultReq('GET', 'api/tms/overseas', null, (response) => {
+                setOses(response.data);
+            }, (error) => {
+                console.error('Error loading overseas experiences:', error);
+            });
+        } catch (error) {
+            console.error('Error loading overseas experiences:', error);
+        }
+    };
+
+    const deleteOses = async (id) => {
+        try {
+            reqSend.defaultReq('DELETE', `api/tms/overseas/${id}`, null, () => {
+                loadOses();
+            }, (error) => {
+                console.error('Error deleting overseas experience:', error);
+            });
+        } catch (error) {
+            console.error('Error deleting overseas experience:', error);
+        }
+    };
+
+    const tableData = {
+        heading: ["", "ID", "Company Name", "Country", "Cost (LKR)", "Duration (Months)","",""],
+        body: oses.map((ose, index) => (
+            <tr key={index}>
+                <th scope="row">{index + 1}</th>
+                <td>{ose.oseId}</td>
+                <td>{ose.companyName}</td>
+                <td>{ose.country}</td>
+                <td>{ose.cost}</td>
+                <td>{ose.duration}</td>
+                <td>
+                    <button className="btn btn-danger mx-2" onClick={() => deleteOses(ose.id)}>Delete</button>
+                </td>
+                <td>
+                    <Link className="btn btn-outline-primary mx-2" to={`edit/${ose.id}`}>Edit</Link>
+                </td>
+            </tr>
+        )),
+    };
+
+    return (
+        <>
+            <main>
+                <div className="head-title">
+                    <div className="left">
+                        <h1>Overseas Experience</h1>
+                        <Link className="btn btn-primary mx-2" to={"add"}>Add</Link>
+                    </div>
+                    <TableComp data={tableData} />
+                </div>
+            </main>
+        </>
+    )
+}
+
+export function AddOse(props){
+    let navigate = useNavigate();
+
+    const [user, setUser] = useState({
+        "oseId": "",
+        "companyName": "",
+        "country": "",
+        "details": "",
+        "cost":"",
+        "duration":"",
+    });
+
+    const { oseId, companyName, country, details,cost,duration } = user;
+
+    const onInputChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const userData = { ...user, oseId: parseInt(oseId),duration: parseInt(duration),cost: parseFloat(cost) };
+            reqSend.defaultReq('POST', 'api/tms/overseas', userData, () => {
+                navigate("/trainingdevelopment-management/manager/over-seas");
+            }, (error) => {
+                console.error('Error adding main supervisor:', error);
+            });
+        } catch (error) {
+            console.error('Error adding main supervisor:', error);
+        }
+    };
+
+    return (
+        <div className='container'>
+        <div className="row">
+            <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
+                <h2 className="text-center m-4">Add Overseas Experience Details</h2>
+                <form onSubmit={(e)=>onSubmit(e)} action="">
+                <div className="mb-3">
+                    <label htmlFor="Name" className='form-label'>Ose ID</label>
+                    <input type={"number"} className='form-control'name='oseId' required placeholder='Enter ose ID'value={oseId} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Company Name</label>
+                    <input type={"text"} className='form-control'name='companyName' required placeholder='Enter company name' value={companyName} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Country</label>
+                    <input type={"text"} className='form-control'name='country' required placeholder='Enter Country' value={country} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Details</label>
+                    <input type={"text"} className='form-control'name='details' required placeholder='Enter details' value={details} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Cost (LKR)</label>
+                    <input type={"text"} className='form-control'name='cost' required placeholder='Enter cost' value={cost} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Duration (Months)</label>
+                    <input type={"number"} className='form-control'name='duration' required placeholder='Enter duration' value={duration} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                
+                <div>
+                    <button type='submit' className='btn btn-outline-primary'>Submit</button>
+                    <Link type='submit' className='btn btn-outline-danger mx-2'to='/trainingdevelopment-management/manager/over-seas' >Cancel</Link>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    );
+}
+
+export function EditOse(props){
+    let navigate=useNavigate();
+    const {id}=useParams();
+
+    const [user, setUser] = useState({
+        "duration": "",
+        "cost": "",
+        "companyName": "",
+        "country": "",
+        "oseId": "",
+        "details": "",
+            
+    });
+
+    const { duration, cost, companyName, country, oseId ,details} = user;
+
+
+        const onInputChange=(e)=>{
+            setUser({...user,[e.target.name]:e.target.value})
+        }
+
+        useEffect(()=>{
+            loadUser();
+        },[])
+        
+        // const onSubmit=async(e)=>{
+        //     e.preventDefault()
+        //     const userData = { ...user, courseId: parseInt(courseId) };
+        //     await axios.put(`http://localhost:8082/course/${id}`,userData)
+        //     navigate("/")
+        // }
+
+        // const loadUser =async()=>{
+        //     const result=await axios.get(`http://localhost:8082/courses/${id}`)
+        //     setUser(result.data)
+        // }
+
+        const loadUser = async () => {
+            try {
+                const result =reqSend.defaultReq('GET', `api/tms/overseas/${id}`, null, (response) => {
+                    setUser(response.data);
+                }, (error) => {
+                    console.error('Error loading courses:', error);
+                });
+            } catch (error) {
+                console.error('Error loading courses:', error);
+            }
+        };
+
+        const onSubmit = async (e) => {
+            e.preventDefault();
+            try {
+                const userData = { ...user, oseId: parseInt(oseId),duration: parseInt(duration),cost: parseFloat(cost) };
+                reqSend.defaultReq('PUT', `api/tms/overseas/${id}`, userData, () => {
+                    navigate("/trainingdevelopment-management/manager/over-seas");
+                }, (error) => {
+                    console.error('Error adding main supervisor:', error);
+                });
+            } catch (error) {
+                console.error('Error adding main supervisor:', error);
+            }
+        };
+
+  return (
+    <div className='container'>
+        <div className="row">
+            <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
+            <h2 className="text-center m-4">Edit Overseas Experience Details</h2>
+                <form onSubmit={(e)=>onSubmit(e)} action="">
+                <div className="mb-3">
+                    <label htmlFor="Name" className='form-label'>OSE ID</label>
+                    <input type={"number"} className='form-control'name='oseId' required placeholder='Enter course ID'value={oseId} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Company Name</label>
+                    <input type={"text"} className='form-control'name='companyName'required placeholder='Enter course name' value={companyName} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Country</label>
+                    <input type={"text"} className='form-control'name='country'required placeholder='Enter Instructor' value={country} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Details</label>
+                    <input type={"text"} className='form-control'name='details' required placeholder='Enter details' value={details} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Duration (Months)</label>
+                    <input type={"number"} className='form-control'name='duration'required placeholder='Enter Duration' value={duration} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Costc(LKR)</label>
+                    <input type={"text"} className='form-control'name='cost' required placeholder='Enter cost' value={cost} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div>
+                    <button type='submit' className='btn btn-outline-primary'>Submit</button>
+                    <Link type='submit' className='btn btn-outline-danger mx-2'to='/trainingdevelopment-management/manager/over-seas' >Cancel</Link>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  )
+}
