@@ -550,3 +550,140 @@ export function SendToQA(props) {
         </div>
     );
 }
+
+export function Products(props) {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        loadProducts();
+    }, []);
+
+    const loadProducts = async () => {
+        try {
+            const result = reqSend.defaultReq('GET', 'api/tms/products', null, handleLoadSuccess, handleLoadError);
+        } catch (error) {
+            console.error("Error loading products:", error);
+        }
+    };
+
+    const handleLoadSuccess = (response) => {
+        setProducts(response.data);
+    };
+
+    const handleLoadError = (error) => {
+        console.error("Error loading products:", error);
+    };
+
+    const tableData = {
+        heading: ["","Id", "Product Name", "Product Details"],
+        body: products.map((product, index) => (
+            <tr key={index}>
+                <th scope="row">{index + 1}</th>
+                <td>{product.productId}</td>
+                <td>{product.productName}</td>
+                <td>{product.productDetails}</td>
+            </tr>
+        )),
+    };
+
+    return (
+        
+            <main>
+            <div className="head-title">
+                <div className="left">
+                    <h1>Products</h1>
+                </div>
+                
+            </div>
+            <TableComp data={tableData} />
+        </main>
+        
+    );
+}
+
+export function AddProducts(props) {
+    let navigate=useNavigate();
+    const {id}=useParams();
+
+    const [user, setUser] = useState({
+        projectName: "",
+        productId: "",
+        productDetails: "",
+    });
+
+    const { projectName, productId, productDetails } = user;
+
+
+        const onInputChange=(e)=>{
+            setUser({...user,[e.target.name]:e.target.value})
+        }
+
+        useEffect(()=>{
+            loadUser();
+        },[])
+        
+        // const onSubmit=async(e)=>{
+        //     e.preventDefault()
+        //     const userData = { ...user, productId: parseInt(productId),productName: projectName };
+        //     await axios.post(`http://localhost:8090/api/tms/products`,userData)
+        //     navigate("/trainingdevelopment-management/main-supervisor/products")
+        // }
+
+        // const loadUser =async()=>{
+        //     const result=await axios.get(`http://localhost:8090/api/tms/product-development/${id}`)
+        //     setUser(result.data)
+        // }
+        const onSubmit = async (e) => {
+            e.preventDefault();
+            const userData = { ...user,  productName: projectName };
+            try {
+                reqSend.defaultReq('POST', 'api/tms/products', userData, () => {
+                    navigate("/trainingdevelopment-management/main-supervisor/products");
+                }, (error) => {
+                    console.error("Error adding product:", error);
+                });
+            } catch (error) {
+                console.error("Error adding product:", error);
+            }
+        };
+        
+        const loadUser = async () => {
+            try {
+                reqSend.defaultReq('GET', `api/tms/product-development/${id}`, null, (response) => {
+                    setUser(response.data);
+                }, (error) => {
+                    console.error("Error loading user:", error);
+                });
+            } catch (error) {
+                console.error("Error loading user:", error);
+            }
+        };
+
+  return (
+    <div className='container'>
+        <div className="row">
+            <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
+                <h2 className="text-center m-4">Add to Products</h2>
+                <form onSubmit={(e)=>onSubmit(e)} action="">
+                <div className="mb-3">
+                    <label htmlFor="Name" className='form-label'>Product Name</label>
+                    <input type={"text"} className='form-control'name='projectName' required placeholder='Enter product name'value={projectName} onChange={(e)=>onInputChange(e)}readOnly/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Product ID</label>
+                    <input type={"text"} className='form-control'name='productId'required placeholder='Enter product id' value={productId} onChange={(e)=>onInputChange(e)} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="Username" className='form-label'>Product Details</label>
+                    <input type={"text"} className='form-control'name='productDetails' required placeholder='Enter product details' value={productDetails} onChange={(e)=>onInputChange(e)}/>
+                </div>
+                <div>
+                    <button type='submit' className='btn btn-outline-primary'>Submit</button>
+                    <Link type='submit' className='btn btn-outline-danger mx-2'to='/trainingdevelopment-management/main-supervisor/product-development' >Cancel</Link>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  )
+}
