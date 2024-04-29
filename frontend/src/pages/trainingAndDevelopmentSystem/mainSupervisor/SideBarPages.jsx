@@ -303,3 +303,190 @@ export function EditPrototype(props) {
         </div>
     );
 }
+
+export function ProductDevelopment(props) {
+    const { id } = useParams();
+
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        loadUsers();
+    }, []);
+
+    const loadUsers = async () => {
+        try {
+            reqSend.defaultReq('GET', 'api/tms/product-developments', null, (response) => {
+                const updatedUsers = response.data.map(user => {
+                    user.progress = calculateProgress(user);
+                    return user;
+                });
+                setUsers(updatedUsers);
+            }, (error) => {
+                console.error("Error loading prototypes:", error);
+            });
+        } catch (error) {
+            console.error("Error loading prototypes:", error);
+        }
+    };
+
+    
+
+    const calculateProgress = (user) => {
+        let progress = 0;
+        if (user.stageOne) progress += 30;
+        if (user.stageTwo) progress += 40;
+        if (user.stageThree) progress += 30;
+        return progress;
+    }
+
+    const updateStage = async (userId, stage) => {
+        // Your updateStage function implementation goes here
+    }
+
+    const tableData = {
+        heading: ["", "Project Code", "Project Name","Project Manager", "Progress", "Quality Assurance", "Add to Products"],
+        body: users.map((user, index) => (
+            <tr key={index}>
+                <th scope="row">{index + 1}</th>
+                {/* <td>{user.id}</td> */}
+                <td>{user.projectCode}</td>
+                <td>{user.projectName}</td>
+                <td>{user.projectManager}</td>
+                <td>
+                    <div className="progress">
+                        <div className="progress-bar" role="progressbar" style={{ width: `${user.progress}%` }}>{user.progress}%</div>
+                    </div>
+                </td>
+                <td>
+                    <Link className={`btn btn-outline-info mx-2 ${user.progress < 100 ? 'disabled' : ''}`} onClick={() => user.progress === 100 && updateStage(user.id, 'stageOne')} disabled={user.progress < 100} to={"/trainingdevelopment-management/main-supervisor/product-development/send-to-qa"}>Send to QA</Link>
+                </td>
+                <td>
+                    <Link className={`btn btn-outline-warning mx-2 ${user.progress < 100 ? 'disabled' : ''}`} onClick={() => user.progress === 100 && updateStage(user.id, 'stageOne')} disabled={user.progress < 100} to={`/trainingdevelopment-management/main-supervisor/product-development/add-product/${user.id}`}>Add</Link>
+                </td>
+            </tr>
+        )),
+    };
+
+    return (
+        <>
+            <main>
+                <div className="head-title">
+                    <div className="left">
+                        <h1>Product Developments</h1>
+                    </div>
+                    <TableComp data={tableData} />
+                </div>
+            </main>
+        </>
+    )
+}
+
+export function AddDevelop(props) {
+    let navigate = useNavigate();
+    const { id } = useParams();
+
+    const [user, setUser] = useState({
+        projectName:"",
+        projectManager: "",
+        projectCode: "",
+        stageOne: false,
+        stageTwo: false,
+        stageThree: false,
+        prototypeName:""
+    });
+
+    const {  projectManager, projectCode,projectName,prototypeName } = user;
+
+    const onInputChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
+
+    useEffect(() => {
+        loadUser();
+    }, []);
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const userData = { ...user, projectCode: parseInt(projectCode) ,projectName:prototypeName};
+        reqSend.defaultReq('POST', 'api/tms/product-development', userData, handleSubmitSuccess, handleSubmitError);
+    };
+
+    const handleSubmitSuccess = () => {
+        navigate("/trainingdevelopment-management/main-supervisor/product-development");
+    };
+
+    const handleSubmitError = (error) => {
+        console.error("Error submitting data:", error);
+    };
+
+    const loadUser = async () => {
+        reqSend.defaultReq('GET', `api/tms/prototype/${id}`, null, handleLoadSuccess, handleLoadError);
+    };
+
+    const handleLoadSuccess = (response) => {
+        setUser(response.data);
+    };
+
+    const handleLoadError = (error) => {
+        console.error("Error loading user:", error);
+    };
+
+    const calculateProgress = (user) => {
+        let progress = 0;
+        if (user.stageOne) progress += 30;
+        if (user.stageTwo) progress += 40;
+        if (user.stageThree) progress += 30;
+        return progress;
+    }
+
+    const updateStage = async (userId, stage) => {
+        //  updateStage function implementation goes here
+    }
+
+    return (
+        <div className='container'>
+            <div className="row">
+                <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
+                    <h2 className="text-center m-4">Proceed to Development</h2>
+                    <form onSubmit={onSubmit} action="">
+                        <div className="mb-3">
+                            <label htmlFor="Name" className='form-label'>Project Name</label>
+                            <input type={"text"} className='form-control' name='projectName' placeholder='Enter project name' value={prototypeName} onChange={onInputChange} />
+                        </div>
+                        {/* <div className="mb-3">
+                            <label htmlFor="Username" className='form-label'>Prototype ID</label>
+                            <input type={"text"} className='form-control' name='prototypeId' placeholder='Enter prototype id' value={prototypeId} onChange={onInputChange} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="Email" className='form-label'>Prototype Type</label>
+                            <div className="form-check">
+                                <input className="form-check-input" type="radio" name="prototypeType" id="flexRadioDefault1" value="IC" required checked={prototypeType === "IC"} onChange={onInputChange} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                    IC
+                                </label>
+                            </div>
+                            <div className="form-check">
+                                <input className="form-check-input" type="radio" name="prototypeType" id="flexRadioDefault2" required checked={prototypeType === "Sensor"} value="Sensor" onChange={onInputChange} />
+                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                    Sensor
+                                </label>
+                            </div>
+                        </div> */}
+                        <div className="mb-3">
+                            <label htmlFor="projectManager" className='form-label'>Project Manager</label>
+                            <input type="text" className='form-control' name='projectManager' required placeholder='Enter project manager' value={projectManager} onChange={onInputChange} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="projectCode" className='form-label'>Project Code</label>
+                            <input type="number" className='form-control' name='projectCode' required placeholder='Enter project code' value={projectCode} onChange={onInputChange} />
+                        </div>
+                        <div>
+                            <button type='submit' className='btn btn-outline-primary'>Submit</button>
+                            <Link type='submit' className='btn btn-outline-danger mx-2' to='/trainingdevelopment-management/main-supervisor/prototypes'>Cancel</Link>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+}
