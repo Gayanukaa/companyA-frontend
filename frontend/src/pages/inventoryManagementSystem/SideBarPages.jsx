@@ -25,6 +25,9 @@ import './custom.css'
 import Warehouse from '../../assets/Warehouse.png';
 import SearchIcon from '@mui/icons-material/Search';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import ElectronicItem from '../../assets/ElectronicItem.png';
+import CardCompDashboard from "./CardCompDashboard.jsx"
+
 
 export function DashboardView(props) {
     const [tableData, setTableData] = useState(null);
@@ -33,10 +36,14 @@ export function DashboardView(props) {
     const [showSendForRepairsForm, setShowSendForRepairsForm] = useState(false);
     const [showAddWarehouseForm, setShowAddWarehouseForm] = useState(false);
     const [warehouseData, setWarehouseData] = useState([]);
+    const [stockOptions, setStockOptions] = useState([]);
+    const [shipmentsData, setShipmentsData] = useState([]);
 
     useEffect(() => {
         fetchData();
         fetchWarehouseData();
+        fetchInventoryData();
+        fetchShipmentsData();
     }, []);
 
     const fetchData = () => {
@@ -85,12 +92,74 @@ export function DashboardView(props) {
         );
     };
 
+    const numOfWarehouses = warehouseData.length; 
+
+    const fetchInventoryData = () => {
+        reqSend.defaultReq("GET", 'api/v1/inventory', {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    const options = response.data.map(item => ({
+                        id: item.id,
+                        name: item.name
+                    }));
+                    setStockOptions(options);
+                    console.log(options)
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    };
+
+    const numOfItems = stockOptions.length;
+
+    const fetchShipmentsData = () => {
+        reqSend.defaultReq("GET", 'api/v1/shipments/getShipments', {},
+            response => {
+                if (response.status === 200 && response.data) {
+                    setShipmentsData(response.data); } 
+                    else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+    };
+
+    const numOfShipments = shipmentsData.length;
+
     const dataList = warehouseData.map(warehouse => ({
         image: Warehouse,
         altText: warehouse.warehouseId,
         count: `${warehouse.warehouseId} | ${warehouse.name}`,
         name: `Location - ${warehouse.location}`
     }));
+
+    const dataCards = [
+        {
+            image: ElectronicItem,
+            altText: "Avatar 1",
+            count: "Number of Items",
+            name: numOfItems
+        },
+        {
+            image: Warehouse,
+            altText: "Avatar 2",
+            count: "Number of Warehouses",
+            name: numOfWarehouses
+        },
+        {
+            image: Shipment,
+            altText: "Avatar 3",
+            count: "Number of Shipments",
+            name: numOfShipments
+        }
+    ];
 
     const toggleAddItemForm = () => {
         setShowAddItemForm(!showAddItemForm);
@@ -115,15 +184,20 @@ export function DashboardView(props) {
                     <h1>Dashboard</h1>
                 </div>
 
+                <div className="full-width-components"><CardCompDashboard data={dataCards} /></div>
+
                 <div className="full-width-components"><hr class="border border-secondary border-2 opacity-50"></hr></div>
 
                 <div>
                     
-                    <Stack direction="row" spacing={2}>
+                    <Stack direction="row" spacing={53}>
                         <h2>Inventory Details</h2>
-                        <button onClick={toggleAddItemForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Item</button>
-                        <button onClick={toggleDeleteItemForm} type="button" className="btn btn-danger justify-center gap-2"><DeleteIcon/>Delete Item</button>
-                        <button onClick={toggleSendForRepairsForm} type="button" className="btn btn-success justify-center gap-2"><BuildIcon/>Send For Repairs</button>
+                        <Stack direction="row" spacing={2}>
+                            <button onClick={toggleAddItemForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Item</button>
+                            <button onClick={toggleDeleteItemForm} type="button" className="btn btn-danger justify-center gap-2"><DeleteIcon/>Delete Item</button>
+                            <button onClick={toggleSendForRepairsForm} type="button" className="btn btn-success justify-center gap-2"><BuildIcon/>Send For Repairs</button>
+                        </Stack>
+                        
                     </Stack>
 
                     {showAddItemForm && <CreateItemForm onClose={toggleAddItemForm} />}
@@ -252,7 +326,7 @@ export function OrderItems(props) {
             <br></br>
             <div>
                 <Stack direction="row" spacing={55}>
-                    <button onClick={fetchData} type="button" className="btn btn-primary"><SearchIcon />View Items Whose Quantity Is Less Than Treshold</button>
+                    <button onClick={fetchData} type="button" className="btn btn-primary"><SearchIcon />View Items Whose Quantity Is Less Than Threshold</button>
                     <button disabled={shipmentButtonDisabled} onClick={toggleShipmentForm} type="button" class="btn btn-primary"><LocalShippingIcon /> Place Shipment For These Items</button>
                 </Stack>
                 {showShipmentForm && <PlaceShipments onClose={toggleShipmentForm} />}
