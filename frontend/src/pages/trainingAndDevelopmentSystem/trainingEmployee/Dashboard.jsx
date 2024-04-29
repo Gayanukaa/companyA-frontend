@@ -71,7 +71,7 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/dashboard/:email" element={<Training />} />
+                        <Route path="/training" element={<Training />} />
                         <Route path="/*" element={<NotFound />}  />
                     </Routes>
                 </section>
