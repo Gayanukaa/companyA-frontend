@@ -1,0 +1,25 @@
+.msg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    margin: 10px 150px;
+    background-color: limegreen;
+    color: white;
+    padding: 5px;
+}
+
+.delete {
+    background-color: red;
+    color: white;
+}
+
+.error {
+    background-color: red;
+    color: white;
+}
+
+.status {
+    background-color: aqua;
+    color: black
+}
