@@ -1,10 +1,13 @@
 import * as reqSend from '../../../global/reqSender.jsx';
 
 
+
 const checkStock = (items, data, get_val, showUnavailable,totalPrice,payBills) => {
+
     const requestData = Object.entries(items).map(([itemId, itemCount]) => ({
         itemId: itemId,
-        quantity: itemCount
+        quantity: itemCount,
+        unitPrice: data.find(item => item.id === itemId).price
     }));
 
     // Send request to check stock

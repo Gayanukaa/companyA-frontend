@@ -19,6 +19,7 @@ function ProductList({ get_url, get_val }) {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const buttonHeight = isSmallScreen ? "40px" : "50px";
     const fontSize = isSmallScreen ? "0.8rem" : "medium";
+    const [loading, setLoading] = useState(false);
 
     const {
         data,
@@ -34,13 +35,16 @@ function ProductList({ get_url, get_val }) {
         let price = 0;
 
         unavailableItems.forEach(item => {
-            price += getPriceByItemId(item.itemId) * itemCounts[item.itemId] - getPriceByItemId(item.itemId) * getQuantityByItemId(item.itemId);
+            const unitPrice=data.find(component => component.id === item.itemId).price;
+            const quantity=data.find(component => component.id === item.itemId).quantity;
+            price += unitPrice * itemCounts[item.itemId] - unitPrice * quantity;
         });
 
         let finalPrice = (totalPrice - price).toFixed(2);
         setUnavailableItems(unavailableItems);
         setFinalPrice(finalPrice);
         setShowUnavailable(true);
+        setLoading(false);
         document.body.classList.add('overflow-hidden');
     };
     const closePopup = () => {
@@ -48,18 +52,15 @@ function ProductList({ get_url, get_val }) {
         document.body.classList.remove('overflow-hidden');
 
     };
-    const payBills = (Total) => {
+    const payBills = async (Total) => {
         //need to check if any items are completely out of stock
-        checkout(itemCounts,Total);
-    }
-    function getPriceByItemId(itemId) {
-        const item = data.find(item => item.id === itemId);
-        return item ? item.price : null;
-    }
-
-    function getQuantityByItemId(itemId) {
-        const item = data.find(item => item.id === itemId);
-        return item ? item.quantity : null;
+        try {
+            await checkout(itemCounts,Total);
+        } catch (error) {
+            console.error('Error occurred:', error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -84,7 +85,7 @@ function ProductList({ get_url, get_val }) {
                             <span style={{fontSize:fontSize}}>{itemCount}</span>
                         </div>
 
-                        <CheckStock  showUnavailable={showUnavailableModal} items={itemCounts} data={data} count={itemCount} get_val={get_val} totalPrice={totalPrice} payBills={payBills}/>
+                        <CheckStock showUnavailable={showUnavailableModal} items={itemCounts} data={data} count={itemCount} get_val={get_val} totalPrice={totalPrice} payBills={payBills}  loading={loading} setloading={setLoading}/>
 
                     </Box>
                 </Toolbar>
@@ -116,7 +117,7 @@ function ProductList({ get_url, get_val }) {
                         right:20,}}
                 >
 
-                    EmptyCart
+                    Empty Cart
                 </Fab>
             </Container>
         </div>
