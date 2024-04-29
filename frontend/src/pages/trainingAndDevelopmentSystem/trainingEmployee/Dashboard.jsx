@@ -8,7 +8,7 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView } from './SideBarPages';
+import { DashboardView ,Training} from './SideBarPages';
 import NotFound from '../../generalManagementSystem/NotFound';
 
 
@@ -71,9 +71,7 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        
-
-
+                        <Route path="/training/:email" element={<Training />} />
                         <Route path="/*" element={<NotFound />}  />
                     </Routes>
                 </section>
