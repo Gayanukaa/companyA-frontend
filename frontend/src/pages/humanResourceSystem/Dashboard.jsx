@@ -71,7 +71,10 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/view-stocks" element={<ViewStocks />} />
+                        <Route path="/employee-registration" element={<EmployeeRegistration />} />
+                        <Route path="/employee-details" element={<EmployeeDetails />} />
+                        <Route path="/attendance-details" element={<AttendanceDetails />} />
+                        
                     </Routes>
                 </section>
                 
