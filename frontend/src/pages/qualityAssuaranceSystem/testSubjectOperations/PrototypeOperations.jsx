@@ -111,25 +111,27 @@ const PrototypeOperations = () => {
 
   return (
 
-    <div>
-      <h2>All Prototypes</h2>
-      <button onClick={handleShowAllClick}>Show All Prototypes</button>
+    <div style={{ margin: '30px 0' }}>
+      <Button onClick={handleShowAllClick} variant="contained" color ="primary">Show All Prototypes</Button>
       {showAll && (
+        <div>
+        <Typography variant="h6" gutterBottom>All Prototypes with received dates</Typography>
         <ul>
           {prototypes.map(prototype => (
             <li key={prototype.id}>{prototype.id} - {prototype.receivedDate}</li>
           ))}
         </ul>
+        </div>
       )}
 
-      <div>
-        <input
-          type="text"
-          value={inputId}
-          onChange={(e) => setInputId(e.target.value)}
-          placeholder="Enter Prototype ID"
-        />
-        <button onClick={getPrototypeById}>Get Prototype by ID</button>
+      <div style={{ margin: '30px 0' }}>
+      <TextField
+        type="text"
+        value={inputId}
+        onChange={(e) => setInputId(e.target.value)}
+        label="Enter Prototype ID"
+      />
+        <Button onClick={getPrototypeById} variant="contained" color ="primary">Get Prototype</Button>
       </div>
       {selectedPrototype && (
         <div>
@@ -148,93 +150,96 @@ const PrototypeOperations = () => {
         </div>  
       )}
 
-      <div>
-        <input
-          type="text"
-          value={deletePrototypeId}
-          onChange={(e) => setDeletePrototypeId(e.target.value)}
-          placeholder="Enter Prototype ID to Delete"
-        />
-        <button onClick={deletePrototypeById}>Delete Prototype by ID</button>
+      <div style={{ margin: '30px 0' }}>
+      <TextField
+        type="text"
+        value={deletePrototypeId}
+        onChange={(e) => setDeletePrototypeId(e.target.value)}
+        label="Enter Prototype ID"
+      />
+        <Button onClick={deletePrototypeById} variant="contained" color ="secondary">Delete Prototype</Button>
         {deletingMessage && <p>{deletingMessage}</p>}
       </div>
 
-      <div>
-      <h2>Update Test Method</h2>
+      <div style={{ margin: '30px 0' }}>
+      <Typography variant="h6" gutterBottom>Update Test Method</Typography>
       <form onSubmit={changeTest}>
-        <div>
-          <label>Updating Prototype ID:</label>
-          <input
+        <div style={{ marginBottom: '6px' }}>
+          <TextField
             type="text"
             value={updatingPrototypeId}
             onChange={(e) => setUpdatingPrototypeId(e.target.value)}
+            label="Updating Prototype ID"
             required
+            style={{ marginRight: '6px' }}
           />
+        <TextField
+          type="text"
+          value={newTestName}
+          onChange={(e) => setNewTestName(e.target.value)}
+          label="New Test Name"
+          required
+          style={{ marginRight: '6px' }}
+        />
         </div>
-        <div>
-          <label>New Test Name:</label>
-          <input
-            type="text"
-            value={newTestName}
-            onChange={(e) => setNewTestName(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Update Test Method</button>
+        <Button type="submit" variant="contained" color ="primary">Update Test Method</Button>
       </form>
       {updatingMessage && <p>{updatingMessage}</p>}
     </div>
 
-    <div>
-      <h2>Test Prototype</h2>
-      <div>
-        <label>Prototype ID:</label>
-        <input
-          type="text"
-          value={inspectPrototypeId}
-          onChange={(e) => setInspectPrototypeId(e.target.value)}
-        />
+    <div style={{ margin: '30px 0' }}>
+    <Typography variant="h6" gutterBottom>Test Prototype</Typography>
+      <div style={{ marginBottom: '6px' }}>
+      <TextField
+        type="text"
+        value={inspectPrototypeId}
+        onChange={(e) => setInspectPrototypeId(e.target.value)}
+        label="Prototype ID"
+        style={{ marginRight: '6px' }}
+      />
+      <TextField
+        type="text"
+        value={inspectTestId}
+        onChange={(e) => setInspectTestId(e.target.value)}
+        label="Test ID"
+        style={{ marginRight: '6px' }}
+      />
       </div>
-      <div>
-        <label>Test ID:</label>
-        <input
-          type="text"
-          value={inspectTestId}
-          onChange={(e) => setInspectTestId(e.target.value)}
-        />
-      </div>
-      <button onClick={handleTestPrototype}>Test Prototype</button>
+      <Button onClick={handleTestPrototype} variant="contained" color ="primary">Test Prototype</Button>
       {inspectResponse && <p>{inspectResponse}</p>}
     </div>
 
-    <div>
-      <h2>Create Prototype</h2>
+    <div style={{ margin: '30px 0' }}>
+    <Typography variant="h6" gutterBottom>Add New Prototype</Typography>
       <form onSubmit={handleCreatePrototype}>
-        <div>
-          <label>ID:</label>
-          <input
-            type="text"
-            value={createPrototypeId}
-            onChange={(e) => setCreatePrototypeId(e.target.value)}
-          />
+        <div style={{ marginBottom: '6px' }}>
+        <TextField
+          type="text"
+          value={createPrototypeId}
+          onChange={(e) => setCreatePrototypeId(e.target.value)}
+          label="ID"
+          required
+        />
         </div>
-        <div>
-          <label>Expected Test:</label>
-          <input
-            type="text"
-            value={prototypeExpectedTest}
-            onChange={(e) => setPrototypeExpectedTest(e.target.value)}
-          />
+        <div style={{ marginBottom: '6px' }}>
+        <TextField
+          type="text"
+          value={prototypeExpectedTest}
+          onChange={(e) => setPrototypeExpectedTest(e.target.value)}
+          label="Expected Test"
+          required
+        />
         </div>
-        <div>
-          <label>Received Date:</label>
-          <input
-            type="text"
-            value={prototypeReceivedDate}
-            onChange={(e) => setPrototypeReceivedDate(e.target.value)}
-          />
+        <div style={{ marginBottom: '6px' }}>
+        <TextField
+          type="text"
+          value={prototypeReceivedDate}
+          onChange={(e) => setPrototypeReceivedDate(e.target.value)}
+          label="Received Date"
+          required
+        />
         </div>
-        <button type="submit">Submit</button>
+        <Button type="submit" variant="contained" color ="primary">Add Prototype</Button>
       </form>
       {createMessage && <p>{createMessage}</p>}
     </div>

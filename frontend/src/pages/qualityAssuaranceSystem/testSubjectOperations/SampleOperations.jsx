@@ -113,25 +113,27 @@ const SampleOperations = () => {
   };
 
   return (
-    <div>
-      <h2>All Samples</h2>
-      <button onClick={handleShowAllClick}>Show All Samples</button>
+    <div style={{ margin: '30px 0' }}>
+      <Button onClick={handleShowAllClick} variant="contained" color ="primary">Show All Samples</Button>
       {showAll && (
+        <div>
+        <Typography variant="h6" gutterBottom>All Samples with received dates</Typography>
         <ul>
           {samples.map(sample => (
             <li key={sample.id}>{sample.id} - {sample.receivedDate}</li>
           ))}
         </ul>
+        </div>
       )}
 
-      <div>
-        <input
-          type="text"
-          value={getSampleId}
-          onChange={(e) => setGetSampleId(e.target.value)}
-          placeholder="Enter Sample ID to Get"
-        />
-        <button onClick={getSampleById}>Get Sample by ID</button>
+      <div style={{ margin: '30px 0' }}>
+      <TextField
+        type="text"
+        value={getSampleId}
+        onChange={(e) => setGetSampleId(e.target.value)}
+        label="Enter Sample ID"
+      />
+        <Button onClick={getSampleById} variant="contained" color ="primary">Get Sample</Button>
       </div>
       {selectedSample && (
         <div>
@@ -150,93 +152,96 @@ const SampleOperations = () => {
         </div>
       )}
 
-        <div>
-        <input
+        <div style={{ margin: '30px 0' }}>
+        <TextField
           type="text"
           value={deleteSampleId}
           onChange={(e) => setDeleteSampleId(e.target.value)}
-          placeholder="Enter Sample ID to Delete"
+          label="Enter Sample ID"
         />
-        <button onClick={deleteSampleById}>Delete Sample by ID</button>
+        <Button onClick={deleteSampleById} variant="contained" color ="secondary">Delete Sample</Button>
         {deletingMessage && <p>{deletingMessage}</p>}
       </div>
 
-      <div>
-      <h2>Update Test Method</h2>
+      <div style={{ margin: '30px 0' }}>
+      <Typography variant="h6" gutterBottom>Update Test Method</Typography>
       <form onSubmit={changeTest}>
-        <div>
-          <label>Updating Sample ID:</label>
-          <input
-            type="text"
-            value={updatingSampleId}
-            onChange={(e) => setUpdatingSampleId(e.target.value)}
-            required
-          />
+        <div style={{ marginBottom: '6px' }}>
+        <TextField
+          type="text"
+          value={updatingSampleId}
+          onChange={(e) => setUpdatingSampleId(e.target.value)}
+          label="Updating Sample ID"
+          required
+          style={{ marginRight: '6px' }}
+        />
+        <TextField
+          type="text"
+          value={newTestName}
+          onChange={(e) => setNewTestName(e.target.value)}
+          label="New Test Name"
+          required
+          style={{ marginRight: '6px' }}
+        />
         </div>
-        <div>
-          <label>New Test Name:</label>
-          <input
-            type="text"
-            value={newTestName}
-            onChange={(e) => setNewTestName(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Update Test Method</button>
+        <Button type="submit" variant="contained" color ="primary">Update Test Method</Button>
       </form>
       {updatingMessage && <p>{updatingMessage}</p>}
     </div>
 
-    <div>
-      <h2>Test Sample</h2>
-      <div>
-        <label>Sample ID:</label>
-        <input
-          type="text"
-          value={inspectSampleId}
-          onChange={(e) => setInspectSampleId(e.target.value)}
-        />
+    <div style={{ margin: '30px 0' }}>
+    <Typography variant="h6" gutterBottom>Test Sample</Typography>
+      <div style={{ marginBottom: '6px' }}>
+      <TextField
+        type="text"
+        value={inspectSampleId}
+        onChange={(e) => setInspectSampleId(e.target.value)}
+        label="Sample ID"
+        style={{ marginRight: '6px' }}
+      />
+      <TextField
+        type="text"
+        value={inspectTestId}
+        onChange={(e) => setInspectTestId(e.target.value)}
+        label="Test ID"
+        style={{ marginRight: '6px' }}
+      />
       </div>
-      <div>
-        <label>Test ID:</label>
-        <input
-          type="text"
-          value={inspectTestId}
-          onChange={(e) => setInspectTestId(e.target.value)}
-        />
-      </div>
-      <button onClick={handleTestSample}>Test Sample</button>
+      <Button onClick={handleTestSample} variant="contained" color ="primary">Test Sample</Button>
       {inspectResponse && <p>{inspectResponse}</p>}
     </div>
 
-    <div>
-      <h2>Create Sample</h2>
+    <div style={{ margin: '30px 0' }}>
+    <Typography variant="h6" gutterBottom>Add New Sample</Typography>
       <form onSubmit={handleCreateSample}>
-        <div>
-          <label>ID:</label>
-          <input
-            type="text"
-            value={createSampleId}
-            onChange={(e) => setCreateSampleId(e.target.value)}
-          />
+        <div style={{ marginBottom: '6px' }}>
+        <TextField
+          type="text"
+          value={createSampleId}
+          onChange={(e) => setCreateSampleId(e.target.value)}
+          label="ID"
+          required
+        />
         </div>
-        <div>
-          <label>Expected Test:</label>
-          <input
-            type="text"
-            value={sampleExpectedTest}
-            onChange={(e) => setSampleExpectedTest(e.target.value)}
-          />
+        <div style={{ marginBottom: '6px' }}>
+        <TextField
+          type="text"
+          value={sampleExpectedTest}
+          onChange={(e) => setSampleExpectedTest(e.target.value)}
+          label="Expected Test"
+          required
+        />
         </div>
-        <div>
-          <label>Received Date:</label>
-          <input
-            type="text"
-            value={sampleReceivedDate}
-            onChange={(e) => setSampleReceivedDate(e.target.value)}
-          />
+        <div style={{ marginBottom: '6px' }}>
+        <TextField
+          type="text"
+          value={sampleReceivedDate}
+          onChange={(e) => setSampleReceivedDate(e.target.value)}
+          label="Received Date"
+          required
+        />
         </div>
-        <button type="submit">Submit</button>
+        <Button type="submit" variant="contained" color ="primary">Add Sample</Button>
       </form>
       {createMessage && <p>{createMessage}</p>}
     </div>
