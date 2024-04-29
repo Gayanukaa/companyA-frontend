@@ -55,7 +55,7 @@ export function OrderHistory(props) {
                 <td>Date</td>
                 <td>{orderDetails?.order_date}</td>
             </tr>,
-            <tr key="row2">
+            <tr key="row3">
                 <td>Amount</td>
                 <td>{orderDetails?.order_amount}</td>
             </tr>,
