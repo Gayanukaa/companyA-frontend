@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {Typography, TextField, Button } from '@mui/material';
 
 const PrototypeOperations = () => {
   const [prototypes, setPrototypes] = useState([]);
   const [selectedPrototype, setSelectedPrototype] = useState(null);
   const [inputId, setInputId] = useState('');
   const [deletePrototypeId, setDeletePrototypeId] = useState('');
+  const [deletingMessage, setDeletingMessage] = useState('');
   const [showAll, setShowAll] = useState(false);
 
   const [updatingPrototypeId, setUpdatingPrototypeId] = useState('');
   const [newTestName, setNewTestName] = useState('');
   const [updatingMessage, setUpdatingMessage] = useState('');
+
+  const [inspectPrototypeId, setInspectPrototypeId] = useState('');
+  const [inspectTestId, setInspectTestId] = useState('');
+  const [inspectResponse, setInspectResponse] = useState('');
+
+  const [createPrototypeId, setCreatePrototypeId] = useState('');
+  const [prototypeExpectedTest, setPrototypeExpectedTest] = useState('');
+  const [prototypeReceivedDate, setPrototypeReceivedDate] = useState('');
+  const [createMessage, setCreateMessage] = useState('');
 
   const getAllPrototypes = async () => {
     try {
@@ -47,14 +58,51 @@ const PrototypeOperations = () => {
 
   const deletePrototypeById = async () => {
     try {
-      await axios.delete(`http://localhost:8090/api/v1/prototypes/delete/${deletePrototypeId}`);
+      const response = await axios.delete(`http://localhost:8090/api/v1/prototypes/delete/${deletePrototypeId}`);
       getAllPrototypes();
       setDeletePrototypeId('');
       setSelectedPrototype(null);
+      setDeletingMessage(response.data);
     } catch (error) {
       console.error('Error deleting prototype by ID:', error);
+      setDeletingMessage('Error occurred. Please try again.');
     }
   };
+
+  const handleTestPrototype = async () => {
+    try {
+      const response = await axios.put('http://localhost:8090/api/v1/prototypes/inspect', null, {
+        params: {
+          prototypeId: inspectPrototypeId,
+          testId: inspectTestId
+        }
+      });
+      setInspectResponse(response.data);
+    } catch (error) {
+      console.error('Error testing prototype:', error);
+      setInspectResponse('Error testing prototype. Please try again.');
+    }
+  };
+
+  const handleCreatePrototype = async (e) => {
+    e.preventDefault(); 
+    try {
+      const response = await axios.post('http://localhost:8090/api/v1/prototypes/createprototype', {
+        id: createPrototypeId,
+        expectedTest: prototypeExpectedTest,
+        receivedDate: prototypeReceivedDate,
+      });
+      setCreateMessage(response.data);
+      setCreatePrototypeId('');
+      setPrototypeExpectedTest('');
+      setPrototypeReceivedDate('');
+      setCreateMessage(response.data);
+    } catch (error) {
+      console.error('Error creating prototype:', error);
+      setCreateMessage('Error occurred. Please try again.');
+    }
+  };
+  
 
   const handleShowAllClick = () => {
     getAllPrototypes();
@@ -62,6 +110,7 @@ const PrototypeOperations = () => {
   };
 
   return (
+
     <div>
       <h2>All Prototypes</h2>
       <button onClick={handleShowAllClick}>Show All Prototypes</button>
@@ -72,6 +121,7 @@ const PrototypeOperations = () => {
           ))}
         </ul>
       )}
+
       <div>
         <input
           type="text"
@@ -97,6 +147,7 @@ const PrototypeOperations = () => {
           )}
         </div>  
       )}
+
       <div>
         <input
           type="text"
@@ -105,7 +156,9 @@ const PrototypeOperations = () => {
           placeholder="Enter Prototype ID to Delete"
         />
         <button onClick={deletePrototypeById}>Delete Prototype by ID</button>
+        {deletingMessage && <p>{deletingMessage}</p>}
       </div>
+
       <div>
       <h2>Update Test Method</h2>
       <form onSubmit={changeTest}>
@@ -131,6 +184,61 @@ const PrototypeOperations = () => {
       </form>
       {updatingMessage && <p>{updatingMessage}</p>}
     </div>
+
+    <div>
+      <h2>Test Prototype</h2>
+      <div>
+        <label>Prototype ID:</label>
+        <input
+          type="text"
+          value={inspectPrototypeId}
+          onChange={(e) => setInspectPrototypeId(e.target.value)}
+        />
+      </div>
+      <div>
+        <label>Test ID:</label>
+        <input
+          type="text"
+          value={inspectTestId}
+          onChange={(e) => setInspectTestId(e.target.value)}
+        />
+      </div>
+      <button onClick={handleTestPrototype}>Test Prototype</button>
+      {inspectResponse && <p>{inspectResponse}</p>}
+    </div>
+
+    <div>
+      <h2>Create Prototype</h2>
+      <form onSubmit={handleCreatePrototype}>
+        <div>
+          <label>ID:</label>
+          <input
+            type="text"
+            value={createPrototypeId}
+            onChange={(e) => setCreatePrototypeId(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Expected Test:</label>
+          <input
+            type="text"
+            value={prototypeExpectedTest}
+            onChange={(e) => setPrototypeExpectedTest(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Received Date:</label>
+          <input
+            type="text"
+            value={prototypeReceivedDate}
+            onChange={(e) => setPrototypeReceivedDate(e.target.value)}
+          />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      {createMessage && <p>{createMessage}</p>}
+    </div>
+
     </div>
     
   );
