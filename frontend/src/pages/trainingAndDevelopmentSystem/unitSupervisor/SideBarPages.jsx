@@ -1,4 +1,3 @@
-//import React from "react";
 import CardComp from "../../../components/sideComps/CardComp";
 import TableComp from '../../../components/sideComps/TableComp'
 import avatar from '../../../assets/avatar.svg';
@@ -37,6 +36,7 @@ export function DashboardView(props) {
     )
 }
 
+// update stage table is here
 export function UpdateStages() {
     const { id } = useParams();
 
@@ -85,6 +85,7 @@ export function UpdateStages() {
         console.error("Error updating stage:", error);
     };
 
+    // button only active ,if previos stage is complete
     const renderButton = (user, stage) => {
         if (user[stage]) {
             return <button className="btn btn-success-outline mx-2" disabled>Completed</button>;
@@ -122,7 +123,7 @@ export function UpdateStages() {
                                     <td>{user.projectName}</td>
                                     <td>{user.projectCode}</td>
                                     <td>{user.projectManager}</td>
-                                    <td>{renderButton(user, 'stageOne')}</td>
+                                    <td>{renderButton(user, 'stageOne')}</td> 
                                     <td>{renderButton(user, 'stageTwo')}</td>
                                     <td>{renderButton(user, 'stageThree')}</td>
                                     <td>
