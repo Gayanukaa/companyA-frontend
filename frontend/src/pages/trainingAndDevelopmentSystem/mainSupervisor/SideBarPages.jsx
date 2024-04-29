@@ -490,3 +490,63 @@ export function AddDevelop(props) {
         </div>
     );
 }
+
+export function SendToQA(props) {
+
+    let navigate = useNavigate();
+
+    const [user, setUser] = useState({
+        id: "",
+        expectedTest: "",
+        receivedDate: ""
+    });
+
+    const { id, expectedTest, receivedDate } = user;
+
+    const onInputChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const userData = { ...user }; // Type casting applied here
+        try {
+            //  reqSend.defaultReq('POST', 'api/v1/prototypes/addPrototype', userData, () => {
+            //     navigate("/trainingdevelopment-management/main-supervisor/product-development");
+            // }, (error) => {
+            //     console.error("Error adding prototype:", error);
+            // });
+            alert(userData.receivedDate)
+        } catch (error) {
+            console.error("Error adding prototype:", error);
+        }
+    };
+
+    return (
+        <div className='container'>
+            <div className="row">
+                <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
+                    <h2 className="text-center m-4">Send To QA</h2>
+                    <form onSubmit={(e) => onSubmit(e)} action="" >
+                        <div className="mb-3">
+                            <label htmlFor="Name" className='form-label'>ID</label>
+                            <input type={"text"} className='form-control' name='id' required placeholder='Enter id' value={id} onChange={(e) => onInputChange(e)} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="Username" className='form-label'>Expected Test</label>
+                            <input type={"text"} className='form-control' name='expectedTest' required placeholder='Enter expected test' value={expectedTest} onChange={(e) => onInputChange(e)} />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="Username" className='form-label'>Expected Test</label>
+                            <input type={"text"} className='form-control' name='receivedDate' required placeholder='Enter Date (dd/mm/yyyy)' value={receivedDate} onChange={(e) => onInputChange(e)} />
+                        </div>
+                        <div>
+                            <button type='submit' className='btn btn-outline-primary'>Submit</button>
+                            <Link type='submit' className='btn btn-outline-danger mx-2' to='/trainingdevelopment-management/main-supervisor/product-development'>Cancel</Link>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+}
