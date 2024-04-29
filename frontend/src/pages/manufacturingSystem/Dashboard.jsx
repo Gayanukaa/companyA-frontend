@@ -10,9 +10,7 @@ import {
 
 import { DashboardView, ViewStocks} from './SideBarPages';
 import FormInput from '../manufacturingSystem/component/FormInput'
-
-
-
+import { OrderStatus } from './OrderStatus';
 
 
 export default function Dashboard() {
@@ -73,6 +71,7 @@ export default function Dashboard() {
                         <Route path="/dashboard" element={<DashboardView />} />
                         <Route path="/view-stocks" element={<ViewStocks />} />
                         <Route path="/material-request" element={<FormInput />} />
+                        <Route path="/order-status" element={<OrderStatus />} />
                         
 
                     </Routes>
