@@ -2,7 +2,6 @@ import CardComp from "../../../components/sideComps/CardComp";
 import TableComp from '../../../components/sideComps/TableComp'
 import avatar from '../../../assets/avatar.svg';
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { Link, useParams,useNavigate } from 'react-router-dom';
 import * as reqSend from '../../../global/reqSender';
 
@@ -34,6 +33,7 @@ export function DashboardView(props) {
     )
 }
 
+//add main supervisor table
 export function MainSupervisors(props) {
 
 
@@ -101,6 +101,7 @@ export function MainSupervisors(props) {
     )
 }
 
+//add unit supervisor table
 export function UnitSupervisors(props) {
 
     const { id } = useParams();
@@ -164,6 +165,7 @@ export function UnitSupervisors(props) {
     );
 }
 
+//add main supervisor form
 export function AddUnitSupervisor(props) {
 
     const navigate = useNavigate();
@@ -223,6 +225,7 @@ export function AddUnitSupervisor(props) {
     );
 }
 
+//add unit supervisor form
 export function AddMainSupervisor(props) {
 
     let navigate = useNavigate();
@@ -282,6 +285,7 @@ export function AddMainSupervisor(props) {
     );
 }
 
+//add course table
 export function Course(props) {
 
     const [courses, setCourses] = useState([]);
@@ -349,6 +353,7 @@ export function Course(props) {
     )
 }
 
+//add course form
 export function AddCourse(props){
     let navigate = useNavigate();
 
@@ -428,6 +433,7 @@ export function AddCourse(props){
     );
 }
 
+//add edit course form
 export function EditCourse(props){
     let navigate=useNavigate();
     const {id}=useParams();
@@ -454,17 +460,6 @@ export function EditCourse(props){
             loadUser();
         },[])
         
-        // const onSubmit=async(e)=>{
-        //     e.preventDefault()
-        //     const userData = { ...user, courseId: parseInt(courseId) };
-        //     await axios.put(`http://localhost:8090/course/${id}`,userData)
-        //     navigate("/")
-        // }
-
-        // const loadUser =async()=>{
-        //     const result=await axios.get(`http://localhost:8090/courses/${id}`)
-        //     setUser(result.data)
-        // }
 
         const loadUser = async () => {
             try {
@@ -518,14 +513,7 @@ export function EditCourse(props){
                     <label htmlFor="Username" className='form-label'>Link to Learn</label>
                     <input type={"url"} className='form-control'name='link' required placeholder='Enter link' value={link} onChange={(e)=>onInputChange(e)}/>
                 </div>
-                {/* <div className="mb-3">
-                    <label htmlFor="Username" className='form-label'>Cost</label>
-                    <input type={"text"} className='form-control'name='cost' required placeholder='Enter link' value={cost} onChange={(e)=>onInputChange(e)}/>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="Username" className='form-label'>Duration</label>
-                    <input type={"text"} className='form-control'name='duration' required placeholder='Enter link' value={duration} onChange={(e)=>onInputChange(e)}/>
-                </div> */}
+                
 
                 <div>
                     <button type='submit' className='btn btn-outline-primary'>Submit</button>
@@ -538,6 +526,7 @@ export function EditCourse(props){
   )
 }
 
+//add ose table
 export function Ose(props) {
     const [oses, setOses] = useState([]);
 
@@ -604,6 +593,7 @@ export function Ose(props) {
     )
 }
 
+//add ose form
 export function AddOse(props){
     let navigate = useNavigate();
 
@@ -678,6 +668,7 @@ export function AddOse(props){
     );
 }
 
+//add edit ose form
 export function EditOse(props){
     let navigate=useNavigate();
     const {id}=useParams();
@@ -703,18 +694,7 @@ export function EditOse(props){
             loadUser();
         },[])
         
-        // const onSubmit=async(e)=>{
-        //     e.preventDefault()
-        //     const userData = { ...user, courseId: parseInt(courseId) };
-        //     await axios.put(`http://localhost:8082/course/${id}`,userData)
-        //     navigate("/")
-        // }
-
-        // const loadUser =async()=>{
-        //     const result=await axios.get(`http://localhost:8082/courses/${id}`)
-        //     setUser(result.data)
-        // }
-
+        
         const loadUser = async () => {
             try {
                 const result =reqSend.defaultReq('GET', `api/tms/overseas/${id}`, null, (response) => {
