@@ -8,7 +8,7 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView } from './SideBarPages';
+import { AddDevelop, AddProducts, AddPrototype, DashboardView, EditPrototype, ProductDevelopment, Products, Prototype, SendToQA } from './SideBarPages';
 import NotFound from '../../generalManagementSystem/NotFound';
 
 
@@ -70,10 +70,14 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        
-
-
-                        
+                        <Route path="/prototypes" element={<Prototype />} />
+                        <Route path="/prototypes/add" element={<AddPrototype />} />
+                        <Route path="/prototypes/edit/:id" element={<EditPrototype />} />
+                        <Route path="/product-development" element={<ProductDevelopment />} />
+                        <Route path="/product-development/send-to-qa" element={<SendToQA />} />
+                        <Route path="/product-development/add-develop/:id" element={<AddDevelop />} />
+                        <Route path="/product-development/add-product/:id" element={<AddProducts />} />
+                        <Route path="/products" element={<Products />} />
                         <Route path="/*" element={<NotFound />}  />
                     </Routes>
                 </section>
