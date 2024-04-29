@@ -13,8 +13,13 @@ export const personImages=[per1,per2,per3,per4,per5,per6,per7,per8]
 
 export const dashboardAdminData = [
     { name: "Dashboard", icon: <i className='bx bxs-dashboard' ></i>, active: true, to: 'dashboard' },
+<<<<<<< Updated upstream
     { name: "Employee Registration", icon: <i className='bx bxs-user-plus' ></i>, active: false, to: 'employee-registration' },
     { name: "Employee Details", icon: <i className='bx bxs-user-plus' ></i>, active: false, to: 'employee-details' },
     { name: "Attendance Details", icon: <i className='bx bxs-user-plus' ></i>, active: false, to: 'attendance-details' },
 
+=======
+    { name: "View Stocks", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-stocks' },
+    { name: "Employee Settings", icon: <i className='bx bxs-user-check'></i>, active: false, to: 'Employee-settings' }
+>>>>>>> Stashed changes
 ]
