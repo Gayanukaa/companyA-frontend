@@ -8,7 +8,7 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView } from './SideBarPages';
+import { DashboardView, UpdateStages } from './SideBarPages';
 import NotFound from '../../generalManagementSystem/NotFound';
 
 
@@ -70,7 +70,7 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        
+                        <Route path="/update-stages" element={<UpdateStages />} />
 
                         <Route path="/*" element={<NotFound />}  />
                     </Routes>
