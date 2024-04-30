@@ -32,8 +32,13 @@ const Login = (props) => {
         logistic_manager: '/logistic-management/dashboard',
         manufacturing_manager: '/manufacturing-management/dashboard',
         sales_manager: '/sales-management/dashboard',
-        training_development_manager: '/trainingdevelopment-management/dashboard',
         general_manager: '/general-management/dashboard',
+
+        training_development_manager: '/trainingdevelopment-management/manager/dashboard',
+        main_supervisor: '/trainingdevelopment-management/main-supervisor/dashboard',
+        unit_supervisor: '/trainingdevelopment-management/unit-supervisor/dashboard',
+        training_employee: '/trainingdevelopment-management/training-employee/dashboard',
+
         customer: '/'
     };
     

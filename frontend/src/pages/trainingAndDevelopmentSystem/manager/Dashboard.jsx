@@ -8,7 +8,7 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView, ViewStocks } from './SideBarPages';
+import { AddCourse, AddMainSupervisor, AddOse, AddUnitSupervisor, Course, DashboardView, EditCourse, EditOse, MainSupervisors, Ose, UnitSupervisors } from './SideBarPages';
 import NotFound from '../../generalManagementSystem/NotFound';
 
 
@@ -70,10 +70,16 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/view-stocks" element={<ViewStocks />} />
-
-
-
+                        <Route path="/main-supervisors" element={<MainSupervisors />} />
+                        <Route path="/unit-supervisors" element={<UnitSupervisors />} />
+                        <Route path="/main-supervisors/add" element={<AddMainSupervisor />} />
+                        <Route path="/unit-supervisors/add" element={<AddUnitSupervisor />} />
+                        <Route path="/courses" element={<Course />} />
+                        <Route path="/courses/add" element={<AddCourse />} />
+                        <Route path="/courses/edit/:id" element={<EditCourse />} />
+                        <Route path="/over-seas" element={<Ose />} />
+                        <Route path="/over-seas/add" element={<AddOse />} />
+                        <Route path="/over-seas/edit/:id" element={<EditOse />} />
                         <Route path="/*" element={<NotFound />}  />
                     </Routes>
                 </section>
