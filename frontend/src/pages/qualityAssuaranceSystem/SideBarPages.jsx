@@ -9,7 +9,7 @@ import ReportDelete from './reports/ReportDelete';
 import PrototypeOperations from './testSubjectOperations/PrototypeOperations';
 import SampleOperations from './testSubjectOperations/SampleOperations';
 import TestOperations from './tests/TestOperations';
-
+import QAManagerView from './qaManager/QAManagerView';
 
 
 export function ViewStocks(props) {
@@ -132,6 +132,15 @@ export function TestOps(props) {
         <div className="Tests" style={{ marginLeft: '20px' }}>
           <h1>Tests</h1>
           <TestOperations/>
+        </div>
+      );
+}
+
+export function ManagerOps(props) {
+    return (
+        <div className="QAManager">
+          
+          <QAManagerView/>
         </div>
       );
 }
