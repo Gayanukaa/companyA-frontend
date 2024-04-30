@@ -45,7 +45,7 @@ const FormInput = (props) => {
       // Submit the form or handle the data here
 
       const data = {
-        "id": parseInt(formDataObject["id"]),
+        "id": formDataObject["id"],
         "quantity": parseInt(formDataObject["quantity"])
       }
 

@@ -37,7 +37,7 @@ function Maintenence() {
     
           const data = {
             "machineId": parseInt(formDataObject["machineId"]),
-            "maintenanceType": parseInt(formDataObject["maintenanceType"])
+            "maintenanceType": formDataObject["maintenanceType"]
           }
 
           console.log(data)
