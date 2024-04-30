@@ -109,7 +109,7 @@ const QAManagerView = () => {
             {managers.map((manager) => (
               <ListItem key={manager.id}>
                 <ListItemText primary={`${manager.name} - ${manager.email} - ${manager.mobileNumber}`} />
-                <Button onClick={() => fetchTestSubjects(manager.id)} variant="contained" color="primary">View Test Subjects</Button>
+                <Button onClick={() => fetchTestSubjects(manager.id)} variant="contained" color="primary" style={{ marginRight: '10px' }}>View Test Subjects</Button>
                 <Button onClick={() => deleteManager(manager.id)} variant="contained" color="secondary">Delete Manager</Button>
               </ListItem>
             ))}
@@ -122,20 +122,32 @@ const QAManagerView = () => {
             <List>
               {testSubjects.map((subject) => (
                 <ListItem key={subject.id}>
-                  <ListItemText primary={`${subject.id} - ${subject.testStatus}- ${subject.receivedDate}- ${subject.expectedTest}`} />
-                  <Button onClick={() => concludeTest(subject.id)} variant="contained" color="primary">Conclude Test</Button>
-                </ListItem>
+                <ListItemText
+                  primary={`${subject.id} - ${subject.receivedDate}- ${subject.expectedTest}`}
+                  secondary={
+                    <Button
+                      onClick={() => concludeTest(subject.id)}
+                      variant="contained"
+                      color="primary"
+                      style={{ marginRight: '20px' }}
+                    >
+                      Conclude Test
+                    </Button>
+                  }
+                />
+              </ListItem>
               ))}
             </List>
             {concludeTestStatus && <Typography>{concludeTestStatus}</Typography>}
-            <Typography variant="h3">Assign New Test Subject to {selectedManager.name}</Typography>
+            <Typography variant="h3" style={{ marginBottom: '10px' }}>Assign New Test Subject to {selectedManager.name}</Typography>
             <TextField
               label="Test Subject Id"
               name="testSubjectId"
               value={newTestSubjectId}
               onChange={(e) => setNewTestSubjectId(e.target.value)}
+              variant="outlined"
             />
-            <Button onClick={addTestSubject} variant="contained" color="primary">Assign Test Subject</Button>
+            <Button onClick={addTestSubject} variant="contained" color="primary" style={{ marginLeft: '10px' }}>Assign Test Subject</Button>
           </Grid>
         )}
 
@@ -146,30 +158,38 @@ const QAManagerView = () => {
             name="id"
             value={newManager.id}
             onChange={handleInputChange}
+            style={{ marginRight: 10 }}
+            variant="outlined"
           />
           <TextField
             label="Name"
             name="name"
             value={newManager.name}
             onChange={handleInputChange}
+            style={{ marginRight: 10 }}
+            variant="outlined"
           />
           <TextField
             label="Mobile Number"
             name="mobileNumber"
             value={newManager.mobileNumber}
             onChange={handleInputChange}
+            style={{ marginRight: 10 }}
+            variant="outlined"
           />
           <TextField
             label="Email"
             name="email"
             value={newManager.email}
             onChange={handleInputChange}
+            style={{ marginRight: 10 }}
+            variant="outlined"
           />
           <Button onClick={addManager} variant="contained" color="primary">Add Manager</Button>
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="h3">Items to be checked</Typography>
+          <Typography variant="h3" style={{ marginBottom: '10px' }}>Items to be checked</Typography>
           <Button onClick={getNotCheckedTestSubjects} variant="contained" color="primary">Get Not Checked Test Subjects</Button>
           <List>
             {notCheckedTestSubjects.map((subject) => (
