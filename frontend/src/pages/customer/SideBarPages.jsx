@@ -2,9 +2,10 @@ import React from "react";
 import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
+import * as reqSend from '../../global/reqSender';
 
 import { useState, useEffect } from 'react';
-
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -94,20 +95,53 @@ export function DashboardView(props) {
 export function PlaceOrder(props) {
     // send the shipping data to backend
 
-    const [houseNumber, setHouseNumber] = useState("");
-    const [streetName, setStreetName] = useState("");
-    const [city, setCity] = useState("");
-    const [postalCode, setPostalCode] = useState("");
+    const [addressLine1, setaddressLine1] = useState("");
+    const [addressLine2, setaddressLine2] = useState("");
+    const [city, setcity] = useState("");
+    const [state, setstate] = useState("");
+    const [country, setcountry] = useState("");
+    const [zipCode, setzipCode] = useState("");
+    const navigate  = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const shippingAddress = `${houseNumber} ${streetName}, ${city}, ${postalCode}`;
+        const shippingAddress = `${addressLine1} ${addressLine2}, ${city}, ${state}, ${country}, ${zipCode}`;
         console.log("Form submitted with shipping address:", shippingAddress);
         // Reset the form
-        setHouseNumber("");
-        setStreetName("");
-        setCity("");
-        setPostalCode("");
+        setaddressLine1("");
+        setaddressLine2("");
+        setcity("");
+        setstate("");
+        setcountry("");
+        setzipCode("");
+
+        const addressData = {
+            addressLine1: addressLine1,
+            addressLine2: addressLine2,
+            city: city,
+            state: state,  
+            country: country,
+            zipCode: zipCode,
+
+
+        };
+
+        console.log(addressData);
+
+
+
+        reqSend.defaultReq("POST", 'api/v1/User delivery addresses', addressData,
+            response => {
+                if (response.status === 200 && response.data) {
+                   navigate("/s");
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
     };
 
     return (
@@ -123,23 +157,23 @@ export function PlaceOrder(props) {
                 <div style={{ marginTop: "20px" }}>
                     <form onSubmit={handleSubmit} style={{ maxWidth: "400px", margin: "0 auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px", backgroundColor: "#f9f9f9" }}>
                         <label style={{ display: "block", marginBottom: "10px" }}>
-                            House Number:
+                            Address Line 1:
                             <input
                                 type="text"
-                                value={houseNumber}
-                                onChange={(e) => setHouseNumber(e.target.value)}
+                                value={addressLine1}
+                                onChange={(e) => setaddressLine1(e.target.value)}
                                 style={{ width: "100%", padding: "10px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "5px" }}
-                                placeholder="Enter house number"
+                                placeholder="Enter Address Line 1 "
                             />
                         </label>
                         <label style={{ display: "block", marginBottom: "10px" }}>
-                            Street Name:
+                            Address Line 2:
                             <input
                                 type="text"
-                                value={streetName}
-                                onChange={(e) => setStreetName(e.target.value)}
+                                value={addressLine2}
+                                onChange={(e) => setaddressLine2(e.target.value)}
                                 style={{ width: "100%", padding: "10px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "5px" }}
-                                placeholder="Enter street name"
+                                placeholder="Enter Address Line 2"
                             />
                         </label>
                         <label style={{ display: "block", marginBottom: "10px" }}>
@@ -153,13 +187,33 @@ export function PlaceOrder(props) {
                             />
                         </label>
                         <label style={{ display: "block", marginBottom: "10px" }}>
-                            Postal Code:
+                            State:
                             <input
                                 type="text"
-                                value={postalCode}
-                                onChange={(e) => setPostalCode(e.target.value)}
+                                value={state}
+                                onChange={(e) => setstate(e.target.value)}
                                 style={{ width: "100%", padding: "10px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "5px" }}
-                                placeholder="Enter postal code"
+                                placeholder="Enter state"
+                            />
+                        </label>
+                        <label style={{ display: "block", marginBottom: "10px" }}>
+                            Country:
+                            <input
+                                type="text"
+                                value={Country}
+                                onChange={(e) => setcountry(e.target.value)}
+                                style={{ width: "100%", padding: "10px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "5px" }}
+                                placeholder="Enter country"
+                            />
+                        </label>
+                        <label style={{ display: "block", marginBottom: "10px" }}>
+                            Zip Code:
+                            <input
+                                type="text"
+                                value={zipCodeCode}
+                                onChange={(e) => setzipCode(e.target.value)}
+                                style={{ width: "100%", padding: "10px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "5px" }}
+                                placeholder="Enter zip code"
                             />
                         </label>
                         <button type="submit" style={{ display: "block", width: "100%", padding: "10px", marginTop: "10px", fontSize: "16px", color: "#fff", backgroundColor: "#007bff", border: "none", borderRadius: "5px", cursor: "pointer" }}>Place Order</button>
@@ -225,5 +279,12 @@ export function OrderHistory() {
             </table>
         </div>
     );
+  }
+
+  export function GetQuotation() {
+    
+    <Button>
+        Get-Quotation
+    </Button>
   }
   
