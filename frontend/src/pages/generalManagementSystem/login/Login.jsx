@@ -107,10 +107,10 @@ const Login = (props) => {
                 <div className="inputBox">
                     <input type="submit" value="Log In" id="btn" onClick={submitLogForm} />
                 </div>
-                {/* <div className="group">
-                    <Link to="/" className='nav-avatar-list'>Forgot password</Link>
-                    <Link to="/register" className='nav-avatar-list'> Sign Up</Link>
-                </div> */}
+                
+                <div className="group" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Link to="/sign-up" className='nav-avatar-list'>Don't have an account? Sign Up</Link>
+                </div>
             </motion.div>
         </section>
     )

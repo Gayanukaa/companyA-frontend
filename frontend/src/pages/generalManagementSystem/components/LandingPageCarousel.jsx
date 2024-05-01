@@ -33,50 +33,50 @@ export default function LandingPageCarousel() {
     <div className='App'>
       <Carousel responsive={responsive}>
         <div style={{ width: '250px', height: '400px', display: 'flex', margin: '0 auto' }} className='card'>
-          <img  className="product--image" src={img01} alt="product image" />
+          <img className="product--image" src={img01} alt="product image" />
           <h2>Capacitor</h2>
           <p className='price'> Rs:20.00</p>
           <p>Product details</p>
-          <button type="text" class="btn btn-dark btn-lg btn-block">In Stoke</button>
+          <button type="text" className="btn btn-dark btn-lg btn-block">In Stoke</button>
         </div>
         <div style={{ width: '250px', height: '400px', display: 'flex', margin: '0 auto' }} className='card'>
-          <img  className="product--image" src={img01} alt="product image" />
+          <img className="product--image" src={img01} alt="product image" />
           <h2>Capacitor</h2>
           <p className='price'> Rs:20.00</p>
           <p>Product details</p>
-          <button type="text" class="btn btn-dark btn-lg btn-block">In Stoke</button>
+          <button type="text" className="btn btn-dark btn-lg btn-block">In Stoke</button>
         </div>
         <div style={{ width: '250px', height: '400px', display: 'flex', margin: '0 auto' }} className='card'>
-          <img  className="product--image" src={img01} alt="product image" />
+          <img className="product--image" src={img01} alt="product image" />
           <h2>Capacitor</h2>
           <p className='price'> Rs:20.00</p>
           <p>Product details</p>
-          <button type="text" class="btn btn-dark btn-lg btn-block">In Stoke</button>
+          <button type="text" className="btn btn-dark btn-lg btn-block">In Stoke</button>
         </div>
         <div style={{ width: '250px', height: '400px', display: 'flex', margin: '0 auto' }} className='card'>
-          <img  className="product--image" src={img01} alt="product image" />
+          <img className="product--image" src={img01} alt="product image" />
           <h2>Capacitor</h2>
           <p className='price'> Rs:20.00</p>
           <p>Product details</p>
-          <button type="text" class="btn btn-dark btn-lg btn-block">In Stoke</button>
+          <button type="text" className="btn btn-dark btn-lg btn-block">In Stoke</button>
         </div>
         <div style={{ width: '250px', height: '400px', display: 'flex', margin: '0 auto' }} className='card'>
-          <img  className="product--image" src={img01} alt="product image" />
+          <img className="product--image" src={img01} alt="product image" />
           <h2>Capacitor</h2>
           <p className='price'> Rs:20.00</p>
           <p>Product details</p>
-          <button type="text" class="btn btn-dark btn-lg btn-block">In Stoke</button>
+          <button type="text" className="btn btn-dark btn-lg btn-block">In Stoke</button>
         </div>
         <div style={{ width: '250px', height: '400px', display: 'flex', margin: '0 auto' }} className='card'>
-          <img  className="product--image" src={img01} alt="product image" />
+          <img className="product--image" src={img01} alt="product image" />
           <h2>Capacitor</h2>
           <p className='price'> Rs:20.00</p>
           <p>Product details</p>
-          <button type="text" class="btn btn-dark btn-lg btn-block">In Stoke</button>
+          <button type="text" className="btn btn-dark btn-lg btn-block">In Stoke</button>
         </div>
 
 
-        
+
 
 
       </Carousel>

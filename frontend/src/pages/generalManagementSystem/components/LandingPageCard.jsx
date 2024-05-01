@@ -38,9 +38,9 @@ export default function LandingPageCard() {
                 </div>
             </div><br></br>
             <p>Welcome to Company A, your premier destination for high-quality electronic circuit components. With a dedication to excellence and a commitment to innovation, we pride ourselves on offering a comprehensive range of electronic components designed to meet the needs of various industries and applications.</p>
-<p>At Company A, quality is our top priority. We source our components from trusted suppliers and ensure that each product meets stringent quality standards. Whether you're looking for resistors, capacitors, transistors, or any other electronic component, you can trust Company A to deliver reliable and performance-driven solutions.</p>
-<p>With a team of experienced professionals and a state-of-the-art facility, we are equipped to handle projects of any scale. Our technical expertise and industry knowledge enable us to provide expert guidance and support, helping you find the perfect components for your projects.</p>
-<p>Partner with Company A and experience the difference in electronic component solutions. We are committed to providing exceptional service, competitive pricing, and timely delivery to ensure your success.</p>
+            <p>At Company A, quality is our top priority. We source our components from trusted suppliers and ensure that each product meets stringent quality standards. Whether you're looking for resistors, capacitors, transistors, or any other electronic component, you can trust Company A to deliver reliable and performance-driven solutions.</p>
+            <p>With a team of experienced professionals and a state-of-the-art facility, we are equipped to handle projects of any scale. Our technical expertise and industry knowledge enable us to provide expert guidance and support, helping you find the perfect components for your projects.</p>
+            <p>Partner with Company A and experience the difference in electronic component solutions. We are committed to providing exceptional service, competitive pricing, and timely delivery to ensure your success.</p>
 
 
         </div>
