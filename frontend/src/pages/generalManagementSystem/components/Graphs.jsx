@@ -10,8 +10,8 @@ const chartSetting = {
       label: 'Stocks',
     },
   ],
-  width: 550,
-  height: 400,
+  width: 1000,
+  height: 500,
 };
 
 
@@ -42,8 +42,9 @@ export function BarGraphComponent(props) {
     <BarChart
       dataset={dataset}
       yAxis={[{ scaleType: 'band', dataKey: 'label' }]}
-      series={[{ dataKey: 'value', label: 'Quantity', valueFormatter }]}
+      series={[{ dataKey: 'value', label: 'Stocks', valueFormatter }]}
       layout="horizontal"
+      colors={['#1976D2']}
       grid={{ vertical: true }}
       {...chartSetting}
     />
@@ -77,10 +78,10 @@ export function SimpleLineChart(props) {
     <>
       {salesValues.length > 0 && xLabels.length > 0 && (
         <LineChart
-          width={550}
-          height={400}
+          width={1000}
+          height={500}
           series={[
-            { data: salesValues, label: 'Sales' },
+            { data: salesValues, label: 'Sales', color: '#1976D2' },
           ]}
           xAxis={[{ scaleType: 'point', data: xLabels }]}
         />

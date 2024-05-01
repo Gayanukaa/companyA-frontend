@@ -14,6 +14,7 @@ import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TrashIcon from "./TrashIcon";
+import LoadingSpinner from './LoadingSpinner.jsx';
 
 
 
@@ -61,8 +62,9 @@ const AccordionDetails = withStyles((theme) => ({
 
 
 export const getFeedBackData = async () => {
+
     try {
-        const response = await axios.get("http://localhost:8090/api/feedback/view");
+        const response = await axios.get("https://spring-boot-companya.azurewebsites.net/api/feedback/view");
         return response.data;
     } catch (error) {
         console.error("Error fetching feedback data:", error);
@@ -74,6 +76,7 @@ const FeedbackSection = () => {
     const [expanded, setExpanded] = React.useState('panel1');
     const [value, setValue] = useState(0);
     const [feedbackData, setFeedbackData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
 
     const handleChange = (panel) => (event, newExpanded) => {
@@ -116,6 +119,7 @@ const FeedbackSection = () => {
         const fetchData = async () => {
             const data = await getFeedBackData();
             setFeedbackData(data);
+            setIsLoading(false);
         };
 
         fetchData();
@@ -127,69 +131,76 @@ const FeedbackSection = () => {
             <div>
 
                 <h1>Feedback</h1>
-                <div className="feedback-container">
-                    <div>
-                        <Tabs value={value} onChange={handleTabValueChange}>
-                            <Tab label="Unread" />
-                            <Tab label="Read" />
-                        </Tabs>
+
+                {
+                    isLoading ? (
+                        <LoadingSpinner />
+                    ) : (
+                        <div className="feedback-container">
+                            <div>
+                                <Tabs value={value} onChange={handleTabValueChange}>
+                                    <Tab label="Unread" />
+                                    <Tab label="Read" />
+                                </Tabs>
 
 
-                        {feedbackData && value === 0 && feedbackData.filter(feedback => feedback.isRead === 0).length === 0 ? (
-                            <Alert severity="info">No Unread Messages</Alert>
-                        ) : (
-                            feedbackData && value === 0 && feedbackData.map((feedback, index) => (
-                                feedback.isRead === 0 && (
-                                    <Accordion key={index}>
-                                        <AccordionSummary expandIcon={<i className='bx bxs-chevron-down' ></i>}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                    <Avatar src={feedback.avatar} alt="Avatar" sx={{ mr: 2 }} />
-                                                    <Grid>
-                                                        <Typography variant="h6">{feedback.subject}</Typography>
-                                                        <Typography variant="body1" >{feedback.name}</Typography>
-                                                        <Typography variant="caption">{new Date(feedback.timestamp).toLocaleString()}</Typography>
-                                                    </Grid>
+                                {feedbackData && value === 0 && feedbackData.filter(feedback => feedback.isRead === 0).length === 0 ? (
+                                    <Alert severity="info">No Unread Messages</Alert>
+                                ) : (
+                                    feedbackData && value === 0 && feedbackData.map((feedback, index) => (
+                                        feedback.isRead === 0 && (
+                                            <Accordion key={index}>
+                                                <AccordionSummary expandIcon={<i className='bx bxs-chevron-down' ></i>}>
+                                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                            <Avatar src={feedback.avatar} alt="Avatar" sx={{ mr: 2 }} />
+                                                            <Grid>
+                                                                <Typography variant="h6">{feedback.subject}</Typography>
+                                                                <Typography variant="body1" >{feedback.name}</Typography>
+                                                                <Typography variant="caption">{new Date(feedback.timestamp).toLocaleString()}</Typography>
+                                                            </Grid>
+                                                        </Box>
+                                                        <Button onClick={(e) => handleMarkAsReadClick(e, feedback.id)} variant='contained' className='markAsRead'>Mark as Read</Button>                                    </Box>
+                                                </AccordionSummary>
+
+                                                <AccordionDetails>
+                                                    <Typography variant="body1">{feedback.message}</Typography>
+                                                </AccordionDetails>
+                                            </Accordion>
+                                        )
+                                    ))
+                                )}
+
+
+                                {feedbackData && value === 1 && feedbackData.filter(feedback => feedback.isRead === 1).length === 0 ? (
+                                    <Alert severity="info">No Read Messages</Alert>
+                                ) : (feedbackData && value === 1 && feedbackData.map((feedback, index) => (
+                                    feedback.isRead === 1 && (
+                                        <Accordion>
+                                            <AccordionSummary expandIcon={<i className='bx bxs-chevron-down' ></i>}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                        <Avatar src={feedback.avatar} alt="Avatar" sx={{ mr: 2 }} />
+                                                        <Grid>
+                                                            <Typography variant="h6">{feedback.subject}</Typography>
+                                                            <Typography variant="body1" >{feedback.name}</Typography>
+                                                            <Typography variant="caption">{new Date(feedback.timestamp).toLocaleString()}</Typography>
+                                                        </Grid>
+                                                    </Box>
+                                                    <TrashIcon onClick={handleDeleteClick} />
                                                 </Box>
-                                                <Button onClick={(e) => handleMarkAsReadClick(e, feedback.id)} variant='contained' className='markAsRead'>Mark as Read</Button>                                    </Box>
-                                        </AccordionSummary>
+                                            </AccordionSummary>
 
-                                        <AccordionDetails>
-                                            <Typography variant="body1">{feedback.message}</Typography>
-                                        </AccordionDetails>
-                                    </Accordion>
-                                )
-                            ))
-                        )}
-
-
-                        {feedbackData && value === 1 && feedbackData.filter(feedback => feedback.isRead === 1).length === 0 ? (
-                            <Alert severity="info">No Read Messages</Alert>
-                        ) : (feedbackData && value === 1 && feedbackData.map((feedback, index) => (
-                            feedback.isRead === 1 && (
-                                <Accordion>
-                                    <AccordionSummary expandIcon={<i className='bx bxs-chevron-down' ></i>}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                <Avatar src={feedback.avatar} alt="Avatar" sx={{ mr: 2 }} />
-                                                <Grid>
-                                                    <Typography variant="h6">{feedback.subject}</Typography>
-                                                    <Typography variant="body1" >{feedback.name}</Typography>
-                                                    <Typography variant="caption">{new Date(feedback.timestamp).toLocaleString()}</Typography>
-                                                </Grid>
-                                            </Box>
-                                            <TrashIcon onClick={handleDeleteClick} />
-                                        </Box>
-                                    </AccordionSummary>
-
-                                    <AccordionDetails>
-                                        <Typography variant="body1">{feedback.message}</Typography>
-                                    </AccordionDetails>
-                                </Accordion>
-                            ))
-                        ))}
-                    </div>
-                </div>
+                                            <AccordionDetails>
+                                                <Typography variant="body1">{feedback.message}</Typography>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                    ))
+                                ))}
+                            </div>
+                        </div>
+                    )
+                }
 
             </div>
         </main>

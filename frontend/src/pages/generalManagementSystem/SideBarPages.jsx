@@ -9,10 +9,17 @@ import TrashIcon from "./components/TrashIcon";
 import { useNavigate } from 'react-router-dom';
 import { systemRoles } from './data/RoleDetails.jsx';
 
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
+import { Alert } from "@mui/material";
+
 
 export function ViewManagers(props) {
     const [data, setData] = useState(null);
     const [tabledata, settabledata] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
     const updateManagerButtonClick = (managerId) => {
         navigate('/general-management/update-managers', { state: { managerId: managerId } });
@@ -34,9 +41,10 @@ export function ViewManagers(props) {
     };
 
     useEffect(() => {
-        axios.get("http://localhost:8090/api/manager/viewAllManagers")
+        axios.get("https://spring-boot-companya.azurewebsites.net/api/manager/viewAllManagers")
             .then(response => {
-                setData(response.data)
+                setData(response.data);
+                setLoading(false);
             })
             .catch(error => {
                 console.error("Error fetching manager data:", error);
@@ -79,10 +87,12 @@ export function ViewManagers(props) {
                     </div>
                 </div>
 
-                {tabledata ?
-                    <TableComp data={tabledata} />
-                    : null
-                }
+                {loading ? (
+                    <LoadingSpinner />
+
+                ) : (
+                    tabledata ? <TableComp data={tabledata} /> : null
+                )}
 
             </main>
         </>
@@ -90,70 +100,11 @@ export function ViewManagers(props) {
 }
 
 
-// export function DashboardView(props) {
-//     const [data, setData] = useState(null);
-//     const [listdata, setCardData] = useState(null);
-
-//     const newdata = [
-//         {
-//             name: 'Card 1',
-//             count: 10,
-//             image: avatar,
-//             altText: 'Image 1',
-//         },
-//         {
-//             name: 'Card 2',
-//             count: 20,
-//             image: avatar,
-//             altText: 'Image 2',
-//         },
-//         // Add more objects for additional cards as needed
-//     ];
-
-//     useEffect(() => {
-//         axios.get("http://localhost:8090/api/manager/viewAllManagers")
-//             .then(response => {
-//                 setData(response.data)
-//             })
-//             .catch(error => {
-//                 console.error("Error fetching manager data:", error);
-//             });
-//     }, []);
-
-
-//     useEffect(() => {
-//         if (data != null) {
-//             setCardData(data.map((manager, index) => ({
-//                 image: avatar,
-//                 altText: `Avatar ${index + 1}`,
-//                 name: manager.email,
-//                 count: manager.lastName
-//             })));
-//         }
-//     }, [data]);
-    
-//     return (
-//         <>
-//             <main>
-//                 <div className="head-title">
-//                     <div className="left">
-//                         <h1>Dashboard</h1>
-//                     </div>
-
-//                     {listdata ?
-//                         <CardComp data={newdata} />
-//                         : null}
-//                 </div>
-
-
-//             </main>
-
-//         </>
-//     )
-// }
 
 export function ApprovalSection(props) {
     const [approvalData, setApprovalData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    
     const handleApproveClick = (id) => {
         console.log("Approving request with id:", id);
     };
@@ -161,46 +112,58 @@ export function ApprovalSection(props) {
         console.log("Approving request with id:", id);
     };
     useEffect(() => {
-        axios.get("http://localhost:8090/api/request/view")
+        axios.get("https://spring-boot-companya.azurewebsites.net/api/request/view")
             .then(response => {
                 const sortedData = response.data.sort((a, b) => a.status - b.status);
                 setApprovalData(sortedData);
+                setIsLoading(false);
             })
             .catch(error => {
                 console.error("Error fetching approval data:", error);
             });
     }, [handleApproveClick]);
+
     useEffect(() => {
-        axios.get("http://localhost:8090/api/request/view")
+        axios.get("https://spring-boot-companya.azurewebsites.net/api/request/view")
             .then(response => {
                 const sortedData = response.data.sort((a, b) => a.status - b.status);
                 setApprovalData(sortedData);
+                setIsLoading(false);
             })
             .catch(error => {
                 console.error("Error fetching approval data:", error);
             });
     }, [handleRejectClick]);
+
     return (
         <main>
             <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
                 <h1>Requests</h1><br></br>
-                <div className="feedback-container">
-                    {approvalData.length > 0 ? (
-                        approvalData.map((request, index) => (
-                            <ApprovalCard
-                                key={index}
-                                id={request.id}
-                                name={request.name}
-                                email={request.email}
-                                message={request.message}
-                                status={request.status}
-                                onApprove={() => handleApproveClick(request.id)}
-                            />
-                        ))
+
+                {
+                    isLoading ? (
+                        <LoadingSpinner />
                     ) : (
-                        <p>No approval requests found.</p>
-                    )}
-                </div>
+                        <div className="feedback-container">
+                            {approvalData.length > 0 ? (
+                                approvalData.map((request, index) => (
+                                    <ApprovalCard
+                                        key={index}
+                                        id={request.id}
+                                        name={request.name}
+                                        email={request.email}
+                                        message={request.message}
+                                        status={request.status}
+                                        onApprove={() => handleApproveClick(request.id)}
+                                    />
+                                ))
+                            ) : (
+                                <Alert severity="info">No approval requests found.</Alert>
+                            )}
+                        </div>
+
+                    )
+                }
             </div>
         </main>
     );

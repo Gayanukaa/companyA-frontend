@@ -4,11 +4,13 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { BarGraphComponent, SimpleLineChart, BasicPie } from './Graphs';
 import { Card, CardContent, Grid } from '@mui/material';
 import * as reqSend from '../../../global/reqSender.jsx';
+import LoadingSpinner from './LoadingSpinner.jsx';
 
 
 
 const DashboardView = () => {
     const [graphData, setGraphData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
 
     const data = [
@@ -44,7 +46,7 @@ const DashboardView = () => {
             response => {
                 if (response.status === 200 && response.data) {
                     setGraphData(response.data);
-                    console.log(response.data);
+                    setIsLoading(false);
                 } else {
                     console.error("Invalid response format:", response);
                 }
@@ -70,10 +72,30 @@ const DashboardView = () => {
                 </div>
 
                 <Grid container spacing={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                    <Grid item xs={12} lg={6}>
+                    <Grid item xs={12} lg={12}>
                         <Card variant="outlined">
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <SimpleLineChart lineGraphData={graphData.salesData} />
+                                {
+                                    isLoading ? (
+                                        <LoadingSpinner />
+                                    ) : (
+                                        <SimpleLineChart lineGraphData={graphData.salesData} />
+                                    )
+                                }
+                            </CardContent>
+                        </Card>
+                    </Grid>
+
+                    <Grid item xs={12} lg={12}>
+                        <Card variant="outlined">
+                            <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                                {
+                                    isLoading ? (
+                                        <LoadingSpinner />
+                                    ) : (
+                                        <BarGraphComponent barGraphData={graphData.inventoryData} />
+                                    )
+                                }
                             </CardContent>
                         </Card>
                     </Grid>
@@ -81,15 +103,13 @@ const DashboardView = () => {
                     <Grid item xs={12} lg={6}>
                         <Card variant="outlined">
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <BarGraphComponent barGraphData={graphData.inventoryData} />
-                            </CardContent>
-                        </Card>
-                    </Grid>
-
-                    <Grid item xs={12} lg={6}>
-                        <Card variant="outlined">
-                            <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <BasicPie />
+                                {
+                                    isLoading ? (
+                                        <LoadingSpinner />
+                                    ) : (
+                                        <BasicPie />
+                                    )
+                                }
                             </CardContent>
                         </Card>
                     </Grid>

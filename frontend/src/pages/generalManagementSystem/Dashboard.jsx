@@ -58,7 +58,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:8090/api/feedback/view");
+                const response = await axios.get("https://spring-boot-companya.azurewebsites.net/api/feedback/view");
     
                 if (response.data) {
                     const unreadMessages = response.data.filter(message => message.isRead === 0);
