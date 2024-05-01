@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, Container, Box } from '@mui/material';
+// import React from 'react';
+// import { AppBar, Toolbar, Typography, Button, Container, Box, BottomNavigation, colors } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LandingPageCarousel from './components/LandingPageCarousel';
 import SearchBar from './components/SearchBar';
 import LandingPageCard from './components/LandingPageCard';
 import ContactUs from './components/ContactUs';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Footer from './components/Footer';
 
 
 const LandingPage = () => {
@@ -139,7 +142,7 @@ const LandingPage = () => {
                 <ContactUs />
             </Container><br />
 
-            <BottomNavigationAction />
+           
 
             {isVisible && (
                 <Button
@@ -159,6 +162,17 @@ const LandingPage = () => {
                 </Button>
             )}
 
+            
+           
+            <div className=" bg-secondary mb-3">
+                <div className="card-body">
+                <Footer/>
+                </div>
+            </div>
+           
+            
+           
+           
         </div>
     );
 }
