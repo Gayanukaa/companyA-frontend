@@ -152,7 +152,7 @@ const QAManagerView = () => {
         )}
 
         <Grid item xs={12}>
-          <Typography variant="h3">Add New Manager</Typography>
+          <Typography variant="h3" style={{ marginBottom: '10px' }}>Add New Manager</Typography>
           <TextField
             label="ID"
             name="id"

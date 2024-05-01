@@ -12,43 +12,6 @@ import TestOperations from './tests/TestOperations';
 import QAManagerView from './qaManager/QAManagerView';
 
 
-export function ViewStocks(props) {
-
-    const tableData = {
-        name: "Sample Table",
-        heading: ["Column 1", "Column 2", "Column 3"],
-        body: [
-            <tr key="row1">
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-            </tr>,
-            <tr key="row2">
-                <td>Data 4</td>
-                <td>Data 5</td>
-                <td>Data 6</td>
-            </tr>,
-            // Add more rows as needed
-        ],
-    };
-
-    return (
-        <>
-            <main>
-                <div className="head-title">
-                    <div className="left">
-                        <h1>View Stocks</h1>
-                    </div>
-
-                    <TableComp data={tableData} />
-
-                </div>
-
-            </main>
-        </>
-    )
-}
-
 
 export function DashboardView(props) {
 
@@ -139,7 +102,6 @@ export function TestOps(props) {
 export function ManagerOps(props) {
     return (
         <div className="QAManager">
-          
           <QAManagerView/>
         </div>
       );
