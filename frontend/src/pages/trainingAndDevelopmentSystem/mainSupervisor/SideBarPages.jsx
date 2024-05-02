@@ -503,7 +503,8 @@ export function SendToQA(props) {
             // }, (error) => {
             //     console.error("Error adding prototype:", error);
             // });
-            alert(userData.receivedDate)
+            alert("Send For Tests Successfully");
+            navigate("/trainingdevelopment-management/main-supervisor/product-development");
         } catch (error) {
             console.error("Error adding prototype:", error);
         }
