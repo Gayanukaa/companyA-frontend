@@ -4,9 +4,50 @@ import img from '../assets/card/Contact.png'
 
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import axios from 'axios';
+import { useState } from 'react';
 
 
 export default function ContactUs() {
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+    isRead:'0'
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    
+
+    try {
+
+      await axios.post('http://localhost:8090/api/feedback/send', formData); 
+ 
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    
+
+     
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      
+    }
+  };
+
+
+  
   return (
     <div>
       <h1>We look forward to hearing from you</h1>
@@ -25,8 +66,9 @@ export default function ContactUs() {
       <p>You can contact our Customer Service for all questions and queries on any of the following channels during office hours</p><br></br><br></br>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         
-        <Box
+      <Box
           component="form"
+          onSubmit={handleSubmit}
           sx={{
             '& > :not(style)': { m: 1, width: '100%' },
             borderRadius: 4,
@@ -35,17 +77,10 @@ export default function ContactUs() {
           noValidate
           autoComplete="off"
         >
-          <TextField id="outlined-basic" label="Name" variant="outlined" required />
-          <TextField id="email" label="Email" variant="outlined" type="email" required />
-          <TextField id="subject" label="Subject" variant="outlined" required />
-          <TextField
-            id="message"
-            label="Message"
-            variant="outlined"
-            multiline
-            rows={4}
-            required
-          />
+          <TextField id="name" label="Name" variant="outlined" value={formData.name} onChange={handleChange} required />
+          <TextField id="email" label="Email" variant="outlined" type="email" value={formData.email} onChange={handleChange} required />
+          <TextField id="subject" label="Subject" variant="outlined" value={formData.subject} onChange={handleChange} required />
+          <TextField id="message" label="Message" variant="outlined" multiline rows={4} value={formData.message} onChange={handleChange} required />
           <Button variant="contained" color="primary" type="submit">
             Submit
           </Button>
