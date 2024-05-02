@@ -52,15 +52,17 @@ function useProductListLogic(get_url) {
     //remove an item from the cart, decrement the item count, total price and individual item counts
     const handleRemoveFromCart = (itemId, price) => {
         if (itemCounts[itemId] > 0) {
+
             setItemCounts(prevCounts => ({
                 ...prevCounts,
                 [itemId]: prevCounts[itemId] - 1
             }));
+            if (totalPrice > 0 && itemCount > 0) {
+                setTotalPrice(totalPrice - price);
+                setItemCount(itemCount - 1);
+            }
         }
-        if (totalPrice > 0 && itemCount > 0) {
-            setTotalPrice(totalPrice - price);
-            setItemCount(itemCount - 1);
-        }
+
     };
 
     return {

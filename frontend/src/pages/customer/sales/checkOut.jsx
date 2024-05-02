@@ -122,7 +122,9 @@ const checkout = async (items, totalPrice) => {
 //uncomment to save records
 //         await saveRecord(oid, items, totalPrice);
 //         await saveFinanceRecord(oid, items, totalPrice);
-        console.log(oid, typeof oid);
+        //console.log(oid, typeof oid);
+        //await new Promise(resolve => setTimeout(resolve, 2000));
+
         console.log("Navigate to payBills");
         //navigate('/payBills');
     } catch (error) {
