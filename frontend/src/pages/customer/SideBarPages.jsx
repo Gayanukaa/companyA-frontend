@@ -101,7 +101,7 @@ export function PlaceOrder(props) {
     const [state, setstate] = useState("");
     const [country, setcountry] = useState("");
     const [zipCode, setzipCode] = useState("");
-    const navigate  = useNavigate();
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -119,7 +119,7 @@ export function PlaceOrder(props) {
             addressLine1: addressLine1,
             addressLine2: addressLine2,
             city: city,
-            state: state,  
+            state: state,
             country: country,
             zipCode: zipCode,
 
@@ -133,7 +133,7 @@ export function PlaceOrder(props) {
         reqSend.defaultReq("POST", 'api/v1/User delivery addresses', addressData,
             response => {
                 if (response.status === 200 && response.data) {
-                   navigate("/s");
+                    navigate("/customer/products");
                 } else {
                     console.error("Invalid response format:", response);
                 }
@@ -181,7 +181,7 @@ export function PlaceOrder(props) {
                             <input
                                 type="text"
                                 value={city}
-                                onChange={(e) => setCity(e.target.value)}
+                                onChange={(e) => setcity(e.target.value)}
                                 style={{ width: "100%", padding: "10px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "5px" }}
                                 placeholder="Enter city"
                             />
@@ -200,7 +200,7 @@ export function PlaceOrder(props) {
                             Country:
                             <input
                                 type="text"
-                                value={Country}
+                                value={country}
                                 onChange={(e) => setcountry(e.target.value)}
                                 style={{ width: "100%", padding: "10px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "5px" }}
                                 placeholder="Enter country"
@@ -210,7 +210,7 @@ export function PlaceOrder(props) {
                             Zip Code:
                             <input
                                 type="text"
-                                value={zipCodeCode}
+                                value={zipCode}
                                 onChange={(e) => setzipCode(e.target.value)}
                                 style={{ width: "100%", padding: "10px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "5px" }}
                                 placeholder="Enter zip code"
@@ -279,12 +279,28 @@ export function OrderHistory() {
             </table>
         </div>
     );
-  }
+}
+export function GetQuotation() {
+    const navigate = useNavigate();
 
-  export function GetQuotation() {
-    
-    <Button>
-        Get-Quotation
-    </Button>
-  }
-  
+    return (
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center', // Add this line to center vertically
+            height: '80vh' // Set height to the full viewport height
+        }}>
+            <button type="submit" style={{
+                // Adjust width as needed
+                width: "20%",
+                padding: "10px",
+                fontSize: "16px",
+                color: "#fff",
+                backgroundColor: "#007bff",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer"
+            }} onClick={() => { navigate("/customer/products") }}>Get Quotation</button>
+        </div>
+    );
+}
