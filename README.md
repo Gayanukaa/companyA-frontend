@@ -1,6 +1,6 @@
 # companyA-frontend
 Frontend for Subsystems of Company A
- 
- To install dependencies `npm install --force`
+ npm install --force
+ To install dependencies ``
 
  To run the project `npm run dev`
