@@ -12,12 +12,6 @@ export const personImages = [per1, per2, per3, per4, per5, per6, per7, per8];
 
 export const dashboardAdminData = [
   {
-    name: "Dashboard",
-    icon: <i className="bx bxs-dashboard"></i>,
-    active: true,
-    to: "dashboard",
-  },
-  {
     name: "Vehicle",
     icon: <i className="bx bxs-car"></i>,
     active: false,

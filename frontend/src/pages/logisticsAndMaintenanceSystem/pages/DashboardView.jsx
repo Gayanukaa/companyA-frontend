@@ -29,11 +29,7 @@ export function DashboardView(props) {
         <>
             <main>
                 <div className="head-title">
-                    <div className="left">
-                        <h1>Dashboard</h1>
-                    </div>
-
-                    <CardComp data={dataList} />
+                    
                 </div>
             </main>
         </>
