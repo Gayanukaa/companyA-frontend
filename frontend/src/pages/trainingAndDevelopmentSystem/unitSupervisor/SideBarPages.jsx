@@ -98,45 +98,40 @@ export function UpdateStages() {
         }
     };
 
+    const tableData = {
+        heading: ["", "Project Name", "Project Code", "Project Manager", "Stage 1", "Stage 2", "Stage 3", "Progress"],
+        body: users.map((user, index) => (
+            <tr key={index}>
+                <th scope="row">{index + 1}</th>
+                <td>{user.projectName}</td>
+                <td>{user.projectCode}</td>
+                <td>{user.projectManager}</td>
+                <td>{renderButton(user, 'stageOne')}</td>
+                <td>{renderButton(user, 'stageTwo')}</td>
+                <td>{renderButton(user, 'stageThree')}</td>
+                <td>
+                    <div className="progress">
+                        <div className="progress-bar" role="progressbar" style={{ width: `${user.progress}%` }}>{user.progress}%</div>
+                    </div>
+                </td>
+            </tr>
+        )),
+    };
+
     return (
         <>
-            <div></div>
-            <div className='container'>
-                <div className="py-4">
-                    <table className="table border shadow">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Project Name</th>
-                                <th scope="col">Project Code</th>
-                                <th scope="col">Project Manager</th>
-                                <th scope="col">Stage 1</th>
-                                <th scope="col">Stage 2</th>
-                                <th scope="col">Stage 3</th>
-                                <th scope="col">Progress</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users.map((user, index) => (
-                                <tr key={index}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{user.projectName}</td>
-                                    <td>{user.projectCode}</td>
-                                    <td>{user.projectManager}</td>
-                                    <td>{renderButton(user, 'stageOne')}</td> 
-                                    <td>{renderButton(user, 'stageTwo')}</td>
-                                    <td>{renderButton(user, 'stageThree')}</td>
-                                    <td>
-                                        <div className="progress">
-                                            <div className="progress-bar" role="progressbar" style={{ width: `${user.progress}%` }}>{user.progress}%</div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+            
+
+            <main>
+            <div className="head-title">
+            <div className="left">
+                <h1>Update Stages</h1>
             </div>
+            <TableComp data={tableData} />
+            </div>
+            </main>
         </>
+
+        
     )
 }
