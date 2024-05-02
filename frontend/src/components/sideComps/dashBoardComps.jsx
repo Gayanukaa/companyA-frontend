@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import Badge from '@mui/material/Badge';
 
 
 // Side Bar component
@@ -25,13 +26,17 @@ export function SideNavigation(props) {
 
             <ul className="side-menu top">
                 {props.data && props.data.map((item, index) => {
-                    console.log(location.pathname);
 
                     return (
                         <li key={index} className={getLastPart(location.pathname) === item.to ? "active" : ""}>
                             <Link to={item.to}>
                                 {item.icon}
                                 <span className="text">{item.name}</span>
+                                {
+                                    item.notification && (
+                                        <span className="sideBarLinkBadge"><Badge badgeContent={item.notification} color="primary"></Badge></span>
+                                    )
+                                }
                             </Link>
                         </li>
                     )

@@ -7,7 +7,7 @@ import LoginHandle from './pages/generalManagementSystem/login/LoginHandle.jsx';
 
 import CustomerOrder from './pages/customerOrderSystem/Dashboard.jsx';
 import FinanticalManagement from './pages/financeSystem/Dashboard.jsx';
-import GeneralManagement from './pages/customerOrderSystem/Dashboard.jsx';
+import GeneralManagement from './pages/generalManagementSystem/Dashboard.jsx';
 import HumanResourceManagement from './pages/humanResourceSystem/Dashboard.jsx';
 import InventoryManagement from './pages/inventoryManagementSystem/Dashboard.jsx';
 import LogisticManagement from './pages/logisticsAndMaintenanceSystem/Dashboard.jsx';
@@ -19,6 +19,7 @@ import TrainingDevelopmentManagement from './pages/trainingAndDevelopmentSystem/
 import NotFound from './pages/generalManagementSystem/NotFound.jsx';
 import LandingPage from './pages/generalManagementSystem/LandingPage.jsx';
 import Unauthorized from './pages/generalManagementSystem/Unauthorized.jsx';
+import Register from './pages/generalManagementSystem/login/Register.jsx';
 
 
 
@@ -29,6 +30,7 @@ function App() {
       <React.Fragment>
         <Routes>
           <Route path="/login/*" element={<LoginHandle />} />
+          <Route path="/sign-up" element={<Register />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<NotFound />} />
