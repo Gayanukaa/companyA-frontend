@@ -10,6 +10,7 @@ import PrototypeOperations from './testSubjectOperations/PrototypeOperations';
 import SampleOperations from './testSubjectOperations/SampleOperations';
 import TestOperations from './tests/TestOperations';
 import QAManagerView from './qaManager/QAManagerView';
+import healthAndSafetyPracticeInfo from './healthAndSafetyPractice/healthAndSafetyPracticeInfo';
 
 
 
@@ -105,5 +106,13 @@ export function ManagerOps(props) {
           <QAManagerView/>
         </div>
       );
+}
+
+export function SafetyOps(props) {
+  return (
+      <div className="HealthSafetyPractices">
+        <healthAndSafetyPracticeInfo/>
+      </div>
+    );
 }
 

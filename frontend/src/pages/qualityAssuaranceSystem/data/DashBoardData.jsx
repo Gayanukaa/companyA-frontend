@@ -17,5 +17,6 @@ export const dashboardAdminData = [
     { name: "Prototypes", icon: <i className='bx bxs-cube'></i>, active: false, to: 'prototypes' },
     { name: "Samples", icon: <i className='bx bxs-flask'></i>, active: false, to: 'samples' },
     { name: "Tests", icon: <i className='bx bxs-wrench'></i>, active: false, to: 'tests' },
-    { name: "QAManagers", icon: <i className='bx bxs-user-detail'></i>, active: false, to: 'qaManagers' }
+    { name: "QAManagers", icon: <i className='bx bxs-user-detail'></i>, active: false, to: 'qaManagers' },
+    { name: "HealthSafetyPractices", icon: <i className='bx bxs-book-heart'></i>, active: false, to: 'health-safety-practices' }
 ]
