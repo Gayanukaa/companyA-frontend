@@ -87,7 +87,7 @@ export function Training(props){
 
     const loadEnrolledCourses = async () => {
         try {
-            const result = reqSend.defaultReq('GET', `api/tms/tm2@gmail.com/enrolledCourses`, null, (response) => {
+            const result = reqSend.defaultReq('GET', `api/tms/trainingemployee@gmail.com/enrolledCourses`, null, (response) => {
                 setEnrolledCourses(response.data);
             }, (error) => {
                 console.error("Error loading enrolled courses:", error);
@@ -101,7 +101,7 @@ export function Training(props){
 
     const loadCompletedCourses = async () => {
         try {
-            const result = await reqSend.defaultReq('GET', `api/tms/tm2@gmail.com/completedCourses`, null, (response) => {
+            const result = await reqSend.defaultReq('GET', `api/tms/trainingemployee@gmail.com/completedCourses`, null, (response) => {
                 setCompletedCourses(response.data);
                 setLoadingCompletedCourses(false);
             }, (error) => {
@@ -116,7 +116,7 @@ export function Training(props){
     // once enroll button will disable
     const enrollUser = async (courseId) => {
         try {
-            await reqSend.defaultReq('PUT', `api/tms/tm2@gmail.com/enroll/${courseId}`, null, (response) => {
+            await reqSend.defaultReq('PUT', `api/tms/trainingemployee@gmail.com/enroll/${courseId}`, null, (response) => {
                 setEnrolledCourses([...enrolledCourses, courseId]);
                 alert('Enrollment successful');
             }, (error) => {
@@ -133,7 +133,7 @@ export function Training(props){
     // once complete button will disable
     const completeCourse = async (courseId) => {
         try {
-            await reqSend.defaultReq('PUT', `api/tms/tm2@gmail.com/complete/${courseId}`, null, (response) => {
+            await reqSend.defaultReq('PUT', `api/tms/trainingemployee@gmail.com/complete/${courseId}`, null, (response) => {
                 setCompletedCourses([...completedCourses, courseId]);
                 alert('Course completed successfully');
             }, (error) => {
@@ -250,7 +250,7 @@ export function Training(props){
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <h1 style={{ fontSize: '1.5rem' }}>Welcome, tm2@gmail.com</h1>
+                        <h1 style={{ fontSize: '1.5rem' }}>Welcome, trainingemployee</h1>
                     </div>
                 </div>
 
