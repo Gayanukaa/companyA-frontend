@@ -65,6 +65,23 @@ const LogisticsAndMaintenanceProvider = (props) => {
       });
   }, []);
 
+  const updateMachine = useCallback((id, data) => {
+    return axios
+      .patch(
+        ResourcePath.BASE_API +
+          ResourcePath.MACHINE_API +
+          ResourcePath.UPDATE_MACHINE +
+          id,
+        data
+      )
+      .then((res) => {
+        alert("Successfull");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const fetchTechnician = useCallback(() => {
     axios
       .get(
@@ -107,6 +124,23 @@ const LogisticsAndMaintenanceProvider = (props) => {
       )
       .then((res) => {
         console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const updateTechnician = useCallback((id, data) => {
+    return axios
+      .patch(
+        ResourcePath.BASE_API +
+          ResourcePath.TECHNICIAN_API +
+          ResourcePath.UPDATE_TECHNICIAN +
+          id,
+        data
+      )
+      .then((res) => {
+        alert("Successfull");
       })
       .catch((err) => {
         console.log(err);
@@ -161,6 +195,23 @@ const LogisticsAndMaintenanceProvider = (props) => {
       });
   }, []);
 
+  const updateVendor = useCallback((id, data) => {
+    return axios
+      .patch(
+        ResourcePath.BASE_API +
+          ResourcePath.VENDOR_API +
+          ResourcePath.UPDATE_VENDOR +
+          id,
+        data
+      )
+      .then((res) => {
+        alert("Successfull");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const fetchVehicle = useCallback(() => {
     axios
       .get(
@@ -208,6 +259,8 @@ const LogisticsAndMaintenanceProvider = (props) => {
         console.log(err);
       });
   }, []);
+
+  const updateVehicle = useCallback((id, data) => {}, []);
 
   const fetchServiceMaintenance = useCallback(() => {
     axios
@@ -278,23 +331,12 @@ const LogisticsAndMaintenanceProvider = (props) => {
 
   useEffect(() => {
     fetchMachinery();
-  }, [machinery]);
-
-  useEffect(() => {
     fetchTechnician();
-  }, [technician]);
-
-  useEffect(() => {
     fetchVendor();
-  }, [vendor]);
-
-  useEffect(() => {
     fetchVehicle();
-  }, [vehicle]);
-
-  useEffect(() => {
     fetchServiceMaintenance();
-  }, [serviceMaintenance]);
+  }, []);
+
 
   const contextValue = useMemo(() => {
     return {
@@ -314,6 +356,11 @@ const LogisticsAndMaintenanceProvider = (props) => {
       addServiceMaintenance,
       deleteServiceMaintenance,
       updateServiceMaintenance,
+
+      updateMachine,
+      updateTechnician,
+      updateVendor,
+      updateVehicle,
     };
   }, [
     machinery,
@@ -332,6 +379,11 @@ const LogisticsAndMaintenanceProvider = (props) => {
     addServiceMaintenance,
     deleteServiceMaintenance,
     updateServiceMaintenance,
+
+    updateMachine,
+    updateTechnician,
+    updateVendor,
+    updateVehicle,
   ]);
 
   return (
