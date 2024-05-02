@@ -10,7 +10,7 @@ import PrototypeOperations from './testSubjectOperations/PrototypeOperations';
 import SampleOperations from './testSubjectOperations/SampleOperations';
 import TestOperations from './tests/TestOperations';
 import QAManagerView from './qaManager/QAManagerView';
-import healthAndSafetyPracticeInfo from './healthAndSafetyPractice/healthAndSafetyPracticeInfo';
+//import healthAndSafetyPracticeInfo from './healthAndSafetyPractice/healthAndSafetyPracticeInfo';
 
 
 
