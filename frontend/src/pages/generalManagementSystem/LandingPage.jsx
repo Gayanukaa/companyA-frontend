@@ -139,7 +139,9 @@ const LandingPage = () => {
             </div><br />
 
             <Container>
+            
                 <ContactUs />
+                
             </Container><br />
 
            
