@@ -36,7 +36,7 @@ const Login = (props) => {
         general_manager: '/general-management/dashboard',
         customer: '/'
     };
-    
+
 
 
     const navigateToManagerPortal = (role) => {
@@ -45,16 +45,16 @@ const Login = (props) => {
     };
 
 
-    
+
     const submitLogForm = () => {
         if (loginEmail && loginPassword && props.role) {
             const loginFormData = {
                 email: loginEmail,
                 password: loginPassword,
-                role: props.role    
+                role: props.role
             };
-    
-            reqSend.defaultReq("POST", 'api/login', loginFormData, 
+
+            reqSend.defaultReq("POST", 'api/login', loginFormData,
                 response => {
                     if (response.status === 200 && response.data && response.data.role) {
                         localStorage.setItem("role", response.data.role);
@@ -71,7 +71,7 @@ const Login = (props) => {
             console.error("Missing or invalid login credentials");
         }
     };
-    
+
 
 
 
@@ -107,10 +107,15 @@ const Login = (props) => {
                 <div className="inputBox">
                     <input type="submit" value="Log In" id="btn" onClick={submitLogForm} />
                 </div>
-                
-                <div className="group" style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Link to="/sign-up" className='nav-avatar-list'>Don't have an account? Sign Up</Link>
-                </div>
+
+                {
+                    props.role && props.role === "customer" ? (
+                        <div className="group" style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Link to="/sign-up" className='nav-avatar-list'>Don't have an account? Sign Up</Link>
+                        </div>
+                    ) : ""
+                }
+
             </motion.div>
         </section>
     )
