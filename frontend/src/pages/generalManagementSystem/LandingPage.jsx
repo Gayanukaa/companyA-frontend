@@ -7,7 +7,6 @@ import LandingPageCard from './components/LandingPageCard';
 import ContactUs from './components/ContactUs';
 import MenuIcon from '@mui/icons-material/Menu';
 
-
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Footer from './components/Footer';
 

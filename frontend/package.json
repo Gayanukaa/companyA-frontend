@@ -32,6 +32,7 @@
     "react-router-dom": "^6.16.0",
     "sweetalert2": "^11.7.27",
     "tailwindcss": "^3.4.3",
+    "typewriter-effect": "^2.21.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {

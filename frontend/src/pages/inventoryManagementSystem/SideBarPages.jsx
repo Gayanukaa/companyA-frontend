@@ -6,7 +6,7 @@ import { Stack, Button, TextField } from '@mui/material'
 import * as reqSend from '../../global/reqSender.jsx';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close'; 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../../styles/css/bootstrap.min.css';
 import DownloadIcon from '@mui/icons-material/Download';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';

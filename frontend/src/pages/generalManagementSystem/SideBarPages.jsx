@@ -12,7 +12,7 @@ import { systemRoles } from './data/RoleDetails.jsx';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
-import { Alert } from "@mui/material";
+import { Alert, Tab, Tabs } from "@mui/material";
 
 
 export function ViewManagers(props) {
@@ -104,7 +104,8 @@ export function ViewManagers(props) {
 export function ApprovalSection(props) {
     const [approvalData, setApprovalData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    
+    const [value, setValue] = useState(0);
+
     const handleApproveClick = (id) => {
         console.log("Approving request with id:", id);
     };
@@ -135,6 +136,11 @@ export function ApprovalSection(props) {
             });
     }, [handleRejectClick]);
 
+
+    const handleTabValueChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     return (
         <main>
             <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
@@ -145,20 +151,69 @@ export function ApprovalSection(props) {
                         <LoadingSpinner />
                     ) : (
                         <div className="feedback-container">
-                            {approvalData.length > 0 ? (
-                                approvalData.map((request, index) => (
-                                    <ApprovalCard
-                                        key={index}
-                                        id={request.id}
-                                        name={request.name}
-                                        email={request.email}
-                                        message={request.message}
-                                        status={request.status}
-                                        onApprove={() => handleApproveClick(request.id)}
-                                    />
-                                ))
-                            ) : (
-                                <Alert severity="info">No approval requests found.</Alert>
+                            <Tabs value={value} onChange={handleTabValueChange}>
+                                <Tab label="New" />
+                                <Tab label="Approved" />
+                                <Tab label="Rejected" />
+                            </Tabs>
+
+                            {/* Render ApprovalCard components based on the selected tab */}
+                            {value === 0 && (
+                                <>
+                                    {approvalData.filter(request => request.status === 0).length === 0 ? (
+                                        <Alert severity="info">No new approval requests found.</Alert>
+                                    ) : (
+                                        approvalData.filter(request => request.status === 0).map((request, index) => (
+                                            <ApprovalCard
+                                                key={index}
+                                                id={request.id}
+                                                name={request.name}
+                                                email={request.email}
+                                                message={request.message}
+                                                status={request.status}
+                                                onApprove={() => handleApproveClick(request.id)}
+                                            />
+                                        ))
+                                    )}
+                                </>
+                            )}
+                            {value === 1 && (
+                                <>
+                                    {approvalData.filter(request => request.status === 1).length === 0 ? (
+                                        <Alert severity="info">No approved requests found.</Alert>
+                                    ) : (
+                                        approvalData.filter(request => request.status === 1).map((request, index) => (
+                                            <ApprovalCard
+                                                key={index}
+                                                id={request.id}
+                                                name={request.name}
+                                                email={request.email}
+                                                message={request.message}
+                                                status={request.status}
+                                                onApprove={() => handleApproveClick(request.id)}
+                                            />
+                                        ))
+                                    )}
+                                </>
+                            )}
+                            {value === 2 && (
+                                <>
+                                    {approvalData.filter(request => request.status === 2).length === 0 ? (
+                                        <Alert severity="info">No rejected approval requests found.</Alert>
+                                    ) : (
+                                        approvalData.filter(request => request.status === 2).map((request, index) => (
+                                            <ApprovalCard
+                                                key={index}
+                                                id={request.id}
+                                                name={request.name}
+                                                email={request.email}
+                                                message={request.message}
+                                                status={request.status}
+                                                onApprove={() => handleApproveClick(request.id)}
+                                            />
+                                        ))
+                                    )}
+                                </>
                             )}
                         </div>
 

@@ -45,12 +45,6 @@ export function SideNavigation(props) {
 
             <ul className="side-menu">
                 <li>
-                    <Link to="#">
-                        <i className='bx bxs-cog' ></i>
-                        <span className="text">Settings</span>
-                    </Link>
-                </li>
-                <li>
                     <Link
                         to="/"
                         onClick={handleLogout}
