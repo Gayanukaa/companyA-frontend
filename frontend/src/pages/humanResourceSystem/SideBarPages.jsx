@@ -406,6 +406,107 @@ export function WorkTime(props) {
           </div>
         </div>
       </main>
+      <div>
+        <>
+          <form onSubmit={handleSubmit}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <label
+                  style={{
+                    width: "100px",
+                    marginRight: "100px",
+                    fontSize: "20px",
+                    textAlign: "right",
+                  }}
+                >
+                  ID:
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter ID"
+                  id="id"
+                  name="id"
+                  onChange={change1}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <label
+                  style={{
+                    width: "100px",
+                    marginRight: "40px",
+                    fontSize: "20px",
+                  }}
+                >
+                  Start Date:
+                </label>
+                <input
+                  type="date"
+                  placeholder="Enter Year"
+                  id="year"
+                  name="year"
+                  onChange={change2}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <label
+                  style={{
+                    width: "100px",
+                    marginRight: "40px",
+                    fontSize: "20px",
+                    textAlign: "left",
+                  }}
+                >
+                  End Date:
+                </label>
+                <input
+                  type="date"
+                  placeholder="Enter Month"
+                  id="month"
+                  name="month"
+                  onChange={change3}
+                />
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <button className="button" onClick={searchClick}>
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </>
+      </div>
+      <footer>{totalWorkedTime && <p>{totalWorkedTime}</p>}</footer>
     </>
   );
 }
