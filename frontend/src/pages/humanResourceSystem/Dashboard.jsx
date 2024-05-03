@@ -16,6 +16,7 @@ import {
   Search,
   SearchAllEmployee,
   SearchOneEmployee,
+  AddEmployee,
 } from "./SideBarPages";
 
 export default function Dashboard() {
@@ -78,6 +79,7 @@ export default function Dashboard() {
             <Route path="/search-employee" element={<Search />} />
             <Route path="/one-employee" element={<SearchOneEmployee />} />
             <Route path="/all-employee" element={<SearchAllEmployee />} />
+            <Route path="/add-employee" element={<AddEmployee />} />
           </Routes>
         </section>
       </div>
