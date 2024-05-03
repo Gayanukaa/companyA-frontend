@@ -234,3 +234,18 @@ export function SearchAllEmployee(props) {
     </>
   );
 }
+
+export function AddEmployee(props) {
+  return (
+    <>
+      <main>
+        <div className="head-title">
+          <div className="left">
+            <h1>Add Employee</h1>
+          </div>
+        </div>
+      </main>
+      <h5>.</h5>
+    </>
+  );
+}
