@@ -16,4 +16,34 @@ export const dashboardAdminData = [
     active: true,
     to: "dashboard",
   },
+  {
+    name: "Employee",
+    icon: <i className="bx bxs-user-plus"></i>,
+    active: false,
+    to: "employee",
+  },
+  {
+    name: "Attendance",
+    icon: <i className="bx bxs-user-plus"></i>,
+    active: false,
+    to: "attendance",
+  },
+  {
+    name: "Mark Attendance",
+    icon: <i className="bx bxs-user-plus"></i>,
+    active: false,
+    to: "mark-attendance",
+  },
+  {
+    name: "Work Time",
+    icon: <i className="bx bxs-user-plus"></i>,
+    active: false,
+    to: "work-time",
+  },
+  {
+    name: "Leave",
+    icon: <i className="bx bxs-user-plus"></i>,
+    active: false,
+    to: "leave",
+  },
 ];
