@@ -3,6 +3,8 @@ import CardComp from "../../components/sideComps/CardComp";
 import TableComp from "../../components/sideComps/TableComp";
 import avatar from "../../assets/avatar.svg";
 import DashboardCards from "./DashboardCards";
+import Button2 from "./Button2";
+import Button1 from "./Button1";
 
 export function DashboardView(props) {
   const dataList = [
@@ -31,6 +33,33 @@ export function DashboardView(props) {
           <DashboardCards data={dataList} />
         </div>
       </main>
+    </>
+  );
+}
+
+export function Employee(props) {
+  return (
+    <>
+      <Button2 />
+    </>
+  );
+}
+
+export function Attendance(props) {
+  return (
+    <>
+      <main>
+        <div className="head-title">
+          <div className="left">
+            <h1>Attendance</h1>
+          </div>
+        </div>
+      </main>
+      <div>
+        <>
+          <Button1 />
+        </>
+      </div>
     </>
   );
 }

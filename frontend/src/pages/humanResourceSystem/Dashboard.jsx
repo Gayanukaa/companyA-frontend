@@ -9,7 +9,7 @@ import {
 } from "../../components/sideComps/dashBoardComps";
 import { dashboardAdminData } from "./data/DashBoardData";
 
-import { DashboardView } from "./SideBarPages";
+import { DashboardView, Employee, Attendance } from "./SideBarPages";
 
 export default function Dashboard() {
   const addJs = () => {
@@ -66,6 +66,8 @@ export default function Dashboard() {
 
           <Routes>
             <Route path="/dashboard" element={<DashboardView />} />
+            <Route path="/employee" element={<Employee />} />
+            <Route path="/attendance" element={<Attendance />} />
           </Routes>
         </section>
       </div>
