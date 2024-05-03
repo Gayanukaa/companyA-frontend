@@ -57,7 +57,24 @@ const ViewLoanDetails = () => {
     };
 
     const handleUpdateLoans = () => {
-        console.log("Update loan details by the manager")
+        if (!loanId) {
+            console.log("Please provide a loan ID.");
+            return;
+        }
+    
+        defaultReq('PUT', `api/updateLoanStatus/${loanId}`, null,
+            (response) => {
+                if (response.status === 200) {
+                    console.log(`Loan status updated successfully for facility ID ${loanId}`);
+                    window.location.reload();
+                } else {
+                    console.log("Failed to update loan status.");
+                }
+            },
+            (error) => {
+                console.log("An error occurred while updating loan status:", error.message || error);
+            }
+        );
     };
 
     return (
