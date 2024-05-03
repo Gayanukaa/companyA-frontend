@@ -3,6 +3,7 @@ import CardComp from "../../components/sideComps/CardComp";
 import TableComp from "../../components/sideComps/TableComp";
 import avatar from "../../assets/avatar.svg";
 import * as reqSend from "../../global/reqSender";
+import backg from "../../assets/bg1.jpeg";
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -65,16 +66,32 @@ export function DashboardView(props) {
   }, []);
 
   return (
-    <main>
-      <div className="head-title">
-        <div className="left">
-          <h1>Dashboard</h1>
-        </div>
-        {userData ? (
+    <main style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '100vh',
+      backgroundImage: `url(${backg})`,
+      backgroundSize: 'cover', 
+      backgroundPosition: 'center',
+    }}>
+      <div style={{ 
+    position: 'absolute', 
+    top: '50%', 
+    left: '50%', 
+    transform: 'translate(-50%, -50%)', 
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    padding: '20px', 
+    borderRadius: '10px', 
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)', 
+    textAlign: 'center', 
+  }}>
+      {userData ? (
           <div>
-            <h2>User Details</h2>
-            <p>Name: {userData.name}</p>
-            <p>Contact Number: {userData.contactNumber}</p>
+            <h2>About me</h2>
+            <p>First Name: {userData.firstName}</p>
+            <p>Last Name: {userData.lastName}</p>
+            <p>Contact Number: {userData.mobileNumber}</p>
             <p>Email: {userData.email}</p>
           </div>
         ) : (
@@ -82,6 +99,8 @@ export function DashboardView(props) {
         )}
         {error && <p>Error: {error}</p>}
       </div>
+        
+      
     </main>
   );
 }
