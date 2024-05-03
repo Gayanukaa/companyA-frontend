@@ -4,6 +4,7 @@ import TableComp from '../../components/sideComps/TableComp';
 import Swal from 'sweetalert2';
 
 const ViewLoanDetails = () => {
+    const [loanId, setLoanId] = useState('');
     const [loanDetails, setLoanDetails] = useState([]);
 
     useEffect(() => {
@@ -55,17 +56,60 @@ const ViewLoanDetails = () => {
         )),
     };
 
+    const handleUpdateLoans = () => {
+        console.log("Update loan details by the manager")
+    };
+
     return (
         <>
-
             <style>
                 {`
-                
-                    .view-individual-button {
-                        position: fixed;
-                        bottom: 40px;
-                        left: calc(50% + 125px);
-                        transform: translateX(-50%);
+                    .bottom-component {
+                        margin-top: 25px;
+                    }
+    
+                    .update-loans {
+                        display: flex; /* Change to flex */
+                        justify-content: center; /* Add space between items */
+                        align-items: center; /* Center items vertically */
+                    }
+    
+                    .left {
+                        flex: 1; /* Allow left content to grow */
+                    }
+    
+                    .search-box {
+                        display: flex;
+                        align-items: center;
+                        border: 1px solid #ccc;
+                        border-radius: 18px;
+                        padding: 5px;
+                        background-color: #242424;
+                        width: 300px;
+                    }
+    
+                    .search-box input[type="text"] {
+                        border: none;
+                        outline: none;
+                        padding: 5px;
+                        margin-right: 5px;
+                        width: 250px;
+                        height: 40px;
+                        background-color: transparent;
+                        color: #fff;
+                    }
+    
+                    .search-icon {
+                        cursor: pointer;
+                        width: 25px;
+                        height: 25px;
+                    }
+    
+                    .search-icon:hover {
+                        opacity: 0.8;
+                    }
+    
+                    .view-all-button {
                         background-color: #007bff;
                         color: #fff;
                         border: none;
@@ -73,29 +117,47 @@ const ViewLoanDetails = () => {
                         padding: 10px 20px;
                         cursor: pointer;
                         outline: none;
-                        margin-right: 20px;
                     }
-                    
-                    .view-individual-button:hover {
+    
+                    .view-all-button:hover {
                         background-color: #0056b3;
                     }
-                    
-                    .view-individual-button:active {
+    
+                    .view-all-button:active {
                         background-color: #004080;
                     }
                 `}
             </style>
-
+    
             {loanDetails && (
                 <div>
                     <TableComp data={loanTable} />
                 </div>
             )}
-        
-        </>
 
+            <div className="bottom-component">
+                <div className="left">
+                    <h3>Update Loan Details</h3>
+                </div>
+
+                <div className="update-loans">
+                    
+                    <div className="search-box">
+                        <input 
+                            type="text" 
+                            placeholder='Enter Loan ID to Update'
+                            value={loanId}
+                            onChange={(e) => setLoanId(e.target.value)}
+                        />
+                    </div>
         
+                    <button className="view-all-button" onClick={handleUpdateLoans}>Update Loans (Monthly)</button>
+                </div>
+            </div>
+        </>
     );
+    
+    
 };
 
 export default ViewLoanDetails;
