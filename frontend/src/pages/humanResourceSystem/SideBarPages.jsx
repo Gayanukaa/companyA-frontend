@@ -635,3 +635,16 @@ export function Interface2(props) {
     </div>
   );
 }
+export function Leave(props) {
+  return (
+    <>
+      <main>
+        <div className="head-title">
+          <div className="left">
+            <h1>Leave</h1>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}
