@@ -396,3 +396,16 @@ export function MarkAttendance(props) {
     </>
   );
 }
+export function WorkTime(props) {
+  return (
+    <>
+      <main>
+        <div className="head-title">
+          <div className="left">
+            <h1>Work Time</h1>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}
