@@ -13,6 +13,7 @@ import AllOrders from './AllOrders.jsx'
 import AddOrUpdateEmployeeSalary from './AddUpdateSalary.jsx';
 import ViewLoanDetails from './ViewLoanDetails.jsx';
 import AddLoanForm from './CreateLoan.jsx';
+import { FinanceOverview } from './FinanceOverview.jsx';
 
 
 export default function Dashboard() {
@@ -79,6 +80,7 @@ export default function Dashboard() {
                         <Route path="/view-all-order-details" element={<AllOrders />}/>
                         <Route path="/view-loan-details" element={<ViewLoanDetails />} />
                         <Route path="/create-loan" element={<AddLoanForm />} />
+                        <Route path="/finance-overview" element={<FinanceOverview />} />
 
                     </Routes>
                 </section>
