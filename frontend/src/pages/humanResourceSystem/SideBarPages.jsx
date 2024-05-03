@@ -10,6 +10,7 @@ import * as reqSend from "../../global/reqSender.jsx";
 import { useEffect } from "react";
 import SearchAll from "./SearchAll.jsx";
 import SearchOne from "./SearchOne.jsx";
+import EmployeeDetailForm from "./EmployeeDetailsForm.jsx";
 
 export function DashboardView(props) {
   const dataList = [
@@ -246,6 +247,17 @@ export function AddEmployee(props) {
         </div>
       </main>
       <h5>.</h5>
+      <EmployeeDetailForm />
     </>
+  );
+}
+export function Interface1(props) {
+  //for add Employee method
+  return (
+    <div className="container">
+      <h2 className="feedbackHeading" id="interface">
+        Employee Created Successfully
+      </h2>
+    </div>
   );
 }
