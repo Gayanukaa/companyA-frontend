@@ -19,6 +19,7 @@ import {
   AddEmployee,
   Interface1,
   MarkAttendance,
+  WorkTime,
 } from "./SideBarPages";
 
 export default function Dashboard() {
@@ -78,6 +79,7 @@ export default function Dashboard() {
             <Route path="/dashboard" element={<DashboardView />} />
             <Route path="/employee" element={<Employee />} />
             <Route path="/attendance" element={<Attendance />} />
+            <Route path="/work-time" element={<WorkTime />} />
             <Route path="/search-employee" element={<Search />} />
             <Route path="/one-employee" element={<SearchOneEmployee />} />
             <Route path="/all-employee" element={<SearchAllEmployee />} />
