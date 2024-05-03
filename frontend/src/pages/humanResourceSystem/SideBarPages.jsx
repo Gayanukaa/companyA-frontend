@@ -645,6 +645,114 @@ export function Leave(props) {
           </div>
         </div>
       </main>
+      <div>
+        <>
+          <form onSubmit={handleSubmit}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <label
+                  style={{
+                    width: "100px",
+                    marginRight: "40px",
+                    fontSize: "20px",
+                    textAlign: "right",
+                  }}
+                >
+                  ID:
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter ID"
+                  id="id"
+                  name="id"
+                  onChange={change1}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <label
+                  style={{
+                    width: "100px",
+                    marginRight: "40px",
+                    fontSize: "20px",
+                    textAlign: "right",
+                  }}
+                >
+                  Year:
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter Year"
+                  id="year"
+                  name="year"
+                  onChange={change2}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <label
+                  style={{
+                    width: "100px",
+                    marginRight: "40px",
+                    fontSize: "20px",
+                    textAlign: "right",
+                  }}
+                >
+                  Month:
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter Month"
+                  id="month"
+                  name="month"
+                  onChange={change3}
+                />
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                <button className="button" onClick={searchClick}>
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+
+          {/* Display leave balance if employeeData is defined */}
+          {employeeData && (
+            <div style={{ textAlign: "center" }}>
+              <p>Leave Balance is {employeeData}</p>
+            </div>
+          )}
+        </>
+      </div>
     </>
   );
 }
