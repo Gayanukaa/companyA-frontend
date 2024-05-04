@@ -10,7 +10,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import useTheme from "@mui/material/styles/useTheme";
 import {useMediaQuery} from "@mui/material";
-
+import {useNavigate} from "react-router-dom";
 function ProductList({ get_url, get_val }) {
     const [showUnavailable, setShowUnavailable] = useState(false);
     const [unavailableItems, setUnavailableItems] = useState([]);
@@ -20,6 +20,7 @@ function ProductList({ get_url, get_val }) {
     const buttonHeight = isSmallScreen ? "40px" : "50px";
     const fontSize = isSmallScreen ? "0.8rem" : "medium";
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const {
         data,
@@ -60,6 +61,7 @@ function ProductList({ get_url, get_val }) {
             console.error('Error occurred:', error);
         } finally {
             setLoading(false);
+            navigate('/customer/dashboard');
         }
     }
 
