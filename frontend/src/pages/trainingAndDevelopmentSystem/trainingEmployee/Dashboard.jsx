@@ -8,7 +8,7 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView ,Training} from './SideBarPages';
+import { DashboardView ,Login,SignUP,Training, TrainingEnroll} from './SideBarPages';
 import NotFound from '../../generalManagementSystem/NotFound';
 
 
@@ -72,6 +72,9 @@ export default function Dashboard() {
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
                         <Route path="/training" element={<Training />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/sign-up" element={<SignUP />} />
+                        <Route path="/training/:email" element={<TrainingEnroll />} />
                         <Route path="/*" element={<NotFound />}  />
                     </Routes>
                 </section>
