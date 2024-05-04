@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Typography, TextField } from '@mui/material';
+
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 const ReportDelete = () => {
   const [deleteReportId, setDeleteReportId] = useState('');
@@ -34,7 +37,7 @@ const ReportDelete = () => {
         onChange={handleInputChange}
         placeholder="Enter Report ID"
         variant="outlined"
-        style={{ marginBottom: '10px' }}
+        style={{ marginBottom: '10px' ,marginRight: '6px'}}
       />
       <Button variant="contained" color="secondary" onClick={deleteReport} style={{ marginRight: '10px' }}>
         Delete Report
