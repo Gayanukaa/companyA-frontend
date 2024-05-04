@@ -76,7 +76,7 @@ const LandingPage = () => {
                 <AppBar position="fixed" sx={{ boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' }}>
                     <Toolbar sx={{ bgcolor: 'white', height: 80 }}>
                         <Typography variant="h5" component="div" sx={{ color: 'rgba(0, 0, 0, 0.87)', flexGrow: 1 }}>
-                            Company A***
+                            Company A
                         </Typography>
 
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>

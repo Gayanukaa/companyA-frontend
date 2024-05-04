@@ -106,7 +106,7 @@ export default function Register() {
             console.log(signInFormData);
 
             try {
-                axios.post('http://localhost:8090/customer/register', signInFormData).then(response => {
+                axios.post('https://spring-boot-companya.azurewebsites.net/customer/register', signInFormData).then(response => {
 
                     const responseStatusReg = response.status;
                     if (responseStatusReg === 200 || responseStatusReg === 201) {
@@ -118,7 +118,7 @@ export default function Register() {
 
 
 
-                        axios.post('http://localhost:8090/api/login', registeredUser).then(response2 => {
+                        axios.post('https://spring-boot-companya.azurewebsites.net/api/login', registeredUser).then(response2 => {
                             const responseStatusLog = response2.status;
                             if (responseStatusLog === 200 || responseStatusLog === 201) {
 
