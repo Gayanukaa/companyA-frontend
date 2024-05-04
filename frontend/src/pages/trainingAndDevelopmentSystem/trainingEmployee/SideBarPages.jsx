@@ -290,11 +290,29 @@ export function Training(props){
     <main>
                 <div className="head-title">
                     <div className="left">
-                        <h1 style={{ fontSize: '1rem' }}>
-                            <p style={{ textAlign: 'justify' }}>
+                        <h1 >
+                            {/* <p style={{ textAlign: 'justify' }}>
                             Training is paramount for both personal and professional advancement, serving as a catalyst for skill development, performance enhancement, and adaptation to change. By investing in training, individuals gain the expertise and knowledge needed to excel in their roles, fostering higher levels of engagement, job satisfaction, and retention. Moreover, organizations benefit from a more skilled and innovative workforce, capable of navigating complexities, mitigating risks, and driving sustainable growth. Ultimately, training cultivates a culture of continuous learning, creativity, and resilience, empowering individuals and organizations to thrive in today's dynamic and competitive landscape.
-                                </p>
-                                 </h1>
+                            </p> */}Training
+                        </h1>
+                        <div className="card" style={{ width: '100%' }}>
+                        <div className="card-body">
+                          <h5 className="card-title">Importance</h5>
+                          <h6 className="card-subtitle mb-2 text-muted">Show Your Colours</h6>
+                          <p className="card-text" style={{ textAlign: 'justify' }}>Welcome to our comprehensive employee development platform! Training is paramount for both personal and professional advancement, serving as a catalyst for skill development, performance enhancement, and adaptation to change. By investing in training, individuals gain the expertise and knowledge needed to excel in their roles, fostering higher levels of engagement, job satisfaction, and retention. Moreover, organizations benefit from a more skilled and innovative workforce, capable of navigating complexities, mitigating risks, and driving sustainable growth. Ultimately, training cultivates a culture of continuous learning, creativity, and resilience, empowering individuals and organizations to thrive in today's dynamic and competitive landscape.</p>
+                          
+                        </div>
+                        </div>
+                            <p></p>
+                        <div className="card" style={{ width: '100%' }}>
+                        <div className="card-body">
+                          <h5 className="card-title">Proceed</h5>
+                          <h6 className="card-subtitle mb-2 text-muted">Road to success</h6>
+                          <p className="card-text" style={{ textAlign: 'justify' }}>At our organization, we prioritize the growth and advancement of our team members. Upon joining, employees have the opportunity to create personalized accounts using their email addresses and unique IDs. Once registered, they gain access to a wealth of resources aimed at enhancing their skills and experiences. Our platform allows employees to enroll in various courses and overseas experiences tailored to their career goals and interests. Upon enrollment, individuals receive confirmation emails, marking the beginning of their journey with us. We believe in the importance of commitment and accountability, hence completion of enrolled programs is mandatory. Throughout the learning process, progress is diligently monitored to ensure individuals stay on track with their development goals. Join us on this journey of growth and continuous learning as we strive to empower our employees for success in their professional endeavors.Welcome to our comprehensive employee development platform! At our organization, we prioritize the growth and advancement of our team members. Upon joining, employees have the opportunity to create personalized accounts using their email addresses and unique IDs. Once registered, they gain access to a wealth of resources aimed at enhancing their skills and experiences. Our platform allows employees to enroll in various courses and overseas experiences tailored to their career goals and interests. Upon enrollment, individuals receive confirmation emails, marking the beginning of their journey with us. We believe in the importance of commitment and accountability, hence completion of enrolled programs is mandatory. Throughout the learning process, progress is diligently monitored to ensure individuals stay on track with their development goals. Join us on this journey of growth and continuous learning as we strive to empower our employees for success in their professional endeavors.</p>
+                          
+                        </div>
+                        </div>
+                                 
                     </div>
                 </div>
 
