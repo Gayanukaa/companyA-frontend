@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
 import {dashboardAdminData} from './data/DashBoardData';
-import { DashboardView,  ViewStocks} from './SideBarPages';
+import { DashboardView} from './SideBarPages';
 import { ViewEmployee } from './EmployeeSalary.jsx';
 import { OrderHistory } from './OrderHistory.jsx';
 import AllEmployeeSalary from './TotalSalary.jsx';
