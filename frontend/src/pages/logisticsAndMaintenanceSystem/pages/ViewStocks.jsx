@@ -212,7 +212,14 @@ export function ViewStocks(props) {
         vendorItems: vehicleForm.vendorItems,
       });
     } else if (updateContext === "vehicle") {
-      updateVehicle(vehicleForm.vehicleId, vehicleForm);
+      updateVehicle(vehicleForm.vehicleId, {
+        vehicleId: vehicleForm.vehicleId,
+        model: vehicleForm.model,
+        location: vehicleForm.location,
+        vehicleStatus: vehicleForm.vehicleStatus,
+        maintenanceDate: vehicleForm.maintenanceDate,
+        fuelLevel: vehicleForm.fuelLevel,
+      });
     }
     setOpenUpdate(false);
   };

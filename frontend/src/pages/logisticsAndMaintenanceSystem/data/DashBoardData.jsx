@@ -37,7 +37,7 @@ export const dashboardAdminData = [
   },
   {
     name: "Service & Maintenance",
-    icon: <i className="bx bxs-user-plus"></i>,
+    icon: <i className="bx bxs-cog"></i>,
     active: false,
     to: "view-services-maintenance",
   },

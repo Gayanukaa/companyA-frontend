@@ -260,7 +260,22 @@ const LogisticsAndMaintenanceProvider = (props) => {
       });
   }, []);
 
-  const updateVehicle = useCallback((id, data) => {}, []);
+  const updateVehicle = useCallback((id, data) => {
+    return axios
+      .patch(
+        ResourcePath.BASE_API +
+          ResourcePath.VEHICLE_API +
+          ResourcePath.UPDATE_VEHICLE +
+          id,
+        data
+      )
+      .then((res) => {
+        alert("Successfull");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const fetchServiceMaintenance = useCallback(() => {
     axios
@@ -336,7 +351,6 @@ const LogisticsAndMaintenanceProvider = (props) => {
     fetchVehicle();
     fetchServiceMaintenance();
   }, []);
-
 
   const contextValue = useMemo(() => {
     return {
