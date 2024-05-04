@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Typography, TextField } from '@mui/material';
+
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 const GetReport = () => {
   const [report, setReport] = useState(null);
@@ -29,9 +32,9 @@ const GetReport = () => {
         onChange={handleInputChange}
         placeholder="Enter Report ID"
         variant="outlined"
-        style={{ marginBottom: '10px' }}
+        style={{ marginBottom: '10px', marginRight: '6px' }}
       />
-      <Button variant="contained" onClick={fetchReport} style={{ marginRight: '10px' }}>
+      <Button variant="contained" color="primary" onClick={fetchReport} style={{ marginRight: '10px' }}>
         Fetch Report
       </Button>
       {error && <Typography variant="body1" style={{ color: 'red', marginBottom: '10px' }}>{error}</Typography>}
