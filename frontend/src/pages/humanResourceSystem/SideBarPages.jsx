@@ -636,6 +636,45 @@ export function Interface2(props) {
   );
 }
 export function Leave(props) {
+  const [val, setVal] = useState("");
+  const [employeeData, setEmployeeData] = useState(null);
+  const [year, setYear] = useState("");
+  const [month, setMonth] = useState("");
+
+  const change1 = (event) => {
+    setVal(event.target.value);
+  };
+
+  const change2 = (event) => {
+    setYear(event.target.value);
+  };
+
+  const change3 = (event) => {
+    setMonth(event.target.value);
+  };
+
+  const searchClick = () => {
+    reqSend.defaultReq(
+      "GET",
+      `Leave/Balance?employeeId=${val}&year=${year}&month=${month}`,
+      {},
+      (response) => {
+        if (response.status === 200 && response.data) {
+          setEmployeeData(response.data);
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      },
+      (error) => {
+        console.error("API request failed:", error);
+      }
+    );
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    searchClick();
+  };
+
   return (
     <>
       <main>
@@ -745,7 +784,6 @@ export function Leave(props) {
             </div>
           </form>
 
-          {/* Display leave balance if employeeData is defined */}
           {employeeData && (
             <div style={{ textAlign: "center" }}>
               <p>Leave Balance is {employeeData}</p>
