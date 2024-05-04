@@ -19,6 +19,9 @@ const GetReport = () => {
     try {
       const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/SmpReports/getReport/${id}`);
       setReport(response.data);
+      if (response.data === null) {
+        alert('Invalid ID. Please check and try again.');
+      }
     } catch (error) {
       setError('Error fetching report. Please try again.'); 
     }

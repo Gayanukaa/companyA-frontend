@@ -39,6 +39,9 @@ const PrototypeOperations = () => {
     try {
       const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/prototypes/getPrototype/{id}?id=${inputId}`);
       setSelectedPrototype(response.data);
+      if (response.data === null) {
+        alert('Invalid ID. Please check and try again.');
+      }
     } catch (error) {
       console.error('Error fetching prototype by ID:', error);
     }

@@ -56,6 +56,9 @@ const TestOperations = () => {
     try {
       const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/tests/getTest/${fetchTestId}`);
       setFetchedTest(response.data);
+      if (response.data === null) {
+        alert('Invalid ID. Please check and try again.');
+      }
     } catch (error) {
       console.error('Error fetching test:', error);
     }

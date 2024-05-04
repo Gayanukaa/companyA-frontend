@@ -44,6 +44,9 @@ const SampleOperations = () => {
     try {
       const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/samples/getSample/${getSampleId}`);
       setSelectedSample(response.data);
+      if (response.data === null) {
+        alert('Invalid ID. Please check and try again.');
+      }
     } catch (error) {
       console.error('Error fetching sample by ID:', error);
     }
