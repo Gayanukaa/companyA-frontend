@@ -3,7 +3,7 @@ import CardComp from "../../components/sideComps/CardComp";
 import TableComp from "../../components/sideComps/TableComp";
 import avatar from "../../assets/avatar.svg";
 import * as reqSend from "../../global/reqSender";
-import backg from "../../assets/bg1.jpeg";
+
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -70,9 +70,7 @@ export function DashboardView(props) {
       display: 'flex', 
       justifyContent: 'center', 
       alignItems: 'center', 
-      height: '100vh',
-      backgroundImage: `url(${backg})`,
-      backgroundSize: 'cover', 
+      height: '100vh', 
       backgroundPosition: 'center',
     }}>
       <div style={{ 
