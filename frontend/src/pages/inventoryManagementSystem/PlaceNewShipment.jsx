@@ -77,6 +77,11 @@ export default function PlaceNewShipment({ onClose }) {
         const inventoryManagerId = document.getElementById('selectManager').value;
         const supplierId = document.getElementById('selectSupplier').value;
 
+        if (!requestedQuantity || requestedQuantity === "0") {
+            setMessage('Error. Quantity should be greater than zero.');
+            return;
+        }
+
         const payload = {
             itemId: itemId,
             requestedQuantity: requestedQuantity,
