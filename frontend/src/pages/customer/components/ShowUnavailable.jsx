@@ -4,6 +4,8 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CancelIcon from "@mui/icons-material/Cancel";
+import useTheme from "@mui/material/styles/useTheme";
+import {useMediaQuery} from "@mui/material";
 
 const modalStyle = {
     display: 'flex',
@@ -12,29 +14,37 @@ const modalStyle = {
     zIndex:'2002'
 };
 
-const modalContentStyle = {
-    backgroundColor: 'white',
-    padding: '24px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    position: 'relative',
-    outline: 'none',
-    width: '500px',
-    height: '500px'
-};
+
 
 const closeButtonStyle = {
+    backgroundColor:'Transparent',
+    border:'none',
     position: 'absolute',
-    top: '0',
-    right: '0',
+    top: '4px',
+    right: '4px',
     padding: '8px'
 };
 
 //Popup modal to show unavailable items and total price of available items,
 // customer can proceed to checkout with available items or cancel the order
 const PopupModal = ({ data,unavailableItems, isOpen, close, finalPrice,payBills }) => {
-
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    const ModalWidth = isSmallScreen ? "80%" : "500px";
+    const ModalHeight = isSmallScreen ? "40%" : "500px";
+    const modalContentStyle = {
+        backgroundColor: 'rgb(225,218,218)',
+        padding: '24px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        position: 'relative',
+        outline: 'none',
+        width: ModalWidth,
+        height:ModalHeight,
+        alignItems: 'center',
+        borderRadius: '15px'
+    };
     const handleNavigate = () => {
         close();
         payBills(finalPrice);
@@ -43,6 +53,7 @@ const PopupModal = ({ data,unavailableItems, isOpen, close, finalPrice,payBills 
         const item= data.find(item=> item.id ===itemId);
         return item? item.name: null;
     }
+
 
     return (
         <Modal
@@ -57,18 +68,31 @@ const PopupModal = ({ data,unavailableItems, isOpen, close, finalPrice,payBills 
 
                 <div>
                     <p>The following items are not in stock:</p>
-                    <ul>
+                    <table style={{borderCollapse: 'collapse', width: '100%', backgroundColor: "rgb(167,179,193)", borderRadius:"10px"}}>
+                        <thead >
+                        <tr  >
+                            <th style={{backgroundColor:"transparent"}}>Item</th>
+                            <th style={{backgroundColor:"transparent"}}>Available Stock</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {unavailableItems.map(item => (
-                            <li key={item.itemId}>{getNameByItemId(item.itemId)}</li>
+                            <tr key={item.itemId}>
+                                <td>{getNameByItemId(item.itemId)}</td>
+                                <td>{item.stock}</td>
+                            </tr>
                         ))}
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
-                <Typography variant="h6" color="primary">
-                    Total Price of Available Items: ${finalPrice}
-                </Typography>
+
                 <button style={closeButtonStyle} onClick={close}>
-                    <CancelIcon sx={{ fontSize: 36, color: 'white' }} />
+                    <CancelIcon sx={{fontSize: 36, color: 'black'}}/>
                 </button>
+
+                <Typography variant="h6" marginTop="30px">
+                    Total Price of Available Items: Rs {finalPrice}
+                </Typography>
                 <Button
                     variant="contained"
                     color="primary"
