@@ -70,11 +70,16 @@ export function DashboardView(props) {
             </main>
             <main><div className="head-title">
                     <div className="left">
-                    
-                    
-                        <h1 style={{ fontSize: '1rem' }}>{message}</h1>
+                    <div className="card text-dark bg-light mb-3" style={{ maxWidth: '100%' }}>
+                      <div className="card-header">Notifications</div>
+                      <div className="card-body">
+                        <h5 className="card-title">Attention Here!</h5>
+                        <p className="card-text">{message}</p>
+                      </div>
                     </div>
+                    
                         
+                    </div> 
                     </div>
             </main>
         </>
