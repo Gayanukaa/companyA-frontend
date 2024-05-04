@@ -356,7 +356,7 @@ export function Login(props){
     return (
         <>
             <div></div>
-            <div className='container'>
+            <div className=''>
                 <div className="row">
                     <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                         <h2 className="text-center m-4">Employee Login</h2>
@@ -423,7 +423,7 @@ export function SignUP(props){
     return (
         <>
             <div></div>
-            <div className='container'>
+            <div className=''>
                 <div className="row">
                     <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                         <h2 className="text-center m-4">Employee Sign UP</h2>
