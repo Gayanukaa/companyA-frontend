@@ -1,8 +1,9 @@
 import React from "react";
 import CardComp from "../../components/sideComps/CardComp";
-import TableComp from '../../components/sideComps/TableComp'
-import avatar from '../../assets/avatar.svg';
-import * as reqSend from '../../global/reqSender';
+import TableComp from "../../components/sideComps/TableComp";
+import avatar from "../../assets/avatar.svg";
+import * as reqSend from "../../global/reqSender";
+
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
