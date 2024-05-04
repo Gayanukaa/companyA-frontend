@@ -13,5 +13,11 @@ export const personImages=[per1,per2,per3,per4,per5,per6,per7,per8]
 
 export const dashboardAdminData = [
     { name: "Dashboard", icon: <i className='bx bxs-dashboard' ></i>, active: true, to: 'dashboard' },
-    { name: "View Stocks", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-stocks' }
+    { name: "View Stocks", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-stocks' },
+    { name: "View Salary Details", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-salary-details' },
+    { name: "Add/Update Salary Details", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'add-update-salary-details' },
+    { name: "View Order History", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-order-history' },
+    { name: "View Loan Details", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-loan-details' },
+    { name: "Create Loan", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'create-loan' },
+    { name: "Finance Overview", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'finance-overview' }
 ]

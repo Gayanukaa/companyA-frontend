@@ -1,14 +1,15 @@
-import '../../styles/dashboard.css';
-import '../../styles/style.css';
+import '../../../styles/dashboard.css';
+import '../../../styles/style.css';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import avatar from '../../assets/avatar.svg';
-import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
+import avatar from '../../../assets/avatar.svg';
+import { SideNavigation, TopBar } from '../../../components/sideComps/dashBoardComps';
 import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView, ViewStocks } from './SideBarPages';
+import { AddDevelop, AddProducts, AddPrototype, DashboardView, EditPrototype, ProductDevelopment, Products, Prototype, SendToQA } from './SideBarPages';
+import NotFound from '../../generalManagementSystem/NotFound';
 
 
 
@@ -69,7 +70,15 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/view-stocks" element={<ViewStocks />} />
+                        <Route path="/prototypes" element={<Prototype />} />
+                        <Route path="/prototypes/add" element={<AddPrototype />} />
+                        <Route path="/prototypes/edit/:id" element={<EditPrototype />} />
+                        <Route path="/product-development" element={<ProductDevelopment />} />
+                        <Route path="/product-development/send-to-qa" element={<SendToQA />} />
+                        <Route path="/product-development/add-develop/:id" element={<AddDevelop />} />
+                        <Route path="/product-development/add-product/:id" element={<AddProducts />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/*" element={<NotFound />}  />
                     </Routes>
                 </section>
                 

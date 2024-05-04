@@ -1,41 +1,98 @@
 import React from "react";
 import CardComp from "../../components/sideComps/CardComp";
-import TableComp from '../../components/sideComps/TableComp'
+import TableComp from '../../components/sideComps/TableComp';
+import ApprovalCard from "./components/Approvals.jsx"
 import avatar from '../../assets/avatar.svg';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import TrashIcon from "./components/TrashIcon";
+import { useNavigate } from 'react-router-dom';
+import { systemRoles } from './data/RoleDetails.jsx';
 
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
+import { Alert, Tab, Tabs } from "@mui/material";
 
 
 export function ViewManagers(props) {
+    const [data, setData] = useState(null);
+    const [tabledata, settabledata] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const tableData = {
-        name: "Sample Table 1",
-        heading: ["Column 1", "Column 2", "Column 3"],
-        body: [
-            <tr key="row1">
-                <td>Data 1</td>
-                <td>Data 2</td>
-                <td>Data 3</td>
-            </tr>,
-            <tr key="row2">
-                <td>Data 4</td>
-                <td>Data 5</td>
-                <td>Data 6</td>
-            </tr>,
-            // Add more rows as needed
-        ],
+    const navigate = useNavigate();
+    const updateManagerButtonClick = (managerId) => {
+        navigate('/general-management/update-managers', { state: { managerId: managerId } });
+    };
+    const addManagerButtonClick = () => {
+        const portalLink = '/general-management/add-managers';
+        navigate(portalLink);
+    };
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
     };
 
+    useEffect(() => {
+        axios.get("https://spring-boot-companya.azurewebsites.net/api/manager/viewAllManagers")
+            .then(response => {
+                setData(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching manager data:", error);
+            });
+    }, []);
+
+    useEffect(() => {
+        if (data != null) {
+            settabledata(
+                {
+                    heading: ["Person", "Name", "e-mail", "Role", "edit", ""],
+                    body: data.map((tablerow, index) => {
+
+                        const roleLabel = systemRoles.find(role => role.role === tablerow.role)?.label || 'Unknown Role';
+
+                        return (
+                            <tr key={index}>
+                                <td><img src={avatar} alt="Avatar" /></td>
+                                <td>{tablerow.firstName + " " + tablerow.lastName}</td>
+                                <td >{tablerow.email}</td>
+                                <td>{roleLabel}</td>
+                                <td><button onClick={() => updateManagerButtonClick(tablerow.id)} className="btn btn-dark">Update</button></td>
+                                <td><TrashIcon /></td>
+                            </tr>
+                        )
+                    }),
+                }
+            )
+        }
+    }, [data]);
     return (
         <>
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <h1>View Customers</h1>
+                        <h1>View Managers</h1>
                     </div>
-
-                    <TableComp data={tableData} />
-
+                    <div className="right">
+                        <button onClick={addManagerButtonClick} className="btn btn-primary">Add Manager</button>
+                    </div>
                 </div>
+
+                {loading ? (
+                    <LoadingSpinner />
+
+                ) : (
+                    tabledata ? <TableComp data={tabledata} /> : null
+                )}
 
             </main>
         </>
@@ -44,40 +101,125 @@ export function ViewManagers(props) {
 
 
 
-export function DashboardView(props) {
+export function ApprovalSection(props) {
+    const [approvalData, setApprovalData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [value, setValue] = useState(0);
 
-    const dataList = [
-        {
-            image: avatar,
-            altText: "Avatar 1",
-            count: 5,
-            name: "John Doe"
-        },
-        {
-            image: avatar,
-            altText: "Avatar 2",
-            count: 3,
-            name: "Jane Smith"
-        },
-        {
-            image: avatar,
-            altText: "Avatar 3",
-            count: 7,
-            name: "Bob Johnson"
-        }
-    ];
+    const handleApproveClick = (id) => {
+        console.log("Approving request with id:", id);
+    };
+    const handleRejectClick = (id) => {
+        console.log("Approving request with id:", id);
+    };
+    useEffect(() => {
+        axios.get("https://spring-boot-companya.azurewebsites.net/api/request/view")
+            .then(response => {
+                const sortedData = response.data.sort((a, b) => a.status - b.status);
+                setApprovalData(sortedData);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching approval data:", error);
+            });
+    }, [handleApproveClick]);
+
+    useEffect(() => {
+        axios.get("https://spring-boot-companya.azurewebsites.net/api/request/view")
+            .then(response => {
+                const sortedData = response.data.sort((a, b) => a.status - b.status);
+                setApprovalData(sortedData);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching approval data:", error);
+            });
+    }, [handleRejectClick]);
+
+
+    const handleTabValueChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     return (
-        <>
-            <main>
-                <div className="head-title">
-                    <div className="left">
-                        <h1>Dashboard</h1>
-                    </div>
+        <main>
+            <div style={{ top: ' 2px', left: '2px', bottom: '2px' }}>
+                <h1>Requests</h1><br></br>
 
-                    <CardComp data={dataList} />
-                </div>
-            </main>
-        </>
-    )
+                {
+                    isLoading ? (
+                        <LoadingSpinner />
+                    ) : (
+                        <div className="feedback-container">
+                            <Tabs value={value} onChange={handleTabValueChange}>
+                                <Tab label="New" />
+                                <Tab label="Approved" />
+                                <Tab label="Rejected" />
+                            </Tabs>
+
+                            {/* Render ApprovalCard components based on the selected tab */}
+                            {value === 0 && (
+                                <>
+                                    {approvalData.filter(request => request.status === 0).length === 0 ? (
+                                        <Alert severity="info">No new approval requests found.</Alert>
+                                    ) : (
+                                        approvalData.filter(request => request.status === 0).map((request, index) => (
+                                            <ApprovalCard
+                                                key={index}
+                                                id={request.id}
+                                                name={request.name}
+                                                email={request.email}
+                                                message={request.message}
+                                                status={request.status}
+                                                onApprove={() => handleApproveClick(request.id)}
+                                            />
+                                        ))
+                                    )}
+                                </>
+                            )}
+                            {value === 1 && (
+                                <>
+                                    {approvalData.filter(request => request.status === 1).length === 0 ? (
+                                        <Alert severity="info">No approved requests found.</Alert>
+                                    ) : (
+                                        approvalData.filter(request => request.status === 1).map((request, index) => (
+                                            <ApprovalCard
+                                                key={index}
+                                                id={request.id}
+                                                name={request.name}
+                                                email={request.email}
+                                                message={request.message}
+                                                status={request.status}
+                                                onApprove={() => handleApproveClick(request.id)}
+                                            />
+                                        ))
+                                    )}
+                                </>
+                            )}
+                            {value === 2 && (
+                                <>
+                                    {approvalData.filter(request => request.status === 2).length === 0 ? (
+                                        <Alert severity="info">No rejected approval requests found.</Alert>
+                                    ) : (
+                                        approvalData.filter(request => request.status === 2).map((request, index) => (
+                                            <ApprovalCard
+                                                key={index}
+                                                id={request.id}
+                                                name={request.name}
+                                                email={request.email}
+                                                message={request.message}
+                                                status={request.status}
+                                                onApprove={() => handleApproveClick(request.id)}
+                                            />
+                                        ))
+                                    )}
+                                </>
+                            )}
+                        </div>
+
+                    )
+                }
+            </div>
+        </main>
+    );
 }
