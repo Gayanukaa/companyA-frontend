@@ -21,6 +21,7 @@ import {
   MarkAttendance,
   WorkTime,
   UpdateEmployee,
+  Interface2,
 } from "./SideBarPages";
 
 export default function Dashboard() {
@@ -88,6 +89,7 @@ export default function Dashboard() {
             <Route path="/update-employee" element={<UpdateEmployee />} />
             <Route path="/mark-attendance" element={<MarkAttendance />} />
             <Route path="/interface1" element={<Interface1 />} />
+            <Route path="/interface2" element={<Interface2 />} />
           </Routes>
         </section>
       </div>
