@@ -28,7 +28,7 @@ export default function SearchBar() {
           <p className="text-center" style={{ fontSize: '1.5rem' }}>Your premier destination for cutting-edge electronics and innovative technology solutions.</p>
           <p className="text-center" style={{ fontSize: '1.2rem' }}>Explore our range of electronics and discover the future today with Company A.</p><br /><br />
           <div className="d-flex justify-content-center">
-            <Link to="/login/customer" className="btn btn-warning" style={{ fontSize: '1.2rem' }}>Get Started</Link>
+            <Link to="/login/customer" className="btn btn-warning" style={{ fontSize: '1.2rem' }}>Get Started &#62; </Link>
           </div>
         </div>
       </div>

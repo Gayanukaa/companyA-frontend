@@ -7,7 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { forwardRef, useImperativeHandle } from 'react';
 import { motion } from "framer-motion";
-import * as reqSend from '../../../global/reqSender.jsx';
+import axios from 'axios';
 
 import bg1 from '../../../assets/bg1.jpeg';
 
@@ -59,21 +59,21 @@ const Login = (props) => {
                 role: props.role
             };
 
-            reqSend.defaultReq("POST", 'api/login', loginFormData,
-                response => {
+            axios.post('https://spring-boot-companya.azurewebsites.net/api/login', loginFormData)
+                .then(response => {
                     if (response.status === 200 && response.data && response.data.role) {
                         localStorage.setItem("role", response.data.role);
                         navigateToManagerPortal(response.data.role);
+
                     } else {
-                        console.error("Invalid response format:", response);
+                        setShowAlert(response.data.message || "Unknown error occurred");
                     }
-                },
-                error => {
-                    console.error("API request failed:", error);
-                }
-            );
+                })
+                .catch(error => {
+                    setShowAlert(error.response.data.message);
+                });
         } else {
-            console.error("Missing or invalid login credentials");
+            setShowAlert("Missing login credentials")
         }
     };
 
@@ -87,7 +87,7 @@ const Login = (props) => {
             <div className="overlay"></div>
             <motion.div animate={{ y: 0, opacity: 1 }} initial={{ opacity: 0, y: 30 }} transition={{ delay: 0.3, duration: 0.5 }} className="logIn ">
 
-                <h2>{props.role && props.role === "manager" ? "Manager Login" : props.role === "customer" ? "Customer Login" : ""}</h2>
+                <h2>{props.role && props.role === "manager" ? "Admin Login" : props.role === "customer" ? "Customer Login" : ""}</h2>
 
                 {showAlert && (
                     <Alert severity="error">Error -<strong>{showAlert}</strong></Alert>

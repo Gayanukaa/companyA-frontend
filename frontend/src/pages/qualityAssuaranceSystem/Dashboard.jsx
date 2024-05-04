@@ -75,7 +75,6 @@ export default function Dashboard() {
                         <Route path="/tests" element={<TestOps />} />
                         <Route path="/qaManagers" element={<ManagerOps />} />
                         <Route path="/health-safety-practices" element={<SafetyOps />}/>
-
                     </Routes>
                 </section>
                 

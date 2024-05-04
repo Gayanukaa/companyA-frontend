@@ -22,13 +22,6 @@ export function BarGraphComponent(props) {
 
   const { barGraphData } = props;
 
-
-  useEffect(() => {
-    if (props.barGraphData) {
-      console.log(props.barGraphData);
-    }
-  }, [props.barGraphData])
-
   if (!barGraphData) {
     return null;
   }
