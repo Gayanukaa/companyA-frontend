@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./HRStyles.css";
+
 import * as reqSend from "../../global/reqSender.jsx";
 
-export default function EmployeeDetailForm() {
+export default function UpdateDetailForm() {
   const [val, setVal] = useState("");
   const [employeeData, setEmployeeData] = useState(null);
   const [formData, setFormData] = useState({

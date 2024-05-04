@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import SearchAll from "./SearchAll.jsx";
 import SearchOne from "./SearchOne.jsx";
 import EmployeeDetailForm from "./EmployeeDetailsForm.jsx";
+import UpdateDetailForm from "./UpdateDetailsForm.jsx";
 
 export function DashboardView(props) {
   const dataList = [
@@ -619,6 +620,7 @@ export function UpdateEmployee(props) {
         <>
           <br />
           <br />
+          <UpdateDetailForm />
         </>
       </div>
     </>
