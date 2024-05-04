@@ -23,6 +23,7 @@
     "@nextui-org/react": "^2.1.13",
     "@nextui-org/theme": "^2.2.1",
     "axios": "^1.5.0",
+    "bootstrap": "^5.3.3",
     "formik": "^2.4.3",
     "framer-motion": "^10.16.4",
     "jquery": "^3.7.1",
