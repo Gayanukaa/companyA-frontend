@@ -7,18 +7,22 @@ import LoginHandle from './pages/generalManagementSystem/login/LoginHandle.jsx';
 
 import CustomerOrder from './pages/customerOrderSystem/Dashboard.jsx';
 import FinanticalManagement from './pages/financeSystem/Dashboard.jsx';
-import GeneralManagement from './pages/customerOrderSystem/Dashboard.jsx';
+import GeneralManagement from './pages/generalManagementSystem/Dashboard.jsx';
 import HumanResourceManagement from './pages/humanResourceSystem/Dashboard.jsx';
 import InventoryManagement from './pages/inventoryManagementSystem/Dashboard.jsx';
 import LogisticManagement from './pages/logisticsAndMaintenanceSystem/Dashboard.jsx';
 import ManufacturingManagement from './pages/manufacturingSystem/Dashboard.jsx';
 import QualityAssuranceManagement from './pages/qualityAssuaranceSystem/Dashboard.jsx';
 import SalesManagement from './pages/salesSystem/Dashboard.jsx';
-import TrainingDevelopmentManagement from './pages/trainingAndDevelopmentSystem/Dashboard.jsx';
+import CustomerSystem from './pages/customer/Dashboard.jsx';
+import TrainingDevelopmentManagement from './pages/trainingAndDevelopmentSystem/DashboardController.jsx';
 
 import NotFound from './pages/generalManagementSystem/NotFound.jsx';
 import LandingPage from './pages/generalManagementSystem/LandingPage.jsx';
 import Unauthorized from './pages/generalManagementSystem/Unauthorized.jsx';
+import Register from './pages/generalManagementSystem/login/Register.jsx';
+
+import FetchReportData from './pages/inventoryManagementSystem/FetchReportData.jsx';
 
 
 
@@ -26,9 +30,11 @@ function App() {
 
   return (
     <>
+    {/* <FetchReportData/> */}
       <React.Fragment>
         <Routes>
           <Route path="/login/*" element={<LoginHandle />} />
+          <Route path="/sign-up" element={<Register />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<NotFound />} />
@@ -65,12 +71,19 @@ function App() {
             <Route path="/sales-management/*" element={<SalesManagement />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRole='training_development_manager' />}>
+          {/* <Route element={<RequireAuth allowedRole='training_development_manager' />}>
             <Route path="/trainingdevelopment-management/*" element={<TrainingDevelopmentManagement />} />
-          </Route>
+          </Route> */}
+
+          <Route path="/trainingdevelopment-management/*" element={<TrainingDevelopmentManagement />} />
+
 
           <Route element={<RequireAuth allowedRole='general_manager' />}>
             <Route path="/general-management/*" element={<GeneralManagement />} />
+          </Route>
+
+          <Route element={<RequireAuth allowedRole='customer' />}>
+            <Route path="/customer/*" element={<CustomerSystem />} />
           </Route>
 
         </Routes>

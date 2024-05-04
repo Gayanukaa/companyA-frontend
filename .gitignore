@@ -128,4 +128,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-frontend/src/pages/humanResourceSystem/hrsPages/EmployeeSettings.css
+
+frontend/package-lock.json

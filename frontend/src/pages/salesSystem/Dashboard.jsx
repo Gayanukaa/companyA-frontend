@@ -72,7 +72,7 @@ export default function Dashboard() {
                         <Route path="/view-stocks" element={<ViewStocks />} />
                     </Routes>
                 </section>
-                
+
             </div>
 
         </>
