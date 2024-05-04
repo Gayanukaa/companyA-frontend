@@ -626,3 +626,12 @@ export function UpdateEmployee(props) {
     </>
   );
 }
+
+export function Interface2(props) {
+  //for Update method
+  return (
+    <div className="container">
+      <h2 className="feedbackHeading">Employee Details Updated Successfully</h2>
+    </div>
+  );
+}
