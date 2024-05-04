@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, CircularProgress, Snackbar, LinearProgress } from '@material-ui/core';
 import axios from 'axios';
-import { Button, Grid, Input, TextField } from '@mui/material';
+import { Alert, Button, Grid, Input, TextField } from '@mui/material';
 
 const API_ENDPOINT = "http://localhost:8090/api";
 
@@ -31,19 +31,28 @@ export function OrderStatus(props) {
 const OrderStatusForm = () => {
     const [orderId, setOrderId] = useState('');
     const [orderStatus, setOrderStatus] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const handleSubmit = async (e) => {
+    const [openSnackBar, setOpenSnackBar] = React.useState(false);
+
+
+    const handleUpdateOrderStatus = async (e) => {
         e.preventDefault();
         try {
-            // Here you can make a POST request to update the order status or handle additional information
-            console.log('Order Status:', orderStatus);
-            console.log('Additional Info:', additionalInfo);
+            setLoading(true);
+            setError('');
+            await axios.post(`${API_ENDPOINT}/production/task/updateOrderStatus?orderID=${orderId}&status=${orderStatus}`);
+            setOpenSnackBar(true)
         } catch (error) {
-            console.error('Error submitting form:', error);
+
+            setError('Error updating the order status')
+            console.error('Error fetching order status:', error);
+        } finally {
+            setLoading(false);
         }
     };
+
     const handleSubmitGetOrderStatus = async (e) => {
         e.preventDefault();
         try {
@@ -51,6 +60,7 @@ const OrderStatusForm = () => {
             setError('');
             const response = await axios.get(`${API_ENDPOINT}/production/task/GetOrderStatus?orderID=${orderId}`);
             setOrderStatus(response.data.status)
+            console.log(response)
         } catch (error) {
 
             setError('Error fetching the order status')
@@ -63,6 +73,18 @@ const OrderStatusForm = () => {
 
     return (
         <div>
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} open={openSnackBar} autoHideDuration={3000} onClose={() => setOpenSnackBar(false)}>
+                <Alert
+                    onClose={() => setOpenSnackBar(false)}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    Order status with id {orderId} was changed to {orderStatus}
+                </Alert>
+            </Snackbar>
+
             <form onSubmit={handleSubmitGetOrderStatus}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
@@ -74,6 +96,8 @@ const OrderStatusForm = () => {
                                 onChange={(e) => setOrderId(e.target.value)}
                             />
                         </FormControl>
+                        {loading && <LinearProgress sx={{ mt: 4 }} />}
+
                     </Grid>
 
                     <Grid item xs={12}>
@@ -81,34 +105,36 @@ const OrderStatusForm = () => {
                     </Grid>
                 </Grid>
             </form>
-
             {error && <div>{error}</div>}
-            {(!error && !loading) && (
-               <form onSubmit={handleSubmit}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            
+            {
+                (!error && !loading) && (
+                    <form onSubmit={handleUpdateOrderStatus}>
+                        <Grid sx={{ mt: 4 }} container spacing={3}>
+                            <Grid item xs={12}>
+
                                 <FormControl fullWidth>
                                     <InputLabel>Order Status</InputLabel>
                                     <Select
                                         value={orderStatus}
                                         onChange={(e) => setOrderStatus(e.target.value)}
                                     >
-                                        <MenuItem value="pending">Pending</MenuItem>
                                         <MenuItem value="processing">Processing</MenuItem>
-                                        <MenuItem value="shipped">Shipped</MenuItem>
-                                        <MenuItem value="delivered">Delivered</MenuItem>
+                                        <MenuItem value="working">Working</MenuItem>
+                                        <MenuItem value="pending">Pending</MenuItem>
+                                        <MenuItem value="completed">Completed</MenuItem>
+                                        <MenuItem value="cancelled">Cancelled</MenuItem>
                                     </Select>
                                 </FormControl>
-                        </Grid>
+                            </Grid>
 
-                        <Grid item xs={12}>
-                            <Button type="submit" variant="contained" color="primary">Update Order Status</Button>
+                            <Grid item xs={12}>
+                                <Button type="submit" variant="contained" color="primary">Update Order Status</Button>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </form>
-            )}
-        </div>
+                    </form>
+                )
+            }
+        </div >
     );
 };
 
