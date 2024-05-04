@@ -56,7 +56,7 @@ export function DashboardView(props) {
             try {
                 const response = await axios.get("http://localhost:8090/api/v1/userDetails", {
                     params: {
-                        user_ID: "6627402520d6be942d372b68"
+                        email: "nimesh@mp.com"
                     }
                 });
                 setUserData(response.data);
