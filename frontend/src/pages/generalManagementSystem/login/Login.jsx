@@ -63,6 +63,7 @@ const Login = (props) => {
                 .then(response => {
                     if (response.status === 200 && response.data && response.data.role) {
                         localStorage.setItem("role", response.data.role);
+                        localStorage.setItem("userId", response.data.userId);
                         navigateToManagerPortal(response.data.role);
 
                     } else {
