@@ -72,7 +72,6 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/view-stocks" element={<ViewStocks />} />
                         <Route path="/view-salary-details" element={<ViewEmployee />}/>
                         <Route path="/view-all-salary-details" element={<AllEmployeeSalary />}/>
                         <Route path="/add-update-salary-details" element={< AddOrUpdateEmployeeSalary/>}/>
