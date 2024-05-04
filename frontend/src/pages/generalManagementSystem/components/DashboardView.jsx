@@ -7,7 +7,6 @@ import * as reqSend from '../../../global/reqSender.jsx';
 import LoadingSpinner from './LoadingSpinner.jsx';
 
 
-
 const DashboardView = () => {
     const [graphData, setGraphData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

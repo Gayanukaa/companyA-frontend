@@ -28,7 +28,7 @@ const PrototypeOperations = () => {
 
   const getAllPrototypes = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/v1/prototypes/getAllPrototypes');
+      const response = await axios.get('https://spring-boot-companya.azurewebsites.net/api/v1/prototypes/getAllPrototypes');
       setPrototypes(response.data);
     } catch (error) {
       console.error('Error fetching prototypes:', error);
@@ -37,8 +37,11 @@ const PrototypeOperations = () => {
 
   const getPrototypeById = async () => {
     try {
-      const response = await axios.get(`http://localhost:8090/api/v1/prototypes/getPrototype/{id}?id=${inputId}`);
+      const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/prototypes/getPrototype/{id}?id=${inputId}`);
       setSelectedPrototype(response.data);
+      if (response.data === null) {
+        alert('Invalid ID. Please check and try again.');
+      }
     } catch (error) {
       console.error('Error fetching prototype by ID:', error);
     }
@@ -47,7 +50,7 @@ const PrototypeOperations = () => {
   const changeTest = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put('http://localhost:8090/api/v1/prototypes/changeTest', null, {
+      const response = await axios.put('https://spring-boot-companya.azurewebsites.net/api/v1/prototypes/changeTest', null, {
         params: {
           prototypeId: updatingPrototypeId, 
           newTestName: newTestName
@@ -61,7 +64,7 @@ const PrototypeOperations = () => {
 
   const deletePrototypeById = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8090/api/v1/prototypes/delete/${deletePrototypeId}`);
+      const response = await axios.delete(`https://spring-boot-companya.azurewebsites.net/api/v1/prototypes/delete/${deletePrototypeId}`);
       getAllPrototypes();
       setDeletePrototypeId('');
       setSelectedPrototype(null);
@@ -74,7 +77,7 @@ const PrototypeOperations = () => {
 
   const handleTestPrototype = async () => {
     try {
-      const response = await axios.put('http://localhost:8090/api/v1/prototypes/inspect', null, {
+      const response = await axios.put('https://spring-boot-companya.azurewebsites.net/api/v1/prototypes/inspect', null, {
         params: {
           prototypeId: inspectPrototypeId,
           testId: inspectTestId
@@ -90,7 +93,7 @@ const PrototypeOperations = () => {
   const handleCreatePrototype = async (e) => {
     e.preventDefault(); 
     try {
-      const response = await axios.post('http://localhost:8090/api/v1/prototypes/createprototype', {
+      const response = await axios.post('https://spring-boot-companya.azurewebsites.net/api/v1/prototypes/createprototype', {
         id: createPrototypeId,
         expectedTest: prototypeExpectedTest,
         receivedDate: prototypeReceivedDate,

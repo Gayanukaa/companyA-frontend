@@ -185,7 +185,7 @@ export function AddPrototype(props) {
     };
 
     return (
-        <div className='container'>
+        <div className=''>
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                     <h2 className="text-center m-4">Add Prototype</h2>
@@ -272,7 +272,7 @@ export function EditPrototype(props) {
     };
 
     return (
-        <div className='container'>
+        <div className=''>
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                     <h2 className="text-center m-4">Edit Prototype</h2>
@@ -453,7 +453,7 @@ export function AddDevelop(props) {
     }
 
     return (
-        <div className='container'>
+        <div className=''>
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                     <h2 className="text-center m-4">Proceed to Development</h2>
@@ -516,7 +516,7 @@ export function SendToQA(props) {
     };
 
     return (
-        <div className='container'>
+        <div className=''>
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                     <h2 className="text-center m-4">Send To QA</h2>
@@ -644,7 +644,7 @@ export function AddProducts(props) {
         };
 
   return (
-    <div className='container'>
+    <div className=''>
         <div className="row">
             <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                 <h2 className="text-center m-4">Add to Products</h2>

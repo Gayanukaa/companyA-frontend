@@ -74,7 +74,7 @@ function ProductList({ get_url, get_val }) {
                     <Box style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', justifyContent: 'center' }}>
                         <div style={{ marginRight: '16px' ,height:buttonHeight,display: 'flex', alignItems: 'center',justifyContent: 'center'}}>
                             <span style={{fontSize:fontSize, marginRight: '4px' }}>Total Price:</span>
-                            <span style={{fontSize:fontSize}}>${totalPrice.toFixed(2)}</span>
+                            <span style={{fontSize:fontSize}}>Rs {totalPrice.toFixed(2)}</span>
                         </div>
                         <div style={{
                             marginRight: '16px',

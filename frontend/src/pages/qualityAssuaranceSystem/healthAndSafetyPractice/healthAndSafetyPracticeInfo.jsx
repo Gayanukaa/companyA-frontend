@@ -41,7 +41,7 @@ const HealthAndSafetyPracticeInfo = () => {
 
   const fetchPractices = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/v1/health-safety-practices/get-all');
+      const response = await axios.get('https://spring-boot-companya.azurewebsites.net/api/v1/health-safety-practices/get-all');
       setPractices(response.data);
     } catch (error) {
       console.error('Error fetching practices:', error);
@@ -50,7 +50,7 @@ const HealthAndSafetyPracticeInfo = () => {
 
   const deletePracticeById = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8090/api/v1/health-safety-practices/delete?id=${deleteId}`);
+      const response = await axios.delete(`https://spring-boot-companya.azurewebsites.net/api/v1/health-safety-practices/delete?id=${deleteId}`);
       alert(response.data);
       setPractices(practices.filter(practice => practice.id !== deleteId));
     } catch (error) {
@@ -61,7 +61,7 @@ const HealthAndSafetyPracticeInfo = () => {
 
   const getPracticeById = async () => {
     try {
-      const response = await axios.get(`http://localhost:8090/api/v1/health-safety-practices/get?id=${inputId}`);
+      const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/health-safety-practices/get?id=${inputId}`);
       setFetchedPractice(response.data);
       setFetchError(''); // Clear previous errors
     } catch (error) {
@@ -82,7 +82,7 @@ const HealthAndSafetyPracticeInfo = () => {
     }
 
     try {
-      const response = await axios.put(`http://localhost:8090/api/v1/health-safety-practices/update?id=${updateId}`, {
+      const response = await axios.put(`https://spring-boot-companya.azurewebsites.net/api/v1/health-safety-practices/update?id=${updateId}`, {
         equipments: updateEquipments.split(','),
         safetyGuidelines: updateSafetyGuidelines.split(','),
         safetyLevel: updateSafetyLevel
@@ -111,7 +111,7 @@ const HealthAndSafetyPracticeInfo = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8090/api/v1/health-safety-practices/create', {
+      const response = await axios.post('https://spring-boot-companya.azurewebsites.net/api/v1/health-safety-practices/create', {
         ...newPractice,
         equipments: newPractice.equipments.split(','),
         safetyGuidelines: newPractice.safetyGuidelines.split(',')
