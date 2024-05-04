@@ -8,7 +8,7 @@ const Toast = Swal.mixin({ toast: true, position: 'top-end', showConfirmButton: 
 export function defaultReq(method, url, data, callback1 = null, callback2 = null, callback3 = null) {
     var options = {
         method: method,
-        url: 'http://localhost:8090/' + url,
+        url: 'https://spring-boot-companya.azurewebsites.net/' + url,
         headers: {
             'Content-Type': 'application/json',
             // Authorization: 'Bearer ' + localStorage.getItem("token")
