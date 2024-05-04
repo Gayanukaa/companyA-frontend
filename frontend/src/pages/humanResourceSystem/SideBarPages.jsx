@@ -422,22 +422,6 @@ export function WorkTime(props) {
     return formattedDate;
   };
 
-  const calculateTotalWorkedTime = (hoursData) => {
-    let totalHours = 0;
-    let totalMinutes = 0;
-
-    hoursData.forEach((item) => {
-      totalHours += parseInt(item.hours);
-      totalMinutes += parseInt(item.minutes);
-    });
-
-    // Convert minutes to hours if greater than 60
-    totalHours += Math.floor(totalMinutes / 60);
-    totalMinutes %= 60;
-
-    return `Total worked time: ${totalHours} hours ${totalMinutes} minutes`;
-  };
-
   const searchClick = async () => {
     try {
       const formattedStartDate = formatDate(startDate);
@@ -451,12 +435,10 @@ export function WorkTime(props) {
         async (workHoursResponse) => {
           if (workHoursResponse.status === 200 && workHoursResponse.data) {
             const workHoursData = workHoursResponse.data;
-            console.log(workHoursResponse); //
+            console.log(workHoursResponse);
             setWorkHoursData(workHoursData);
-
-            // Calculate total worked time
-            const totalWorkedHours = calculateTotalWorkedTime(workHoursData);
-            setTotalWorkedTime(totalWorkedHours);
+            document.getElementById("header3").innerHTML =
+              JSON.stringify(workHoursData);
           } else {
             console.error("Failed to fetch work hours data");
           }
@@ -474,7 +456,10 @@ export function WorkTime(props) {
         (otHoursResponse) => {
           if (otHoursResponse.status === 200 && otHoursResponse.data) {
             const otHoursData = otHoursResponse.data;
+            console.log(otHoursResponse);
             setOtHoursData(otHoursData);
+            document.getElementById("header4").innerHTML =
+              JSON.stringify(otHoursData);
           } else {
             console.error("Failed to fetch OT hours data");
           }
@@ -492,6 +477,7 @@ export function WorkTime(props) {
     event.preventDefault();
     searchClick();
   };
+
   return (
     <>
       <main>
@@ -596,9 +582,16 @@ export function WorkTime(props) {
                 <button className="button" onClick={searchClick}>
                   Search
                 </button>
+                <div></div>
               </div>
             </div>
           </form>
+          <br />
+          <br />
+          <h5 id="header3" style={{ textAlign: "center" }}></h5>
+          <br />
+          <br />
+          <h5 id="header4" style={{ textAlign: "center" }}></h5>
         </>
       </div>
       <footer>{totalWorkedTime && <p>{totalWorkedTime}</p>}</footer>
