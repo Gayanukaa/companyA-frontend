@@ -1,0 +1,81 @@
+.msg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    margin: 10px 150px;
+    background-color: limegreen;
+    color: white;
+    padding: 5px;
+}
+
+.delete {
+    background-color: red;
+    color: white;
+}
+
+.error {
+    background-color: red;
+    color: white;
+}
+
+.status {
+    background-color: aqua;
+    color: black
+}
+
+.report-form h1 {
+    margin-left: 20px;
+    font-size: 2.2rem;
+}
+
+.report-form .form-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.report-form button {
+    padding: 5px 10px;
+    background-color: dodgerblue;
+    border-radius: 5px;
+    border: none;
+    margin: 5px 20px;
+    color: white;
+}
+
+.report-form input[type="text"] {
+    border: 1px solid dodgerblue;
+    background-color: none;
+    color: black;
+    outline: none;
+    padding: 5px 10px;
+    margin: 5px 20px;
+    border-radius: 5px;
+}
+
+.report-form .report-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px 30px;
+    border: 1px solid dodgerblue;
+    border-radius: 5px;
+
+}
+
+.report-form .report-box .report-col {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.report-form .report-box .report-col i {
+    font-weight: bold;
+    margin-left: 10px;
+}
