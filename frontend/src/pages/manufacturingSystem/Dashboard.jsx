@@ -8,9 +8,11 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView, ViewStocks } from './SideBarPages';
-
-
+import { DashboardView, ViewStocks} from './SideBarPages';
+import FormInput from '../manufacturingSystem/component/FormInput'
+import Report from './component/Report';
+import { OrderStatus } from './OrderStatus';
+import Maintenence from './component/Maintenence';
 
 
 export default function Dashboard() {
@@ -70,6 +72,10 @@ export default function Dashboard() {
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
                         <Route path="/view-stocks" element={<ViewStocks />} />
+                        <Route path="/material-request" element={<FormInput />} />
+                        <Route path="/order-status" element={<OrderStatus />} />
+                        <Route path="/maintenence-request" element={<Maintenence />} />
+                        <Route path="/report-request" element={<Report />} />
                     </Routes>
                 </section>
                 
