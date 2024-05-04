@@ -122,9 +122,9 @@ export default function Register() {
                             const responseStatusLog = response2.status;
                             if (responseStatusLog === 200 || responseStatusLog === 201) {
 
-                                localStorage.setItem("role", response.data.role);
+                                localStorage.setItem("role", response2.data.role);
 
-                                navigate('/');
+                                navigate('/customer/dashboard');
                                 Toast.fire({ icon: 'success', title: 'You have successfully Registered!' });
                             } else {
                                 setShowAlert(response2.data['message'])
