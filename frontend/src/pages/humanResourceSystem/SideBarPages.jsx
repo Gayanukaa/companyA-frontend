@@ -262,6 +262,84 @@ export function Interface1(props) {
   );
 }
 export function MarkAttendance(props) {
+  const [val1, setVal1] = useState("");
+  const [signInData, setSignInData] = useState(null);
+
+  const change1 = (event) => {
+    setVal1(event.target.value);
+  };
+
+  const signInClick = () => {
+    reqSend.defaultReq(
+      "POST",
+      `Attendance/SignIn/${val1}`,
+      {},
+      (response) => {
+        if (response.status === 200 && response.data) {
+          setSignInData(response.data);
+          console.log("Attendance marked");
+          var element = document.getElementById("attendance");
+          var stringToPass = "Sign In Successful!";
+          element.innerText = stringToPass;
+          // to refresh the page
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        } else {
+          window.location.reload();
+          console.error("Invalid response format:", response);
+        }
+      },
+      (error) => {
+        console.error("API request failed:", error);
+        window.location.reload();
+      }
+    );
+  };
+
+  const handleSubmit1 = (event) => {
+    event.preventDefault();
+    signInClick();
+  };
+
+  const [val2, setVal2] = useState("");
+  const [signOutData, setSignOutData] = useState(null);
+
+  const change2 = (event) => {
+    setVal2(event.target.value);
+  };
+
+  const signOutClick = () => {
+    reqSend.defaultReq(
+      "POST",
+      `Attendance/SignOut/${val2}`,
+      {},
+      (response) => {
+        if (response.status === 200 && response.data) {
+          setSignOutData(response.data);
+          var element = document.getElementById("attendance");
+          var stringToPass = "Sign Out Successful!";
+          element.innerText = stringToPass;
+          // to refresh the page
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        } else {
+          window.location.reload();
+          console.error("Invalid response format:", response);
+        }
+      },
+      (error) => {
+        console.error("API request failed:", error);
+        window.location.reload();
+      }
+    );
+  };
+
+  const handleSubmit2 = (event) => {
+    event.preventDefault();
+    signOutClick();
+  };
   return (
     <>
       <main>
