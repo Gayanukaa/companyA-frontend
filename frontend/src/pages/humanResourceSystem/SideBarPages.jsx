@@ -795,6 +795,58 @@ export function Leave(props) {
   );
 }
 export function DeleteEmployee(props) {
+  const [val, setVal] = useState("");
+  const [employeeData, setEmployeeData] = useState(null); // Initialize state as null
+
+  const change = (event) => {
+    setVal(event.target.value);
+  };
+
+  const searchClick = () => {
+    reqSend.defaultReq(
+      "GET",
+      `Employee/${val}`,
+      {},
+      (response) => {
+        if (response.status === 200 && response.data) {
+          setEmployeeData(response.data);
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      },
+      (error) => {
+        console.error("API request failed:", error);
+      }
+    );
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    searchClick();
+  };
+
+  const deleteClick = () => {
+    reqSend.defaultReq(
+      "DELETE",
+      `Employee/${val}`,
+      {},
+      (response) => {
+        if (response.status === 200 && response.data) {
+          window.location.replace("/humanResource-management/interface3");
+        } else {
+          console.error("Invalid response format:", response);
+        }
+      },
+      (error) => {
+        console.error("API request failed:", error);
+      }
+    );
+  };
+
+  const deleteSubmit = (event) => {
+    event.preventDefault();
+    deleteClick();
+  };
   return (
     <>
       <main>
