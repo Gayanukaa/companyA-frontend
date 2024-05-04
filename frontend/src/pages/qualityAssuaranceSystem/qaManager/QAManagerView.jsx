@@ -36,7 +36,7 @@ const QAManagerView = () => {
 
   const fetchManagers = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/v1/qaManager');
+      const response = await axios.get('https://spring-boot-companya.azurewebsites.net/api/v1/qaManager');
       setManagers(response.data);
     } catch (error) {
       console.error('Error fetching managers:', error);
@@ -55,7 +55,7 @@ const QAManagerView = () => {
       return; // Don't proceed further
     }
     try {
-      const response = await axios.post('http://localhost:8090/api/v1/qaManager/addQAManager', newManager);
+      const response = await axios.post('https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/addQAManager', newManager);
       setManagers([...managers, response.data]);
       setNewManager({ id:'', name: '', mobileNumber: '', email: '' });
     } catch (error) {
@@ -65,7 +65,7 @@ const QAManagerView = () => {
 
   const deleteManager = async (id) => {
     try {
-      await axios.delete(`http://localhost:8090/api/v1/qaManager/delete/${id}`);
+      await axios.delete(`https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/delete/${id}`);
       setManagers(managers.filter(manager => manager.id !== id));
     } catch (error) {
       console.error('Error deleting manager:', error);
@@ -74,7 +74,7 @@ const QAManagerView = () => {
 
   const fetchTestSubjects = async (managerId) => {
     try {
-      const response = await axios.get(`http://localhost:8090/api/v1/qaManager/getQAManager/{id}?id=${managerId}`);
+      const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/getQAManager/{id}?id=${managerId}`);
       setSelectedManager(response.data);
       setTestSubjects(response.data.assignedTestSubjects);
     } catch (error) {
@@ -85,7 +85,7 @@ const QAManagerView = () => {
   const addTestSubject = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:8090/api/v1/qaManager/assignManager?qaManagerId=${selectedManager.id}&testSubjectId=${newTestSubjectId}`);
+        `https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/assignManager?qaManagerId=${selectedManager.id}&testSubjectId=${newTestSubjectId}`);
       setTestSubjects([...testSubjects, response.data]);
       alert('Test subject assigned successfully');
       setNewTestSubjectId('');
@@ -99,7 +99,7 @@ const QAManagerView = () => {
   const concludeTest = async (testSubjectId) => {
     try {
       setOpenDialog(true)
-      await axios.put(`http://localhost:8090/api/v1/qaManager/concludeTest?qaManagerId=${selectedManager.id}&testSubjectId=${testSubjectId}`);
+      await axios.put(`https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/concludeTest?qaManagerId=${selectedManager.id}&testSubjectId=${testSubjectId}`);
       setConcludeTestStatus('Test concluded successfully');
     } catch (error) {
       console.error('Error concluding test:', error);
@@ -111,7 +111,7 @@ const QAManagerView = () => {
 
   const getNotCheckedTestSubjects = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/v1/qaManager/notCheckedItems');
+      const response = await axios.get('https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/notCheckedItems');
       setNotCheckedTestSubjects(response.data);
     } catch (error) {
       console.error('Error fetching not checked test subjects:', error);

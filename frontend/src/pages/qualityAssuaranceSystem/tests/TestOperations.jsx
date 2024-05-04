@@ -20,7 +20,7 @@ const TestOperations = () => {
 
   const fetchTests = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/v1/tests');
+      const response = await axios.get('https://spring-boot-companya.azurewebsites.net/api/v1/tests');
       setTests(response.data);
     } catch (error) {
       console.error('Error fetching tests:', error);
@@ -29,7 +29,7 @@ const TestOperations = () => {
 
   const handleAddTest = async () => {
     try {
-      const response = await axios.post('http://localhost:8090/api/v1/tests/addTest', {
+      const response = await axios.post('https://spring-boot-companya.azurewebsites.net/api/v1/tests/addTest', {
         testId: newTestId,
         name: newTestName,
       });
@@ -43,7 +43,7 @@ const TestOperations = () => {
 
   const handleDeleteTest = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8090/api/v1/tests/delete/${deleteTestId}`);
+      const response = await axios.delete(`https://spring-boot-companya.azurewebsites.net/api/v1/tests/delete/${deleteTestId}`);
       setTests(tests.filter((test) => test.testId !== deleteTestId));
       setDeleteResponse(response.data);
       setDeleteTestId('');
@@ -54,7 +54,7 @@ const TestOperations = () => {
 
   const handleFetchTest = async () => {
     try {
-      const response = await axios.get(`http://localhost:8090/api/v1/tests/getTest/${fetchTestId}`);
+      const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/tests/getTest/${fetchTestId}`);
       setFetchedTest(response.data);
     } catch (error) {
       console.error('Error fetching test:', error);

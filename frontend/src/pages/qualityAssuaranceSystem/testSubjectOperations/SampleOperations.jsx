@@ -33,7 +33,7 @@ const SampleOperations = () => {
 
   const getAllSamples = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/v1/samples');
+      const response = await axios.get('https://spring-boot-companya.azurewebsites.net/api/v1/samples');
       setSamples(response.data);
     } catch (error) {
       console.error('Error fetching samples:', error);
@@ -42,7 +42,7 @@ const SampleOperations = () => {
 
   const getSampleById = async () => {
     try {
-      const response = await axios.get(`http://localhost:8090/api/v1/samples/getSample/${getSampleId}`);
+      const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/samples/getSample/${getSampleId}`);
       setSelectedSample(response.data);
     } catch (error) {
       console.error('Error fetching sample by ID:', error);
@@ -52,7 +52,7 @@ const SampleOperations = () => {
   const changeTest = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put('http://localhost:8090/api/v1/samples/changeTest', null, {
+      const response = await axios.put('https://spring-boot-companya.azurewebsites.net/api/v1/samples/changeTest', null, {
         params: {
           sampleId: updatingSampleId, 
           newTestName: newTestName
@@ -66,7 +66,7 @@ const SampleOperations = () => {
 
   const deleteSampleById = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8090/api/v1/samples/delete/${deleteSampleId}`);
+      const response = await axios.delete(`https://spring-boot-companya.azurewebsites.net/api/v1/samples/delete/${deleteSampleId}`);
       getAllSamples();
       setDeleteSampleId('');
       setSelectedSample(null);
@@ -79,7 +79,7 @@ const SampleOperations = () => {
 
   const handleTestSample = async () => {
     try {
-      const response = await axios.put('http://localhost:8090/api/v1/samples/inspect', null, {
+      const response = await axios.put('https://spring-boot-companya.azurewebsites.net/api/v1/samples/inspect', null, {
         params: {
           sampleId: inspectSampleId,
           testId: inspectTestId
@@ -95,7 +95,7 @@ const SampleOperations = () => {
   const handleCreateSample = async (e) => {
     e.preventDefault(); 
     try {
-      const response = await axios.post('http://localhost:8090/api/v1/samples/createsample', {
+      const response = await axios.post('https://spring-boot-companya.azurewebsites.net/api/v1/samples/createsample', {
         id: createSampleId,
         expectedTest: sampleExpectedTest,
         receivedDate: sampleReceivedDate,

@@ -17,7 +17,7 @@ const GetReport = () => {
 
   const fetchReport = async () => {
     try {
-      const response = await axios.get(`http://localhost:8090/api/v1/SmpReports/getReport/${id}`);
+      const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/SmpReports/getReport/${id}`);
       setReport(response.data);
     } catch (error) {
       setError('Error fetching report. Please try again.'); 

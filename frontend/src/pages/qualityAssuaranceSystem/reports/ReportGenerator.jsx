@@ -12,8 +12,8 @@ const ReportGenerator = ({ reportType, buttonText }) => {
   const generateReport = () => {
     setLoading(true);
     const endpoint = reportType === 'sample' 
-      ? 'http://localhost:8090/api/v1/SmpReports/samples/generate' 
-      : 'http://localhost:8090/api/v1/SmpReports/prototypes/generate';
+      ? 'https://spring-boot-companya.azurewebsites.net/api/v1/SmpReports/samples/generate' 
+      : 'https://spring-boot-companya.azurewebsites.net/api/v1/SmpReports/prototypes/generate';
     axios.post(endpoint)
       .then(response => {
         setReport(response.data);

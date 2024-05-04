@@ -18,7 +18,7 @@ const ReportDelete = () => {
 
   const deleteReport = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8090/api/v1/SmpReports/delete/${deleteReportId}`);
+      const response = await axios.delete(`https://spring-boot-companya.azurewebsites.net/api/v1/SmpReports/delete/${deleteReportId}`);
       setResponseMessage(response.data);
     } catch (error) {
       if (error.response) {
