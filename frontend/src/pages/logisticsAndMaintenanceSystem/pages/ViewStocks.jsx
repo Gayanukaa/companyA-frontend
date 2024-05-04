@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState, useEffect } from "react";
 import TableComp from "../../../components/sideComps/TableComp";
 import { logisticsAndMaintenanceContext } from "../context/logisticsAndMaintenanceContext.jsx";
 import {
@@ -14,6 +14,14 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
 export function ViewStocks(props) {
+  const [reloadPage, setReloadPage] = useState(false); // State variable for triggering reload
+
+  useEffect(() => {
+    if (reloadPage) {
+      window.location.reload(); // Reload the page when reloadPage state changes
+    }
+  }, [reloadPage]);
+
   const {
     machinery,
     vehicle,
@@ -24,7 +32,6 @@ export function ViewStocks(props) {
     deleteTechnician,
     deleteVendor,
     addMachine,
-
     addTechnician,
     addVendor,
     deleteVehicle,
@@ -32,12 +39,14 @@ export function ViewStocks(props) {
     addServiceMaintenance,
     deleteServiceMaintenance,
     updateServiceMaintenance,
-
     updateMachine,
     updateTechnician,
     updateVendor,
     updateVehicle,
   } = useContext(logisticsAndMaintenanceContext);
+
+  // Rest of your code remains unchanged
+
 
   //techList
   const techList = technician;
@@ -54,6 +63,7 @@ export function ViewStocks(props) {
     updateServiceMaintenance(serviceId, technicianId);
     setSelectedTech(null);
     setOpenTechList(false);
+    setReloadPage(true);
   };
 
   const [openAdd, setOpenAdd] = React.useState(false);
@@ -222,6 +232,7 @@ export function ViewStocks(props) {
       });
     }
     setOpenUpdate(false);
+    setReloadPage(true);
   };
 
   const handleOnSubmit = (e) => {
@@ -229,22 +240,27 @@ export function ViewStocks(props) {
     if (props.data === "machinery") {
       addMachine(machineryForm);
       setOpenAdd(false);
+      setReloadPage(true);
     }
     if (props.data === "technician") {
       addTechnician(technicianForm);
       setOpenAdd(false);
+      setReloadPage(true);
     }
     if (props.data === "vendor") {
       addVendor(vendorForm);
       setOpenAdd(false);
+      setReloadPage(true);
     }
     if (props.data === "vehicle") {
       addVehicle(vehicleForm);
       setOpenAdd(false);
+      setReloadPage(true);
     }
     if (props.data === "serviceMaintenance") {
       addServiceMaintenance(serviceMaintenanceForm);
       setOpenAdd(false);
+      setReloadPage(true);
     }
     // window.location.href = "/logistic-management/dashboard";
   };
@@ -277,18 +293,23 @@ export function ViewStocks(props) {
   const deleteData = (id, data) => {
     if (data === "machinery") {
       deleteMachine(id);
+      setReloadPage(true);
     }
     if (data === "technician") {
       deleteTechnician(id);
+      setReloadPage(true);
     }
     if (data === "vendor") {
       deleteVendor(id);
+      setReloadPage(true);
     }
     if (data === "vehicle") {
       deleteVehicle(id);
+      setReloadPage(true);
     }
     if (data === "serviceMaintenance") {
       deleteServiceMaintenance(id);
+      setReloadPage(true);
     }
     // window.location.href = "/logistic-management/dashboard";
   };
@@ -475,6 +496,7 @@ export function ViewStocks(props) {
                 }}
               >
                 Technician Id : {selectedService.technicianId}
+
               </Typography>
             </>}
 
