@@ -397,6 +397,100 @@ export function MarkAttendance(props) {
   );
 }
 export function WorkTime(props) {
+  const [val, setVal] = useState("");
+  const [workHoursData, setWorkHoursData] = useState([]);
+  const [otHoursData, setOtHoursData] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [totalWorkedTime, setTotalWorkedTime] = useState("");
+
+  const change1 = (event) => {
+    setVal(event.target.value);
+  };
+
+  const change2 = (event) => {
+    setStartDate(event.target.value);
+  };
+
+  const change3 = (event) => {
+    setEndDate(event.target.value);
+  };
+
+  const formatDate = (dateString) => {
+    const formattedDate = new Date(dateString).toISOString().split("T")[0];
+    return formattedDate;
+  };
+
+  const calculateTotalWorkedTime = (hoursData) => {
+    let totalHours = 0;
+    let totalMinutes = 0;
+
+    hoursData.forEach((item) => {
+      totalHours += parseInt(item.hours);
+      totalMinutes += parseInt(item.minutes);
+    });
+
+    // Convert minutes to hours if greater than 60
+    totalHours += Math.floor(totalMinutes / 60);
+    totalMinutes %= 60;
+
+    return `Total worked time: ${totalHours} hours ${totalMinutes} minutes`;
+  };
+
+  const searchClick = async () => {
+    try {
+      const formattedStartDate = formatDate(startDate);
+      const formattedEndDate = formatDate(endDate);
+
+      // Fetch work hours data
+      reqSend.defaultReq(
+        "GET",
+        `PayRoll/WorkTime/WorkHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        {},
+        async (workHoursResponse) => {
+          if (workHoursResponse.status === 200 && workHoursResponse.data) {
+            const workHoursData = workHoursResponse.data;
+            console.log(workHoursResponse); //
+            setWorkHoursData(workHoursData);
+
+            // Calculate total worked time
+            const totalWorkedHours = calculateTotalWorkedTime(workHoursData);
+            setTotalWorkedTime(totalWorkedHours);
+          } else {
+            console.error("Failed to fetch work hours data");
+          }
+        },
+        (error) => {
+          console.error("Error fetching work hours data:", error);
+        }
+      );
+
+      // Fetch OT hours data
+      reqSend.defaultReq(
+        "GET",
+        `PayRoll/WorkTime/WorkOtHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        {},
+        (otHoursResponse) => {
+          if (otHoursResponse.status === 200 && otHoursResponse.data) {
+            const otHoursData = otHoursResponse.data;
+            setOtHoursData(otHoursData);
+          } else {
+            console.error("Failed to fetch OT hours data");
+          }
+        },
+        (error) => {
+          console.error("Error fetching OT hours data:", error);
+        }
+      );
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    searchClick();
+  };
   return (
     <>
       <main>
