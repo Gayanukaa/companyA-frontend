@@ -261,3 +261,16 @@ export function Interface1(props) {
     </div>
   );
 }
+export function MarkAttendance(props) {
+  return (
+    <>
+      <main>
+        <div className="head-title">
+          <div className="left">
+            <h1>Mark Attendance</h1>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}
