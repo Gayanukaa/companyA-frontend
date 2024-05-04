@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./HRStyles.css";
 
 import * as reqSend from "../../global/reqSender.jsx";
 
