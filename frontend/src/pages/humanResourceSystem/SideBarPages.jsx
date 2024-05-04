@@ -928,3 +928,11 @@ export function DeleteEmployee(props) {
     </>
   );
 }
+export function Interface3(props) {
+  //for delete Employee method
+  return (
+    <div className="container">
+      <h2 className="feedbackHeading">Employee Removed Successfully</h2>
+    </div>
+  );
+}
