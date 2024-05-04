@@ -24,6 +24,7 @@ import {
   Interface2,
   Leave,
   DeleteEmployee,
+  Interface3,
 } from "./SideBarPages";
 
 export default function Dashboard() {
@@ -94,6 +95,7 @@ export default function Dashboard() {
             <Route path="/leave" element={<Leave />} />
             <Route path="/interface1" element={<Interface1 />} />
             <Route path="/interface2" element={<Interface2 />} />
+            <Route path="/interface3" element={<Interface3 />} />
           </Routes>
         </section>
       </div>
