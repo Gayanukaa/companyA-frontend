@@ -271,6 +271,50 @@ export function MarkAttendance(props) {
           </div>
         </div>
       </main>
+      <div>
+        <div className="signin-container">
+          <div className="signin-box">
+            <h2>Sign In</h2>
+            <div>
+              <label className="input-label" htmlFor="id">
+                ID:
+              </label>
+              <input
+                className="input-field"
+                type="text"
+                id="id"
+                name="id"
+                onChange={change1}
+              />
+            </div>
+            <button className="signin-button" onClick={handleSubmit1}>
+              Enter
+            </button>
+          </div>
+          <div className="signin-box">
+            <h2>Sign Out</h2>
+            <div>
+              <label className="input-label" htmlFor="id2">
+                ID:
+              </label>
+              <input
+                className="input-field"
+                type="text"
+                id="id2"
+                name="id2"
+                onChange={change2}
+              />
+            </div>
+            <button className="signin-button" onClick={handleSubmit2}>
+              Enter
+            </button>
+          </div>
+        </div>
+        <h3
+          id="attendance"
+          style={{ textAlign: "center", marginTop: "40px" }}
+        ></h3>
+      </div>
     </>
   );
 }
