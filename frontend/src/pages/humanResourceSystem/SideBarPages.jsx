@@ -604,3 +604,23 @@ export function WorkTime(props) {
     </>
   );
 }
+
+export function UpdateEmployee(props) {
+  return (
+    <>
+      <main>
+        <div className="head-title">
+          <div className="left">
+            <h1>Update Employee</h1>
+          </div>
+        </div>
+      </main>
+      <div>
+        <>
+          <br />
+          <br />
+        </>
+      </div>
+    </>
+  );
+}
