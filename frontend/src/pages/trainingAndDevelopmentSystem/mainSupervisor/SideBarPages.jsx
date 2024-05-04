@@ -73,7 +73,7 @@ export function DashboardView(props) {
                     <div className="card text-dark bg-light mb-3" style={{ maxWidth: '100%' }}>
                       <div className="card-header">Notifications</div>
                       <div className="card-body">
-                        <h5 className="card-title">Attention Here!</h5>
+                        <h5 className="card-title" style={{ color: 'Red' }}>Attention Here!</h5>
                         <p className="card-text">{message}</p>
                       </div>
                     </div>
