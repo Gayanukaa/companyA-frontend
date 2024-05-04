@@ -600,6 +600,34 @@
 	margin-bottom: 0;
 }
 
+.card-theme {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+
+.markAsRead {
+    background-color: green !important;
+    color: white !important; /* Text color */
+    border: none !important; /* Remove border */
+    border-radius: 4px !important; /* Add border radius for button */
+    padding: 6px 12px !important; /* Adjust padding */
+    cursor: pointer !important; /* Change cursor to pointer on hover */
+    transition: background-color 0.3s !important; /* Smooth transition for background color */
+}
+
+.markAsRead:hover {
+    background-color: darkgreen !important; /* Darken color on hover */
+}
+
+
+.sideBarLinkBadge {
+	margin-left: 20px;
+}
+
+
+
 /* MAIN */
 /* CONTENT */
 

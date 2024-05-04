@@ -8,7 +8,9 @@ import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView, ViewStocks } from './SideBarPages';
+import { DashboardView, OrderHistory, PlaceOrder, ViewStocks, GetQuotation } from './SideBarPages';
+import ProductPage from "./ProductPage.jsx";
+import ExistingProductsPage from "./ExistingProductsPage.jsx";
 
 
 
@@ -69,7 +71,12 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
+                        <Route path="/place-order" element={<PlaceOrder />} />
                         <Route path="/view-stocks" element={<ViewStocks />} />
+                        <Route path="/order-history" element={<OrderHistory />} />
+                        <Route path="/get-quotation" element={<GetQuotation />} />
+                        <Route path="/products" element={<ProductPage />} />
+                        <Route path="/existingproducts" element={<ExistingProductsPage />} />
                     </Routes>
                 </section>
                 

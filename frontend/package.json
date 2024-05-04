@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@canvasjs/react-charts": "^1.0.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@material-ui/core": "^4.12.4",
@@ -17,19 +18,23 @@
     "@mui/icons-material": "^5.14.9",
     "@mui/material": "^5.14.9",
     "@mui/utils": "^5.14.15",
+    "@mui/x-charts": "^7.3.1",
     "@mui/x-date-pickers": "^6.17.0",
     "@nextui-org/react": "^2.1.13",
     "@nextui-org/theme": "^2.2.1",
     "axios": "^1.5.0",
-    "bootstrap": "^5.3.1",
+    "bootstrap": "^5.3.3",
     "formik": "^2.4.3",
     "framer-motion": "^10.16.4",
     "jquery": "^3.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-multi-carousel": "^2.8.5",
     "react-router-dom": "^6.16.0",
     "sweetalert2": "^11.7.27",
-    "tailwindcss": "^3.4.3"
+    "tailwindcss": "^3.4.3",
+    "typewriter-effect": "^2.21.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

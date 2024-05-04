@@ -7,7 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { forwardRef, useImperativeHandle } from 'react';
 import { motion } from "framer-motion";
-import * as reqSend from '../../../global/reqSender.jsx';
+import axios from 'axios';
 
 import bg1 from '../../../assets/bg1.jpeg';
 
@@ -32,11 +32,15 @@ const Login = (props) => {
         logistic_manager: '/logistic-management/dashboard',
         manufacturing_manager: '/manufacturing-management/dashboard',
         sales_manager: '/sales-management/dashboard',
-        training_development_manager: '/trainingdevelopment-management/dashboard',
         general_manager: '/general-management/dashboard',
-        customer: '/'
+        customer: '/customer/dashboard',
+
+        training_development_manager: '/trainingdevelopment-management/manager/dashboard',
+        main_supervisor: '/trainingdevelopment-management/main-supervisor/dashboard',
+        unit_supervisor: '/trainingdevelopment-management/unit-supervisor/dashboard',
+        training_employee: '/trainingdevelopment-management/training-employee/dashboard',
     };
-    
+
 
 
     const navigateToManagerPortal = (role) => {
@@ -45,33 +49,34 @@ const Login = (props) => {
     };
 
 
-    
+
     const submitLogForm = () => {
         if (loginEmail && loginPassword && props.role) {
             const loginFormData = {
                 email: loginEmail,
                 password: loginPassword,
-                role: props.role    
+                role: props.role
             };
-    
-            reqSend.defaultReq("POST", 'api/login', loginFormData, 
-                response => {
+
+            axios.post('https://spring-boot-companya.azurewebsites.net/api/login', loginFormData)
+                .then(response => {
                     if (response.status === 200 && response.data && response.data.role) {
                         localStorage.setItem("role", response.data.role);
+                        localStorage.setItem("userId", response.data.userId);
                         navigateToManagerPortal(response.data.role);
+
                     } else {
-                        console.error("Invalid response format:", response);
+                        setShowAlert(response.data.message || "Unknown error occurred");
                     }
-                },
-                error => {
-                    console.error("API request failed:", error);
-                }
-            );
+                })
+                .catch(error => {
+                    setShowAlert(error.response.data.message);
+                });
         } else {
-            console.error("Missing or invalid login credentials");
+            setShowAlert("Missing login credentials")
         }
     };
-    
+
 
 
 
@@ -82,7 +87,7 @@ const Login = (props) => {
             <div className="overlay"></div>
             <motion.div animate={{ y: 0, opacity: 1 }} initial={{ opacity: 0, y: 30 }} transition={{ delay: 0.3, duration: 0.5 }} className="logIn ">
 
-                <h2>{props.role && props.role === "manager" ? "Manager Login" : props.role === "customer" ? "Customer Login" : ""}</h2>
+                <h2>{props.role && props.role === "manager" ? "Admin Login" : props.role === "customer" ? "Customer Login" : ""}</h2>
 
                 {showAlert && (
                     <Alert severity="error">Error -<strong>{showAlert}</strong></Alert>
@@ -107,10 +112,15 @@ const Login = (props) => {
                 <div className="inputBox">
                     <input type="submit" value="Log In" id="btn" onClick={submitLogForm} />
                 </div>
-                {/* <div className="group">
-                    <Link to="/" className='nav-avatar-list'>Forgot password</Link>
-                    <Link to="/register" className='nav-avatar-list'> Sign Up</Link>
-                </div> */}
+
+                {
+                    props.role && props.role === "customer" ? (
+                        <div className="group" style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Link to="/sign-up" className='nav-avatar-list'>Don't have an account? Sign Up</Link>
+                        </div>
+                    ) : ""
+                }
+
             </motion.div>
         </section>
     )

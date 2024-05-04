@@ -6,7 +6,7 @@ import '../../styles/style.css';
 
 const TableComp = (props) => {
   return (
-    <div className="table-data " >
+    <div className="table-data" >
             <div className="order boxShadow1 ">
                 <div className="head">
                     <h3>{props.data.name}</h3>

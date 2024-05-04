@@ -2,7 +2,6 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from "react";
-import Autocomplete from '@mui/material/Autocomplete';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -11,8 +10,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Swal from 'sweetalert2'
 import './Login.css'
 import { motion } from "framer-motion";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+
 
 import bg2 from '../../../assets/bg1.jpeg';
 
@@ -27,32 +25,14 @@ const Toast = Swal.mixin({
 
 export default function Register() {
 
-
-    useEffect(() => {
-        fetch(
-            "https://valid.layercode.workers.dev/list/countries?format=select&flags=true&value=code"
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                setCountries(data.countries);
-            });
-    }, []);
-
-
     const navigate = useNavigate();
-    const [countries, setCountries] = useState([]);
-
-    const [createdCountry, setcreatedCountry] = useState(null);
     const [showAlert, setShowAlert] = useState(null);
 
-    const [role, setRole] = useState(0);
     const [store, setStore] = useState('STOR_1');
 
 
 
 
-
-    console.log(role)
     const validationSchema = yup.object({
         firstName: yup.string()
             .min(2, 'Min 2 characters')
@@ -67,11 +47,8 @@ export default function Register() {
             .email('Invalid email format')
             .required('Required'),
 
-        address: yup.string()
+        mobileNumber: yup.string()
             .required('Address is required'),
-
-        // country: yup.string()
-        //     .required('Required'),
 
         password: yup.string()
             .required('Required')
@@ -98,20 +75,17 @@ export default function Register() {
 
 
     // validateReg
-
     const formik = useFormik({
         initialValues: {
             firstName: '',
             lastName: '',
             email: '',
-            address: '',
-            // country: '',
+            mobileNumber: '',
             password: '',
             confirmPassword: '',
         },
         validationSchema: validationSchema,
         onSubmit: values => {
-            // console.log(values);
             handleSignupSubmit(values);
         },
     });
@@ -120,38 +94,37 @@ export default function Register() {
 
     const handleSignupSubmit = async (values) => {
 
-        if (createdCountry) {
-
             const signInFormData = {
                 firstName: values.firstName,
                 lastName: values.lastName,
+                mobileNumber: values.mobileNumber,
                 email: values.email,
                 password: values.password,
-                address: values.address,
-                country: createdCountry,
-                role: role,
-                store: (role==1|| role==5|| role ==6) ? store: -1   
+                role: 'customer',
             }
 
+            console.log(signInFormData);
+
             try {
-                axios.post('http://localhost:3001/user/sign-up', signInFormData).then(response => {
+                axios.post('http://localhost:8090/customer/register', signInFormData).then(response => {
 
                     const responseStatusReg = response.status;
                     if (responseStatusReg === 200 || responseStatusReg === 201) {
                         const registeredUser = {
                             email: values.email,
-                            password: values.password
+                            password: values.password,
+                            role: 'customer'
                         }
 
 
 
-                        axios.post('http://localhost:3001/user/login', registeredUser).then(response2 => {
+                        axios.post('http://localhost:8090/api/login', registeredUser).then(response2 => {
                             const responseStatusLog = response2.status;
                             if (responseStatusLog === 200 || responseStatusLog === 201) {
 
-                                localStorage.setItem('token', response2.data['token']);
+                                localStorage.setItem("role", response2.data.role);
 
-                                navigate('/');
+                                navigate('/customer/dashboard');
                                 Toast.fire({ icon: 'success', title: 'You have successfully Registered!' });
                             } else {
                                 setShowAlert(response2.data['message'])
@@ -169,12 +142,6 @@ export default function Register() {
 
                 });
             } catch (err) {
-
-            }
-        } else {
-            setShowAlert("Please select your country");
-
-
         }
 
     }
@@ -185,9 +152,9 @@ export default function Register() {
 
     return (
         <section id="sectionLogin">
-            <img src={bg2} class="bg" />
-            <div class="overlay"></div>
-            <motion.div animate={{ y: 0, opacity: 1 }} initial={{ opacity: 0, y: 30 }} transition={{ delay: 0.3, duration: 0.5 }} class="logIn ">
+            <img src={bg2} className="bg" />
+            <div className="overlay"></div>
+            <motion.div animate={{ y: 0, opacity: 1 }} initial={{ opacity: 0, y: 30 }} transition={{ delay: 0.3, duration: 0.5 }} className="logIn ">
 
                 <h2>Sign Up</h2>
                 {showAlert && (
@@ -227,48 +194,19 @@ export default function Register() {
                     </Grid>
                 </Grid>
 
-
-
-
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <TextField
-                            name="address"
+                            name="mobileNumber"
                             value={formik.values.address}
                             error={formik.touched.address && Boolean(formik.errors.address)}
                             helperText={formik.touched.address && formik.errors.address}
-                            onChange={e => { formik.handleChange(e) }} id="address" label="Address" variant="outlined" fullWidth />
+                            onChange={e => { formik.handleChange(e) }} id="mobileNumber" label="Mobile Number" variant="outlined" fullWidth />
                     </Grid>
                 </Grid>
 
-                <Grid container spacing={2} >
-                    <Grid item xs={12} style={{ zIndex: '100' }}>
-                        <Autocomplete
-                            id="country-select-demo"
-                            options={countries}
-                            autoHighlight
-                            name="country"
-                            isOptionEqualToValue={(option, value) => option.value === value.value}
-                            onSelect={e => { setcreatedCountry(e.target.value); }}
-                            renderInput={(params) => (
-                                <TextField
 
-                                    {...params}
-                                    label="Country"
-                                    inputProps={{
-                                        ...params.inputProps,
-                                        autoComplete: 'new-password', // disable autocomplete and autofill
-                                    }}
-                                />
-                            )}
-                        />
-
-
-
-                    </Grid>
-                </Grid>
-
-                <Grid container spacing={2} >
+                {/* <Grid container spacing={2} >
                     <Grid item xs={12} style={{  }}>
                         <Select
                             labelId="demo-simple-select-label"
@@ -277,7 +215,6 @@ export default function Register() {
                             label="Role"
                             onChange={(e)=>{setRole(e.target.value)}}
                             fullWidth
-                            
                         >
                             <MenuItem value={0}>Customer</MenuItem>
                             <MenuItem value={1}>Store Manager</MenuItem>
@@ -287,41 +224,10 @@ export default function Register() {
                             <MenuItem value={5}>Driver</MenuItem>
                             <MenuItem value={6}>Driver Assistant</MenuItem>
                             
-                        </Select>
-
-                     
-
+                        </Select>   
                     </Grid>
-                </Grid>
+                </Grid> */}
 
-
-               {
-                (role==1|| role==5|| role ==6) ?
-                <Grid container spacing={2} >
-                <Grid item xs={12} style={{  }}>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={store}
-                        label="Store"
-                        onChange={(e)=>{setStore(e.target.value)}}
-                        fullWidth
-                        
-                    >
-                        <MenuItem value={'STOR_1'}>Colombo</MenuItem>
-                        <MenuItem value={'STOR_2'} >Negombo</MenuItem>
-                        <MenuItem value={'STOR_3'} >Galle</MenuItem>
-                        <MenuItem value={'STOR_4'} >Matara</MenuItem>
-                        <MenuItem value={'STOR_5'} >Jaffna</MenuItem>
-                        <MenuItem value={'STOR_6'} >Trinco</MenuItem>
-                       
-                        
-                    </Select>
-
-                 
-                </Grid>
-            </Grid>:null
-               }
 
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -342,17 +248,13 @@ export default function Register() {
                             onChange={e => { formik.handleChange(e) }} id="confirm-password" label="Confirm Password" variant="outlined" type="password" fullWidth />
                     </Grid>
                 </Grid>
-                <div class="inputBox">
+                <div className="inputBox">
                     <input onClick={formik.handleSubmit} type="submit" value="Sign Up" id="btn" />
                 </div>
-                <div class="group">
-                    <Link to="/login" className='nav-avatar-list'> Forgot password</Link>
-                    <Link to="/login" className='nav-avatar-list'> Log In</Link>
-                    {/* <a href="#">Forgot password</a>
-                <a href="#">Sign Up</a> */}
+
+                <div className="group" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Link to="/login/customer" className='nav-avatar-list'>Already have an account? Log In</Link>
                 </div>
-
-
             </motion.div>
 
 

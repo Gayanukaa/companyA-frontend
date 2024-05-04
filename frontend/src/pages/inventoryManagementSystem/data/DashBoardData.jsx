@@ -12,6 +12,8 @@ export const personImages=[per1,per2,per3,per4,per5,per6,per7,per8]
 
 
 export const dashboardAdminData = [
-    { name: "Dashboard", icon: <i className='bx bxs-dashboard' ></i>, active: true, to: 'dashboard' },
-    { name: "View Stocks", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-stocks' }
+    { name: "Dashboard", icon: <i className='bx bxs-dashboard bx-flashing-hover' ></i>, active: true, to: 'dashboard' },
+    { name: "Orders & Shipments", icon: <i className='bx bxs-shopping-bags bx-flashing-hover' ></i>, active:  false, to: 'view-order-items' },
+    { name: "Reports", icon: <i className='bx bxs-report bx-flashing-hover'></i>, active: false, to: 'view-reports' },
+    { name: "Repairs", icon: <i className='bx bxs-band-aid bx-flashing-hover'></i>, active: false, to: 'view-repairs' }
 ]

@@ -1,19 +1,20 @@
 import '../../styles/dashboard.css';
 import '../../styles/style.css';
-import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
-import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
+import {SideNavigation, TopBar} from '../../components/sideComps/dashBoardComps';
 import {
     dashboardAdminData,
 } from './data/DashBoardData';
 
-import { DashboardView, ViewStocks } from './SideBarPages';
-
-
+import {DashboardView} from './pages/DashboardView';
+import {ViewStocks} from './pages/ViewStocks';
+import LogisticsAndMaintenanceProvider from "./context/logisticsAndMaintenanceContext.jsx";
+import {useEffect} from "react";
 
 
 export default function Dashboard() {
+
 
     const addJs = () => {
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
@@ -55,24 +56,26 @@ export default function Dashboard() {
         addJs()
     }, [])
 
-
-
-
     return (
         <>
             <div id="dashboardWrapper">
 
-                <SideNavigation data={dashboardAdminData} />
+                <SideNavigation data={dashboardAdminData}/>
 
                 <section id="content" style={{height: '100vh'}}>
-                    <TopBar avatar={avatar} />
-
-                    <Routes>
-                        <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/view-stocks" element={<ViewStocks />} />
-                    </Routes>
+                    <TopBar avatar={avatar}/>
+                    <LogisticsAndMaintenanceProvider>
+                        <Routes>
+                            <Route path="/dashboard" element={<DashboardView/>}/>
+                            <Route path="/view-machinery" element={<ViewStocks data="machinery"/>}/>
+                            <Route path="/view-vehicle" element={<ViewStocks data="vehicle"/>}/>
+                            <Route path="/view-technician" element={<ViewStocks data="technician"/>}/>
+                            <Route path="/view-vendor" element={<ViewStocks data="vendor"/>}/>
+                            <Route path="/view-services-maintenance" element={<ViewStocks data="serviceMaintenance"/>}/>
+                        </Routes>
+                    </LogisticsAndMaintenanceProvider>
                 </section>
-                
+
             </div>
 
         </>

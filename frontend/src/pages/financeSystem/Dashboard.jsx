@@ -4,13 +4,16 @@ import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
-import {
-    dashboardAdminData,
-} from './data/DashBoardData';
-
-import { DashboardView, ViewStocks } from './SideBarPages';
-
-
+import {dashboardAdminData} from './data/DashBoardData';
+import { DashboardView} from './SideBarPages';
+import { ViewEmployee } from './EmployeeSalary.jsx';
+import { OrderHistory } from './OrderHistory.jsx';
+import AllEmployeeSalary from './TotalSalary.jsx';
+import AllOrders from './AllOrders.jsx'
+import AddOrUpdateEmployeeSalary from './AddUpdateSalary.jsx';
+import ViewLoanDetails from './ViewLoanDetails.jsx';
+import AddLoanForm from './CreateLoan.jsx';
+import { FinanceOverview } from './FinanceOverview.jsx';
 
 
 export default function Dashboard() {
@@ -69,7 +72,15 @@ export default function Dashboard() {
 
                     <Routes>
                         <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/view-stocks" element={<ViewStocks />} />
+                        <Route path="/view-salary-details" element={<ViewEmployee />}/>
+                        <Route path="/view-all-salary-details" element={<AllEmployeeSalary />}/>
+                        <Route path="/add-update-salary-details" element={< AddOrUpdateEmployeeSalary/>}/>
+                        <Route path="/view-order-history" element={<OrderHistory />} />
+                        <Route path="/view-all-order-details" element={<AllOrders />}/>
+                        <Route path="/view-loan-details" element={<ViewLoanDetails />} />
+                        <Route path="/create-loan" element={<AddLoanForm />} />
+                        <Route path="/finance-overview" element={<FinanceOverview />} />
+
                     </Routes>
                 </section>
                 
