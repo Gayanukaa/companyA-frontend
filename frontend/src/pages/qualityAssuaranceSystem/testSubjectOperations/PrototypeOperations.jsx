@@ -115,12 +115,25 @@ const PrototypeOperations = () => {
       <Button onClick={handleShowAllClick} variant="contained" color ="primary">Show All Prototypes</Button>
       {showAll && (
         <div>
-        <Typography variant="h6" gutterBottom>All Prototypes with received dates</Typography>
-        <ul>
+        <Typography variant="h6" gutterBottom>All Prototypes with received dates and current test status</Typography>
+        <table style={{ maxWidth: '700px' }}>
+          <thead>
+          <tr>
+            <th>Prototype ID</th>
+            <th>Received Date</th>
+            <th>Test Status</th>
+        </tr>
+        </thead>
+        <tbody>
           {prototypes.map(prototype => (
-            <li key={prototype.id}>{prototype.id} - {prototype.receivedDate}</li>
+          <tr key={prototype.id}>
+          <td>{prototype.id}</td>
+          <td>{prototype.receivedDate}</td>
+          <td>{prototype.testStatus}</td>
+        </tr>
           ))}
-        </ul>
+        </tbody>
+      </table>
         </div>
       )}
 

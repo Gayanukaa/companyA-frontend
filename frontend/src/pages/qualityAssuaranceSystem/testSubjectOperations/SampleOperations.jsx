@@ -117,12 +117,25 @@ const SampleOperations = () => {
       <Button onClick={handleShowAllClick} variant="contained" color ="primary">Show All Samples</Button>
       {showAll && (
         <div>
-        <Typography variant="h6" gutterBottom>All Samples with received dates</Typography>
-        <ul>
+        <Typography variant="h6" gutterBottom>All Samples with received dates and current test status</Typography>
+        <table style={{ maxWidth: '700px' }}>
+          <thead>
+          <tr>
+          <th>Sample ID</th>
+          <th>Received Date</th>
+          <th>Test Status</th>
+          </tr>
+          </thead>
+        <tbody>
           {samples.map(sample => (
-            <li key={sample.id}>{sample.id} - {sample.receivedDate}</li>
+          <tr key={sample.id}>
+          <td>{sample.id}</td>
+          <td>{sample.receivedDate}</td>
+          <td>{sample.testStatus}</td>
+        </tr>
           ))}
-        </ul>
+      </tbody>
+      </table>
         </div>
       )}
 
