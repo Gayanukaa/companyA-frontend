@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {Typography, TextField, Button } from '@mui/material';
+
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 const SampleOperations = () => {
   const [samples, setSamples] = useState([]);
@@ -142,9 +145,11 @@ const SampleOperations = () => {
       <div style={{ margin: '30px 0' }}>
       <TextField
         type="text"
+        variant="outlined"
         value={getSampleId}
         onChange={(e) => setGetSampleId(e.target.value)}
         label="Enter Sample ID"
+        style={{ marginRight: '6px' }}
       />
         <Button onClick={getSampleById} variant="contained" color ="primary">Get Sample</Button>
       </div>
@@ -168,9 +173,11 @@ const SampleOperations = () => {
         <div style={{ margin: '30px 0' }}>
         <TextField
           type="text"
+          variant="outlined"
           value={deleteSampleId}
           onChange={(e) => setDeleteSampleId(e.target.value)}
           label="Enter Sample ID"
+          style={{ marginRight: '6px' }}
         />
         <Button onClick={deleteSampleById} variant="contained" color ="secondary">Delete Sample</Button>
         {deletingMessage && <p>{deletingMessage}</p>}
@@ -182,6 +189,7 @@ const SampleOperations = () => {
         <div style={{ marginBottom: '6px' }}>
         <TextField
           type="text"
+          variant="outlined"
           value={updatingSampleId}
           onChange={(e) => setUpdatingSampleId(e.target.value)}
           label="Updating Sample ID"
@@ -190,6 +198,7 @@ const SampleOperations = () => {
         />
         <TextField
           type="text"
+          variant="outlined"
           value={newTestName}
           onChange={(e) => setNewTestName(e.target.value)}
           label="New Test Name"
@@ -207,6 +216,7 @@ const SampleOperations = () => {
       <div style={{ marginBottom: '6px' }}>
       <TextField
         type="text"
+        variant="outlined"
         value={inspectSampleId}
         onChange={(e) => setInspectSampleId(e.target.value)}
         label="Sample ID"
@@ -214,6 +224,7 @@ const SampleOperations = () => {
       />
       <TextField
         type="text"
+        variant="outlined"
         value={inspectTestId}
         onChange={(e) => setInspectTestId(e.target.value)}
         label="Test ID"
@@ -230,28 +241,30 @@ const SampleOperations = () => {
         <div style={{ marginBottom: '6px' }}>
         <TextField
           type="text"
+          variant="outlined"
           value={createSampleId}
           onChange={(e) => setCreateSampleId(e.target.value)}
           label="ID"
           required
+          style={{ marginRight: '6px' }}
         />
-        </div>
-        <div style={{ marginBottom: '6px' }}>
         <TextField
           type="text"
+          variant="outlined"
           value={sampleExpectedTest}
           onChange={(e) => setSampleExpectedTest(e.target.value)}
           label="Expected Test"
           required
+          style={{ marginRight: '6px' }}
         />
-        </div>
-        <div style={{ marginBottom: '6px' }}>
         <TextField
           type="text"
+          variant="outlined"
           value={sampleReceivedDate}
           onChange={(e) => setSampleReceivedDate(e.target.value)}
           label="Received Date"
           required
+          style={{ marginRight: '6px' }}
         />
         </div>
         <Button type="submit" variant="contained" color ="primary">Add Sample</Button>

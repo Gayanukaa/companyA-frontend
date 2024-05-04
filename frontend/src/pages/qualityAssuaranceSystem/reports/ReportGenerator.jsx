@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Typography } from '@mui/material';
+
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const ReportGenerator = ({ reportType, buttonText }) => {
   const [report, setReport] = useState(null);
@@ -25,7 +27,7 @@ const ReportGenerator = ({ reportType, buttonText }) => {
 
   return (
     <div>
-      <Button variant="contained" onClick={generateReport} disabled={loading} style={{ marginBottom: '10px' }}>
+      <Button variant="contained" color="primary" onClick={generateReport} disabled={loading} style={{ marginBottom: '10px' }}>
         {buttonText}
       </Button>
       {loading && <Typography>Loading...</Typography>}
