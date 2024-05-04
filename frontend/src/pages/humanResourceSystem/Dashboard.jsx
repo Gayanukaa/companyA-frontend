@@ -23,6 +23,7 @@ import {
   UpdateEmployee,
   Interface2,
   Leave,
+  DeleteEmployee,
 } from "./SideBarPages";
 
 export default function Dashboard() {
@@ -89,6 +90,7 @@ export default function Dashboard() {
             <Route path="/add-employee" element={<AddEmployee />} />
             <Route path="/update-employee" element={<UpdateEmployee />} />
             <Route path="/mark-attendance" element={<MarkAttendance />} />
+            <Route path="/delete-employee" element={<DeleteEmployee />} />
             <Route path="/leave" element={<Leave />} />
             <Route path="/interface1" element={<Interface1 />} />
             <Route path="/interface2" element={<Interface2 />} />
