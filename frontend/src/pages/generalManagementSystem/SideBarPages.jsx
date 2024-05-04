@@ -1,5 +1,4 @@
 import React from "react";
-import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp';
 import ApprovalCard from "./components/Approvals.jsx"
 import avatar from '../../assets/avatar.svg';
@@ -9,8 +8,6 @@ import TrashIcon from "./components/TrashIcon";
 import { useNavigate } from 'react-router-dom';
 import { systemRoles } from './data/RoleDetails.jsx';
 
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import { Alert, Tab, Tabs } from "@mui/material";
 

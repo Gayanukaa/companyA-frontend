@@ -247,8 +247,10 @@ export function OrderHistory() {
                 }`
             )
             .then((response) => {
-                setSalesRecords(response.data.orders);
-                console.log();
+                if (response.data && response.data.orders) { // Add this null check
+                    console.log(response.data);
+                    setSalesRecords(response.data.orders);
+                }
             })
             .catch((error) => {
                 // Handle any errors that occur during the fetch
@@ -316,7 +318,7 @@ export function OrderHistory() {
                     </tr>
                 </thead>
                 <tbody>
-                    {salesRecords.map((record, index) => {
+                    {salesRecords && salesRecords.map((record, index) => {
 
 
                         return (

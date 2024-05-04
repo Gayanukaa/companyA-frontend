@@ -115,8 +115,6 @@ const DashboardView = () => {
                     </Grid>
                 </Grid>
             </div>
-
-
         </main>
 
     );
