@@ -804,6 +804,75 @@ export function DeleteEmployee(props) {
           </div>
         </div>
       </main>
+      <div>
+        <form
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "10px",
+            }}
+          >
+            <label
+              htmlFor="searchInput"
+              style={{ marginRight: "100px", fontSize: "24px" }}
+            >
+              ID
+            </label>
+            <input
+              type="text"
+              id="searchInput"
+              name="searchInput"
+              placeholder="Enter ID"
+              onChange={change}
+            />
+          </div>
+          <div style={{ display: "flex", marginRight: "60px" }}>
+            <button
+              type="submit"
+              style={{ fontSize: "25px" }}
+              onClick={handleSubmit}
+              className="button"
+            >
+              Search
+            </button>
+            <button
+              type="submit"
+              style={{ fontSize: "25px" }}
+              onClick={deleteSubmit}
+              className="button"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+
+        {employeeData && (
+          <div style={{ marginTop: "20px" }}>
+            <h2>Employee Details</h2>
+            <form className="form-detail">
+              {Object.entries(employeeData).map(([key, value]) => (
+                <div key={key} style={{ marginBottom: "10px" }}>
+                  <label htmlFor={key}>{key} :</label>
+                  <input
+                    type="text"
+                    id={key}
+                    name={key}
+                    value={value}
+                    readOnly
+                  />
+                </div>
+              ))}
+            </form>
+          </div>
+        )}
+      </div>
     </>
   );
 }
