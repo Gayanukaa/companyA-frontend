@@ -1,5 +1,6 @@
 import '../../styles/dashboard.css';
 import '../../styles/style.css';
+import './DashBoardView.css';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
