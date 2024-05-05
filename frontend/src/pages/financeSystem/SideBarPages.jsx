@@ -23,7 +23,7 @@ export function DashboardView(props) {
                         <Typography variant="h1">Dashboard</Typography> 
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}> 
-                        <CardComp data={dataList} style={{ width: '300px' }} /> 
+                        <CardComp data={dataList} /> 
                     </div>
                 </div>
             </main>
