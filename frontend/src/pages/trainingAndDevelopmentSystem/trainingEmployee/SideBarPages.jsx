@@ -5,7 +5,7 @@ import avatar from '../../../assets/avatar.svg';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams,useNavigate } from 'react-router-dom';
 import * as reqSend from '../../../global/reqSender';
-
+import axios from "axios";
 
 export function DashboardView(props) {
 
@@ -335,8 +335,8 @@ export function Login(props){
     const onInputChange = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
     }
-
-    const onSubmit = async (e) => {
+    //not perform well
+    const onSubmit1 = async (e) => {
         e.preventDefault();
         try {
             reqSend.defaultReq('POST', 'api/tms/get-tm/login', loginData, (response) => {
@@ -352,6 +352,25 @@ export function Login(props){
             alert("Error");
         }
     };
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(" https://spring-boot-companya.azurewebsites.net/api/tms/get-tm/login", loginData);
+            if (response.status === 200) {
+                // Redirect user to home page or any other route after successful login
+                // Example: history.push("/")
+                alert("Login successful");
+                console.log("Login successful");
+                navigate(`/trainingdevelopment-management/training-employee/training/${loginData.email}`);
+            }
+        } catch (error) {
+            setError("Invalid username or password");
+        }
+    }
+
+
+
 
     return (
         <>
@@ -399,8 +418,8 @@ export function SignUP(props){
     const onInputChange = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value ,});
     }
-
-    const onSubmit = async (e) => {
+    //not perform well
+    const onSubmit1 = async (e) => {
         e.preventDefault();
         try {
             const userData = { ...loginData, employeeId: parseInt(employeeId) };
@@ -419,6 +438,24 @@ export function SignUP(props){
             console.log("Error during sign up");
         }
     };
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const userData = { ...loginData, employeeId: parseInt(employeeId) };
+            const response = await axios.post(" https://spring-boot-companya.azurewebsites.net/api/tms/get-tm/signup", userData);
+            if (response.status === 201) {
+                // Redirect user to home page or any other route after successful login
+                // Example: history.push("/")
+                alert("Sign Up successful");
+                console.log("Sign Up successful");
+                navigate(`/trainingdevelopment-management/training-employee/training/${loginData.email}`);
+            }
+        } catch (error) {
+            setError("Email Already Exists.");
+        }
+    }
 
     return (
         <>
