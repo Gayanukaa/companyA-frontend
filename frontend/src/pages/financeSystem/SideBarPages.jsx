@@ -1,26 +1,35 @@
 import React from "react";
 // import { useEffect } from 'react';
+import CardComp from "../../components/sideComps/CardComp";
+import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
-import './DashBoardView.css';
 
 
 
-const UserProfile = () => {
-    return(
-        <div className="UP">
-            <div className="gradient"></div>
-            <div className="profile-down">
-                <img src={avatar} alt="" />
-                <div className="profile-title">Michael Brown</div>
-                <div className="description">Financial Manager</div>
-            </div>
-            <div className="profile-button"><a href="mailto: michael.brown@example.com" className="mail">Contact Me</a></div>
+export function DashboardView(props) {
 
+    const dataList = [
+        {
+            image: avatar,
+            altText: "Avatar 1",
+            count: "Finance Manager",
+            name: "Michael Brown"
+        },
+        
+    ];
 
-        </div>
+    return (
+        <>
+            <main>
+                <div className="head-title">
+                    <div className="left">
+                        <h1>Dashboard</h1>
+                    </div>
+
+                    <CardComp data={dataList} />
+                </div>
+            </main>
+        </>
     )
-
 }
-
-export default UserProfile;   
 
