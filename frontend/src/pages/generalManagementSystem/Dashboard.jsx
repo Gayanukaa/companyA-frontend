@@ -14,6 +14,7 @@ import ModalForm from './components/ModalForm'
 import AddManager from './components/AddManager';
 import FeedBack from './components/FeedbackSection';
 import DashboardView from './components/DashboardView';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 
 
@@ -77,7 +78,8 @@ export default function Dashboard() {
 
     const dashboardAdminData = [
         { name: "Dashboard", icon: <i className='bx bxs-dashboard' ></i>, active: true, to: 'dashboard' },
-        { name: "Managers", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-managers' },
+        { name: "View Managers", icon: <i class='bx bxs-group'></i>, active: false, to: 'view-managers' },
+        { name: "Add Manager", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'add-managers' },
         { name: "Feedbacks", icon: <i className='bx bxs-comment-detail'></i>, active: false, to: 'view-feedback', notification: notificationData ? notificationData : null},
         { name: "Approvals", icon: <i className='bx bxs-file'></i>, active: false, to: 'approvals' },
     ]

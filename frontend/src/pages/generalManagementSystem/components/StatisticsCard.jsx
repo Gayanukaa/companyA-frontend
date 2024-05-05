@@ -1,40 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt'; 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import Typography from '@mui/material/Typography';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
-const StatisticsCard = ({ data }) => {
+function StatisticsCard() {
+    const [apiData, setApiData] = useState(null);
+
+    useEffect(() => {
+        fetch('https://spring-boot-companya.azurewebsites.net/api/count')
+            .then(response => response.json())
+            .then(data => {
+                
+                const keys = Object.keys(data[0]);
+                const values = Object.values(data[0]);
+
+                
+                const newData = keys.map((key, index) => ({
+                    name: key.charAt(0).toUpperCase() + key.slice(1), 
+                    count: values[index], 
+                    image: index === 3 ? <DirectionsCarIcon fontSize="large" style={{ color: '#3C91E6' }} /> : 
+                    index === 2 ? <InventoryIcon fontSize="large" style={{ color: '#3C91E6' }} /> :
+                    <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
+                    altText: `Image ${index + 1}`,
+                }));
+
+                
+                setApiData(newData);
+            })
+            .catch(error => {
+                console.error('Error fetching API data:', error);
+            });
+    }, []);
+
     return (
         <Grid container spacing={2}>
-            {data.map((item, index) => (
+            {apiData && apiData.map((item, index) => (
                 <Grid key={index} item xs={12} sm={6} md={4} lg={3} xl={3}>
                     <Box boxShadow={3}>
                         <Card variant="outlined">
                             <CardContent>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '10px', paddingRight: '10px' }}>
-                                    <div>
-                                        {/* <img src={item.image} alt={item.altText} style={{ width: '50px', height: '50px' }} /> */}
-                                        {item.image}
-                                    </div>
-                                    <div style={{ textAlign: 'right' }}>
+                                {item.image}
+                                <div style={{ textAlign: 'right' }}>
                                         <Typography variant="h4" component="div">
                                             {item.count}
                                         </Typography>
                                         <Typography variant="subtitle1" color="textSecondary" component="p">
                                             {item.name}
                                         </Typography>
-                                    </div>
+                                        </div>
                                 </div>
                             </CardContent>
                         </Card>
-
                     </Box>
                 </Grid>
             ))}
         </Grid>
     );
-};
+}
 
 export default StatisticsCard;

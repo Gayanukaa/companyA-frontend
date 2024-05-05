@@ -54,7 +54,7 @@ export function DashboardView(props) {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get("http://localhost:8090/api/v1/userDetails", {
+                const response = await axios.get("https://spring-boot-companya.azurewebsites.net/api/v1/userDetails", {
                     params: {
                         email: "nimesh@mp.com"
                     }
@@ -241,7 +241,7 @@ export function OrderHistory() {
         // Fetch data from backend when component mounts
         axios
             .get(
-                `http://localhost:8090/api/v1/salesRecord?user_ID=${localStorage.getItem("userId")
+                `https://spring-boot-companya.azurewebsites.net/api/v1/salesRecord?user_ID=${localStorage.getItem("userId")
                     ? localStorage.getItem("userId")
                     : "66189fd589a3a818a791a9c2"
                 }`
@@ -275,7 +275,7 @@ export function OrderHistory() {
 
     const fetchOrderStatuses = async (orderId) => {
         try {
-            const response = await axios.get(`http://localhost:8090/api/v1/getOrderStatus?orderID=${orderId}`);
+            const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/getOrderStatus?orderID=${orderId}`);
             return response.data.status; // Return status from response
         } catch (error) {
             console.error("Error fetching order status:", error);

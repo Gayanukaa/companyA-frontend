@@ -85,20 +85,31 @@ export function SimpleLineChart(props) {
 
 
 
-export function BasicPie() {
+export function BasicPie(props) {
+  const [transformedData, setTransformedData] = useState([]);
+
+  useEffect(() => {
+    if (props.pieChartData) {
+      const data = Object.entries(props.pieChartData).map(([label, value], index) => ({
+        id: index,
+        value,
+        label,
+      }));
+
+      setTransformedData(data);
+    }
+  }, [props.pieChartData]);
+
+
+
   return (
     <PieChart
-      series={[
-        {
-          data: [
-            { id: 0, value: 10, label: 'series A' },
-            { id: 1, value: 15, label: 'series B' },
-            { id: 2, value: 20, label: 'series C' },
-          ],
-        },
-      ]}
-      width={500}
-      height={300}
+      series={[{ data: transformedData,
+        highlightScope: { faded: 'global', highlighted: 'item' },
+          faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+       }]}
+      width={1000}
+      height={400}
     />
   );
 }
