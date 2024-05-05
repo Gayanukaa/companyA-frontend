@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import StatisticsCard from './StatisticsCard';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { BarGraphComponent, SimpleLineChart, BasicPie } from './Graphs';
 import { Card, CardContent, Grid } from '@mui/material';
 import * as reqSend from '../../../global/reqSender.jsx';
@@ -12,32 +11,7 @@ const DashboardView = () => {
     const [isLoading, setIsLoading] = useState(true);
 
 
-    const data = [
-        {
-            name: 'Total Managers',
-            count: 10,
-            image: <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-            altText: 'Image 1',
-        },
-        {
-            name: 'Total Managers',
-            count: 10,
-            image: <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-            altText: 'Image 1',
-        },
-        {
-            name: 'Total Managers',
-            count: 10,
-            image: <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-            altText: 'Image 1',
-        },
-        {
-            name: 'Total Managers',
-            count: 10,
-            image: <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-            altText: 'Image 1',
-        }
-    ];
+
 
 
     useEffect(() => {
@@ -64,7 +38,7 @@ const DashboardView = () => {
                 </div>
 
 
-                <StatisticsCard data={data} />
+                <StatisticsCard />
 
                 <div className="left" style={{ marginTop: '25px' }}>
                     <h3>Analysis</h3>
