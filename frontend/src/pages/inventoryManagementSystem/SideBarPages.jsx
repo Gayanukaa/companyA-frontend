@@ -441,15 +441,6 @@ export function ViewReports(props) {
         setShowVal(event.target.value)
     } 
 
-    // const showClick = () => {
-    //     setReportForm(true);
-    //     console.log("ShowClicked")
-    //     const report = data.find(report => report.reportId === showVal);
-    //     console.log(data);
-    //     console.log(report);
-    //     setCurrentReport(report);
-    // };
-
     const showClick = () => {
         setReportForm(true);
         console.log(data)
@@ -509,10 +500,6 @@ export function ViewReports(props) {
     
     const [currentReport, setCurrentReport] = useState(null);
 
-    // const handleShowClick = () => {
-    //     setReportForm(true); 
-    // }
-
     const reportForm = (
         <div className="addItemForm" style={{maxWidth: "750px", margin: "0 auto", border: "2px solid #ccc", padding: "10px", borderRadius: "10px", position: "relative" }}>
             <h2 style={{ textAlign: 'center' }}>Report Details</h2>
@@ -524,54 +511,6 @@ export function ViewReports(props) {
                     <CloseIcon />
             </IconButton>
             {Object.keys(invReport).length !== 0 && (
-                        // <div>
-                        // <h1>Report ID: {invReport.reportId}</h1>
-                        //     <h2>Generated Date and Time: {invReport.generatedDateAndTime}</h2>
-            
-                        //     <h2>Warehouse Details:</h2>
-                        //     <ul>
-                        //     {Object.entries(invReport.warehouses).map(([warehouseId, warehouseName]) => (
-                        //         <li key={warehouseId}>
-                        //         {warehouseName} ({warehouseId})
-                        //         </li>
-                        //     ))}
-                        //     </ul>
-            
-                        //     <h2>Items by Warehouse:</h2>
-                        //     {Object.entries(invReport.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
-                        //     <div key={warehouseId}>
-                        //         <h3>{invReport.warehouses[warehouseId]}</h3>
-                        //         <ul>
-                        //         {Object.entries(items).map(([itemId, itemName]) => (
-                        //             <li key={itemId}>
-                        //             {itemName} ({itemId})
-                        //             </li>
-                        //         ))}
-                        //         </ul>
-                        //     </div>
-                        //     ))}
-            
-                        //     <h2>Most Remaining Items by Warehouse:</h2>
-                        //     {Object.entries(invReport.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
-                        //     <div key={warehouseId}>
-                        //         <h3>{invReport.warehouses[warehouseId]}</h3>
-                        //         <ul>
-                        //         {items.map((item, index) => (
-                        //             <li key={index}>{item}</li>
-                        //         ))}
-                        //         </ul>
-                        //     </div>
-                        //     ))}
-            
-                        //     <h2>Total Worth by Warehouse:</h2>
-                        //     <ul>
-                        //     {Object.entries(invReport.totalWorth).map(([warehouseId, total]) => (
-                        //         <li key={warehouseId}>
-                        //         {invReport.warehouses[warehouseId]}: {total}
-                        //         </li>
-                        //     ))}
-                        //     </ul>
-                        // </div>
                         <div className="report-container">
                         <h4>Report ID: {invReport.reportId}</h4>
                         <Stack spacing={3}>
@@ -634,57 +573,7 @@ export function ViewReports(props) {
                             </ul>
                         </div>
                     </div>
-                    )}
-            {/* <div>
-            <h1>Report ID: {invReport.reportId}</h1>
-                <h2>Generated Date and Time: {invReport.generatedDateAndTime}</h2>
-
-                <h2>Warehouse Details:</h2>
-                <ul>
-                {Object.entries(invReport.warehouses).map(([warehouseId, warehouseName]) => (
-                    <li key={warehouseId}>
-                    {warehouseName} ({warehouseId})
-                    </li>
-                ))}
-                </ul>
-
-                <h2>Items by Warehouse:</h2>
-                {Object.entries(invReport.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
-                <div key={warehouseId}>
-                    <h3>{invReport.warehouses[warehouseId]}</h3>
-                    <ul>
-                    {Object.entries(items).map(([itemId, itemName]) => (
-                        <li key={itemId}>
-                        {itemName} ({itemId})
-                        </li>
-                    ))}
-                    </ul>
-                </div>
-                ))}
-
-                <h2>Most Remaining Items by Warehouse:</h2>
-                {Object.entries(invReport.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
-                <div key={warehouseId}>
-                    <h3>{invReport.warehouses[warehouseId]}</h3>
-                    <ul>
-                    {items.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
-                    </ul>
-                </div>
-                ))}
-
-                <h2>Total Worth by Warehouse:</h2>
-                <ul>
-                {Object.entries(invReport.totalWorth).map(([warehouseId, total]) => (
-                    <li key={warehouseId}>
-                    {invReport.warehouses[warehouseId]}: {total}
-                    </li>
-                ))}
-                </ul>
-            </div> */}
-            
-            
+                    )}         
         </div>
     )
 
@@ -832,10 +721,8 @@ export function ViewReports(props) {
                             <tr>
                                 <td><Button onClick={showClick} size="medium"  style={{ width: '30px', minWidth:'105px' }} variant="contained" startIcon={<Summarize />} color="success" > Show </Button></td>
                                 <td><TextField onChange={changeShowVal} value={showVal} size="small"  id="outlined-basic" label="Report ID" variant="outlined" /></td>
-                                <td align="left"><button style={{ borderRadius: 4, background: 'none', padding: '5.5px 8px' }}><DownloadIcon/></button></td>
                             </tr>
                             </table>
-                            {/* <div class="container square-box d-flex justify-content-center align-items-center"> */}
                             <div class="container">
                                 <Stack spacing={2} direction="column" >
                                 <h3 style={{ marginBottom: '20px' }} >Past generated reports:</h3>
@@ -861,80 +748,11 @@ export function ViewReports(props) {
                 </div>
                 <Stack spacing={4}>
                 <div class="container">
-                {/* <div className="mt-5" >
-                    <h3 style={{ marginBottom: '20px' }} >Past generated reports:</h3>
-                    <table class="table table-bordered table-hover table-sm" style={{ width: '70%', margin: 'auto' }} >
-                        <thead class="thead-light">
-                            <tr>
-                               <th>Report ID</th>
-                               <th>Date & Time</th>
-                            </tr>
-                        </thead>
-                    <tbody>
-                        {data.map((reports, index) => (
-                            <tr key={index}>
-                                <td>{reports.reportId}</td>
-                                <td>{reports.generatedDateAndTime}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                    </table>
-                </div> */}
                 </div>
                 <div>
                     {showReportForm && reportForm} 
                 </div>
                 </Stack>
-{/* ////////////////////////////////// */}
-                {/* <div>
-                <h1>Report ID: {report.reportId}</h1>
-                <h2>Generated Date and Time: {report.generatedDateAndTime}</h2>
-
-                <h2>Warehouse Details:</h2>
-                <ul>
-                {Object.entries(report.warehouses).map(([warehouseId, warehouseName]) => (
-                    <li key={warehouseId}>
-                    {warehouseName} ({warehouseId})
-                    </li>
-                ))}
-                </ul>
-
-                <h2>Items by Warehouse:</h2>
-                {Object.entries(report.warehouseItemsByWarehouse).map(([warehouseId, items]) => (
-                <div key={warehouseId}>
-                    <h3>{report.warehouses[warehouseId]}</h3>
-                    <ul>
-                    {Object.entries(items).map(([itemId, itemName]) => (
-                        <li key={itemId}>
-                        {itemName} ({itemId})
-                        </li>
-                    ))}
-                    </ul>
-                </div>
-                ))}
-
-                <h2>Most Remaining Items by Warehouse:</h2>
-                {Object.entries(report.mostRemainingItemsByWarehouse).map(([warehouseId, items]) => (
-                <div key={warehouseId}>
-                    <h3>{report.warehouses[warehouseId]}</h3>
-                    <ul>
-                    {items.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
-                    </ul>
-                </div>
-                ))}
-
-                <h2>Total Worth by Warehouse:</h2>
-                <ul>
-                {Object.entries(report.totalWorth).map(([warehouseId, total]) => (
-                    <li key={warehouseId}>
-                    {report.warehouses[warehouseId]}: {total}
-                    </li>
-                ))}
-                </ul>
-            </div> */}
-
             </main>
         </>
     )
