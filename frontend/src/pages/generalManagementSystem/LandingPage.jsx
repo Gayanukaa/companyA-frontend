@@ -11,6 +11,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Footer from './components/Footer';
 
 
+
 const LandingPage = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [menuOpen, setMenuOpen] = useState(null);
@@ -89,6 +90,7 @@ const LandingPage = () => {
                             <Button component='a' href='#contact-us' variant="contained" color="inherit" sx={{ marginRight: 60, color: 'black', height: 75, width: 130 }}>
                                 Contact Us
                             </Button>
+                           
 
                             <Button component={Link} to="/login/manager" variant="contained" color="secondary" sx={{ marginRight: 2 }}>
                                 Manager Login
@@ -152,7 +154,7 @@ const LandingPage = () => {
 
             <Container >
                 <LandingPageCarousel /><br />
-                <LandingPageCarousel /><br />
+               
             </Container><br />
 
             <div className="card" id="about-us">
