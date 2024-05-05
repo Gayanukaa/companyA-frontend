@@ -50,21 +50,10 @@ export function DashboardView(props) {
         {
             image: avatar,
             altText: "Avatar 1",
-            count: 5,
-            name: "John Doe"
+            count: "Finance Manager",
+            name: "Michael Brown"
         },
-        {
-            image: avatar,
-            altText: "Avatar 2",
-            count: 3,
-            name: "Jane Smith"
-        },
-        {
-            image: avatar,
-            altText: "Avatar 3",
-            count: 7,
-            name: "Bob Johnson"
-        }
+        
     ];
 
     return (
