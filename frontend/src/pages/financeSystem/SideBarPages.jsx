@@ -1,13 +1,10 @@
 import React from "react";
-// import { useEffect } from 'react';
 import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
-
-
+import Typography from '@mui/material/Typography';
 
 export function DashboardView(props) {
-
     const dataList = [
         {
             image: avatar,
@@ -23,13 +20,13 @@ export function DashboardView(props) {
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <h1>Dashboard</h1>
+                        <Typography variant="h1">Dashboard</Typography>
                     </div>
-
-                    <CardComp data={dataList} />
+                    <div style={{ display: 'flex', justifyContent: 'center' }}> 
+                        <CardComp data={dataList} style={{ width: '300px' }} />
+                    </div>
                 </div>
             </main>
         </>
     )
 }
-
