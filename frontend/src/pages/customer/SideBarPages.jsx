@@ -56,7 +56,7 @@ export function DashboardView(props) {
             try {
                 const response = await axios.get("https://spring-boot-companya.azurewebsites.net/api/v1/userDetails", {
                     params: {
-                        email: "nimesh@mp.com"
+                        id: localStorage.getItem("userId") ? localStorage.getItem("userId") : '6636348e535dd04b97253092' 
                     }
                 });
                 setUserData(response.data);

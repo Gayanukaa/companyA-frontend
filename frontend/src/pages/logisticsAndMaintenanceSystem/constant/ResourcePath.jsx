@@ -1,5 +1,5 @@
 export const ResourcePath = {
-  BASE_API: "http://localhost:8090/api",
+  BASE_API: "https://spring-boot-companya.azurewebsites.net/api",
 
   // MACHINE
   MACHINE_API: "/m1",
