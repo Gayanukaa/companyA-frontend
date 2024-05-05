@@ -11,16 +11,16 @@ export function DashboardView(props) {
             altText: "Avatar 1",
             count: "Finance Manager",
             name: "Michael Brown",
-            email: "michael.brown@example.com" 
+            email: "michael.brown@example.com"
         },
         
     ];
 
     return (
         <>
-            <main style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <div>
-                    <div className="head-title" style={{ textAlign: 'center' }}>
+            <main>
+                <div className="head-title">
+                    <div className="left">
                         <Typography variant="h1">Dashboard</Typography>
                         <Typography variant="body1">{dataList[0].email}</Typography>
                     </div>
