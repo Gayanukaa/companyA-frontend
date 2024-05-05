@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import StatisticsCard from './StatisticsCard';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { BarGraphComponent, SimpleLineChart, BasicPie } from './Graphs';
 import { Card, CardContent, Grid } from '@mui/material';
 import * as reqSend from '../../../global/reqSender.jsx';
@@ -12,36 +11,8 @@ const DashboardView = () => {
     const [isLoading, setIsLoading] = useState(true);
 
 
-    const data = [
-        {
-            name: 'Total Managers',
-            count: 10,
-            image: <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-            altText: 'Image 1',
-        },
-        {
-            name: 'Total Managers',
-            count: 10,
-            image: <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-            altText: 'Image 1',
-        },
-        {
-            name: 'Total Managers',
-            count: 10,
-            image: <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-            altText: 'Image 1',
-        },
-        {
-            name: 'Total Managers',
-            count: 10,
-            image: <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-            altText: 'Image 1',
-        }
-    ];
-
-
     useEffect(() => {
-        reqSend.defaultReq("GET", "api/dashboard/graphs", {},
+        reqSend.defaultReq("GET", "/api/dashboard/graphs", {},
             response => {
                 if (response.status === 200 && response.data) {
                     setGraphData(response.data);
@@ -54,7 +25,9 @@ const DashboardView = () => {
                 console.error("API request failed:", error);
             }
         );
+
     }, [])
+
 
     return (
         <main>
@@ -64,7 +37,7 @@ const DashboardView = () => {
                 </div>
 
 
-                <StatisticsCard data={data} />
+                <StatisticsCard />
 
                 <div className="left" style={{ marginTop: '25px' }}>
                     <h3>Analysis</h3>
@@ -72,6 +45,9 @@ const DashboardView = () => {
 
                 <Grid container spacing={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                     <Grid item xs={12} lg={12}>
+
+                        <h6 style={{ textAlign: 'center' }}>Records of Past Sales</h6>
+
                         <Card variant="outlined">
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                                 {
@@ -86,6 +62,9 @@ const DashboardView = () => {
                     </Grid>
 
                     <Grid item xs={12} lg={12}>
+
+                        <h6 style={{ textAlign: 'center' }}>Records of Stocks</h6>
+
                         <Card variant="outlined">
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                                 {
@@ -99,14 +78,18 @@ const DashboardView = () => {
                         </Card>
                     </Grid>
 
-                    <Grid item xs={12} lg={6}>
+
+                    <Grid item xs={12} lg={12}>
+
+                        <h6 style={{ textAlign: 'center' }}>Stocks in each Warehouse</h6>
+
                         <Card variant="outlined">
                             <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                                 {
                                     isLoading ? (
                                         <LoadingSpinner />
                                     ) : (
-                                        <BasicPie />
+                                        <BasicPie pieChartData={graphData.warehouseData} />
                                     )
                                 }
                             </CardContent>
