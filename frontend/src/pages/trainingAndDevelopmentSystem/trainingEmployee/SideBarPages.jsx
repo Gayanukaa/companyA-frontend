@@ -365,7 +365,7 @@ export function Login(props){
                 navigate(`/trainingdevelopment-management/training-employee/training/${loginData.email}`);
             }
         } catch (error) {
-            setError("Invalid username or password");
+            setError("Invalid email or password");
         }
     }
 
