@@ -241,10 +241,7 @@ export function OrderHistory() {
         // Fetch data from backend when component mounts
         axios
             .get(
-                `https://spring-boot-companya.azurewebsites.net/api/v1/salesRecord?user_ID=${localStorage.getItem("userId")
-                    ? localStorage.getItem("userId")
-                    : "66189fd589a3a818a791a9c2"
-                }`
+                "https://spring-boot-companya.azurewebsites.net/api/v1/salesRecord?user_ID=66189fd589a3a818a791a9c2"
             )
             .then((response) => {
                 if (response.data && response.data.orders) { // Add this null check
