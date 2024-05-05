@@ -53,7 +53,6 @@ export function ViewManagers(props) {
 
     
     const handleDeleteClick = (managerId) => {
-        console.log("Data received from TrashIcon:", managerId);
 
         reqSend.defaultReq(
             "DELETE",
@@ -88,27 +87,30 @@ export function ViewManagers(props) {
                 console.error("API request failed:", error);
             }
         );
-
     }
 
 
     useEffect(() => {
         if (data != null) {
             settabledata({
-                heading: ["Person", "Name", "e-mail", "Role", "Actions", ""],
+                heading: ["Person", "Name", "Email", "Role", "Actions", ""],
                 body: data.map((tablerow, index) => {
                     if (tablerow.isDeleted === 0) {
                         const roleLabel = systemRoles.find(role => role.role === tablerow.role)?.label || 'Unknown Role';
-                        return (
-                            <tr key={index}>
-                                <td><img src={avatar} alt="Avatar" /></td>
-                                <td>{tablerow.firstName + " " + tablerow.lastName}</td>
-                                <td>{tablerow.email}</td>
-                                <td>{roleLabel}</td>
-                                <td><button onClick={() => updateManagerButtonClick(tablerow.id)} className="btn btn-dark">Update</button></td>
-                                <td><TrashIcon onClickHandler={() => handleDeleteClick(tablerow.id)} /></td>
-                            </tr>
-                        );
+
+                        if (roleLabel !== "Unknown Role") {
+                            return (
+                                <tr key={index}>
+                                    <td><img src={avatar} alt="Avatar" /></td>
+                                    <td>{tablerow.firstName + " " + tablerow.lastName}</td>
+                                    <td>{tablerow.email}</td>
+                                    <td>{roleLabel}</td>
+                                    <td><button onClick={() => updateManagerButtonClick(tablerow.id)} className="btn btn-dark">Update</button></td>
+                                    <td><TrashIcon onClickHandler={() => handleDeleteClick(tablerow.id)} /></td>
+                                </tr>
+                            );
+                        }
+                        
                     } else {
                         return null;
                     }
