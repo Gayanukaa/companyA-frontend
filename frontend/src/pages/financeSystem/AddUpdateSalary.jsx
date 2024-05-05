@@ -149,12 +149,14 @@ const AddOrUpdateEmployeeSalary = ({ initialFormData }) => {
 
     const handleUpdate = () => {
         if (isFormValid()) {
-            // Handle update operation
-            defaultReq('PUT', 'api/updateSalary', formData, handleUpdateResponse);
+            const params = new URLSearchParams(formData);
+    
+            defaultReq('PUT', 'api/updateSalary', params, handleUpdateResponse);
         } else {
             Swal.fire({ title: 'Error!', text: 'Please fill in all fields.', icon: 'error', confirmButtonText: 'OK' });
         }
     };
+    
 
     const isFormValid = () => {
         return Object.values(formData).every(value => value.trim() !== '');
