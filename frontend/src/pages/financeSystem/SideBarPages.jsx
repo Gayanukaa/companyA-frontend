@@ -50,7 +50,7 @@ export function DashboardView(props) {
         {
             image: avatar,
             altText: "Avatar 1",
-            position: "Finance Manager",
+            count: "Finance Manager",
             name: "Michael Brown",
             email: "michael.brown@example.com"
         },

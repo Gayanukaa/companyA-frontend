@@ -24,6 +24,9 @@ const CardComp = ({ data }) => {
                                         <Typography variant="body2" color="textSecondary" component="p">
                                             {item.name}
                                         </Typography>
+                                        <Typography variant="body2" color="textSecondary" component="p">
+                                            {item.email}
+                                        </Typography>
                                     </div>
                                 </div>
                             </CardContent>
