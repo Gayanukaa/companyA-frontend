@@ -109,10 +109,9 @@ const FeedbackSection = () => {
     }
 
     const handleDeleteClick = (feedbackId) => {
-
         axios.delete(`https://spring-boot-companya.azurewebsites.net/api/feedback/delete?id=${feedbackId}`)
             .then(response => {
-                
+
             })
             .catch(error => {
                 console.error("Error fetching manager data:", error);
