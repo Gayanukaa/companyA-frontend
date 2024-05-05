@@ -10,8 +10,7 @@ export function DashboardView(props) {
             image: avatar,
             altText: "Avatar 1",
             count: "Finance Manager",
-            name: "Michael Brown",
-            email: "michael.brown@example.com"
+            name: "Michael Brown"
         },
         
     ];
@@ -21,11 +20,10 @@ export function DashboardView(props) {
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <Typography variant="h1">Dashboard</Typography>
-                        
+                        <Typography variant="h1">Dashboard</Typography> 
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}> 
-                        <CardComp data={dataList} style={{ width: '300px' }} />
+                        <CardComp data={dataList} style={{ width: '300px' }} /> 
                     </div>
                 </div>
             </main>
