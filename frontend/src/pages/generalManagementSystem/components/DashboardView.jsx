@@ -5,33 +5,10 @@ import { Card, CardContent, Grid } from '@mui/material';
 import * as reqSend from '../../../global/reqSender.jsx';
 import LoadingSpinner from './LoadingSpinner.jsx';
 
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-
 
 const DashboardView = () => {
     const [graphData, setGraphData] = useState([]);
-    const [apiData, setApiData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-
-
-    const icons = [
-        <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-        <ManageAccountsIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-        <InventoryIcon fontSize="large" style={{ color: '#3C91E6' }} />,
-        <LocalShippingIcon fontSize="large" style={{ color: '#3C91E6' }} />
-    ];
-
-    const transformData = (apiData) => {
-        return Object.entries(apiData).map(([key, value], index) => ({
-            name: `${key.charAt(0).toUpperCase() + key.slice(1)}`,
-            count: value,
-            image: icons[index],
-            altText: 'Image 1',
-        }));
-    };
 
 
     useEffect(() => {
@@ -49,20 +26,6 @@ const DashboardView = () => {
             }
         );
 
-
-        reqSend.defaultReq("GET", "api/count", {},
-            response => {
-                if (response.status === 200 && response.data) {
-                    setApiData(response.data);
-                    setIsLoading(false);
-                } else {
-                    console.error("Invalid response format:", response);
-                }
-            },
-            error => {
-                console.error("API request failed:", error);
-            }
-        );
     }, [])
 
 
@@ -73,7 +36,8 @@ const DashboardView = () => {
                     <h1>Dashboard</h1>
                 </div>
 
-                <StatisticsCard data={apiData ? transformData(apiData[0]) : []} />
+
+                <StatisticsCard />
 
                 <div className="left" style={{ marginTop: '25px' }}>
                     <h3>Analysis</h3>
