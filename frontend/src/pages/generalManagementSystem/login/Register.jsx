@@ -123,7 +123,7 @@ export default function Register() {
                         if (responseStatusLog === 200 || responseStatusLog === 201) {
 
                             localStorage.setItem("role", response2.data.role);
-                            localStorage.setItem("userId", response.data.userId);
+                            localStorage.setItem("userId", response2.data.userId);
 
                             navigate('/customer/dashboard');
                             Toast.fire({ icon: 'success', title: 'You have successfully Registered!' });
