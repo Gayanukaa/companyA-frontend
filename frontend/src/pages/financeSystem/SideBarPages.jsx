@@ -5,7 +5,7 @@ import './DashBoardView.css';
 
 
 
-const DashboardView = () => {
+const UserProfile = () => {
     return(
         <div className="UP">
             <div className="gradient"></div>
@@ -22,5 +22,5 @@ const DashboardView = () => {
 
 }
 
-export default DashboardView    
+export default UserProfile   
 

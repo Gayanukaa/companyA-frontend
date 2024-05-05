@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
 import {dashboardAdminData} from './data/DashBoardData';
-import { DashboardView} from './SideBarPages';
+import { UserProfile} from './SideBarPages';
 import { ViewEmployee } from './EmployeeSalary.jsx';
 import { OrderHistory } from './OrderHistory.jsx';
 import AllEmployeeSalary from './TotalSalary.jsx';
@@ -72,7 +72,7 @@ export default function Dashboard() {
                     <TopBar avatar={avatar} />
 
                     <Routes>
-                        <Route path="/dashboard" element={<DashboardView />} />
+                        <Route path="/dashboard" element={<UserProfile />} />
                         <Route path="/view-salary-details" element={<ViewEmployee />}/>
                         <Route path="/view-all-salary-details" element={<AllEmployeeSalary />}/>
                         <Route path="/add-update-salary-details" element={< AddOrUpdateEmployeeSalary/>}/>
