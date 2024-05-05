@@ -435,7 +435,6 @@ export function WorkTime(props) {
         async (workHoursResponse) => {
           if (workHoursResponse.status === 200 && workHoursResponse.data) {
             const workHoursData = workHoursResponse.data;
-            console.log(workHoursResponse);
             setWorkHoursData(workHoursData);
             document.getElementById("header3").innerHTML =
               JSON.stringify(workHoursData);
@@ -456,7 +455,6 @@ export function WorkTime(props) {
         (otHoursResponse) => {
           if (otHoursResponse.status === 200 && otHoursResponse.data) {
             const otHoursData = otHoursResponse.data;
-            console.log(otHoursResponse);
             setOtHoursData(otHoursData);
             document.getElementById("header4").innerHTML =
               JSON.stringify(otHoursData);
@@ -821,7 +819,7 @@ export function DeleteEmployee(props) {
   const deleteClick = () => {
     reqSend.defaultReq(
       "DELETE",
-      `Employee/${val}`,
+      `https://spring-boot-companya.azurewebsites.net/Employee/${val}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {

@@ -5,7 +5,7 @@ import avatar from '../../../assets/avatar.svg';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams,useNavigate } from 'react-router-dom';
 import * as reqSend from '../../../global/reqSender';
-
+import axios from "axios";
 
 export function DashboardView(props) {
 
@@ -335,8 +335,8 @@ export function Login(props){
     const onInputChange = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
     }
-
-    const onSubmit = async (e) => {
+    //not perform well
+    const onSubmit1 = async (e) => {
         e.preventDefault();
         try {
             reqSend.defaultReq('POST', 'api/tms/get-tm/login', loginData, (response) => {
@@ -353,10 +353,29 @@ export function Login(props){
         }
     };
 
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(" https://spring-boot-companya.azurewebsites.net/api/tms/get-tm/login", loginData);
+            if (response.status === 200) {
+                // Redirect user to home page or any other route after successful login
+                // Example: history.push("/")
+                alert("Login successful");
+                console.log("Login successful");
+                navigate(`/trainingdevelopment-management/training-employee/training/${loginData.email}`);
+            }
+        } catch (error) {
+            setError("Invalid email or password");
+        }
+    }
+
+
+
+
     return (
         <>
             <div></div>
-            <div className='container'>
+            <div className=''>
                 <div className="row">
                     <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                         <h2 className="text-center m-4">Employee Login</h2>
@@ -399,8 +418,8 @@ export function SignUP(props){
     const onInputChange = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value ,});
     }
-
-    const onSubmit = async (e) => {
+    //not perform well
+    const onSubmit1 = async (e) => {
         e.preventDefault();
         try {
             const userData = { ...loginData, employeeId: parseInt(employeeId) };
@@ -420,10 +439,28 @@ export function SignUP(props){
         }
     };
 
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const userData = { ...loginData, employeeId: parseInt(employeeId) };
+            const response = await axios.post(" https://spring-boot-companya.azurewebsites.net/api/tms/get-tm/signup", userData);
+            if (response.status === 201) {
+                // Redirect user to home page or any other route after successful login
+                // Example: history.push("/")
+                alert("Sign Up successful");
+                console.log("Sign Up successful");
+                navigate(`/trainingdevelopment-management/training-employee/training/${loginData.email}`);
+            }
+        } catch (error) {
+            setError("Email Already Exists.");
+        }
+    }
+
     return (
         <>
             <div></div>
-            <div className='container'>
+            <div className=''>
                 <div className="row">
                     <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                         <h2 className="text-center m-4">Employee Sign UP</h2>

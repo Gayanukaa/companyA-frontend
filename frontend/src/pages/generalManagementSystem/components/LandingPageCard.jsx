@@ -29,7 +29,7 @@ export default function LandingPageCard() {
                         </div>
                         <div className="col-md-8">
                             <div className="card-body">
-                                <h5 className="card-title">Another Card</h5>
+                                <h5 className="card-title">Friendly customer service</h5>
                                 <p className="card-text">This is another card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                 <p className="card-text"><small className="text-muted">Login for more</small></p>
                             </div>

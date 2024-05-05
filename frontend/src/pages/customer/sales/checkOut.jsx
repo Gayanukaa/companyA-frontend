@@ -1,4 +1,3 @@
-//import useNavigate from 'react-router-dom';
 import * as reqSend from '../../../global/reqSender.jsx';
 
 const getOrderId = () => {
@@ -36,9 +35,12 @@ const saveRecord = (oid, items, totalPrice) => {
 
         }
         //add customer id
+       // const customer_Id = localStorage.getItem("userId");
+        const customer_Id = "0002ec60dc82d25a7b918f75";
+        console.log(customer_Id);
         const requestData = {
             "_id": {
-                "$oid": "662213df80341b1e86443b32"
+                "$oid": customer_Id
             },
             "orders": [
                 {
@@ -49,8 +51,8 @@ const saveRecord = (oid, items, totalPrice) => {
                 }
             ]
         };
-        console.log(requestData);//add customerid
-        reqSend.defaultReq("POST", `api/SalesTable/662213df80341b1e86443b32/addRecord`, requestData,
+        console.log(requestData);
+        reqSend.defaultReq("POST", `api/SalesTable/${customer_Id}/addRecord`, requestData,
             response => {
                 if (response.status === 201 && response.data) {
                     console.log("Record saved successfully");
@@ -81,7 +83,7 @@ const saveFinanceRecord = (oid, items, totalPrice) => {
                 componentList.push(key.toString());
             }
         }
-        //addcustomer id
+        //add customer id
         const requestData = {
             "_id": {
                 "$oid": "662213df80341b1e86443b32"
@@ -114,19 +116,84 @@ const saveFinanceRecord = (oid, items, totalPrice) => {
     });
 };
 
+const subtractProducts = (items) => {
+    return new Promise((resolve, reject) => {
+        const productList = [];
+        for (const key in items) {
+            if (items[key] > 0) {
+                productList.push(key.toString());
+            }
+
+        }
+        reqSend.defaultReq("POST", 'api/products/updateTable', productList,
+            response => {
+                if (response.status === 200 && response.data) {
+                    console.log("product deleted successfully");
+                    resolve();
+                } else {
+                    console.error("Invalid response format:", response);
+                    reject(new Error("Invalid response format"));
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+                reject(error);
+            }
+        );
+    });
+};
+
+const subtractExistingProducts = (items) => {
+    return new Promise((resolve, reject) => {
+        const productList = [];
+        for (const key in items) {
+            if (items[key] > 0) {
+                productList.push(key.toString());
+            }
+
+        }
+        reqSend.defaultReq("POST", 'api/existingProducts/updateTable', productList,
+            response => {
+                if (response.status === 200 && response.data) {
+                    console.log("product deleted successfully");
+                    resolve();
+                } else {
+                    console.error("Invalid response format:", response);
+                    reject(new Error("Invalid response format"));
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+                reject(error);
+            }
+        );
+    });
+};
+
+
 const checkout = async (items, totalPrice) => {
-   //const navigate = useNavigate();
-    console.log("items",items);
     try {
         const oid = await getOrderId();
-//uncomment to save records
-//         await saveRecord(oid, items, totalPrice);
-//         await saveFinanceRecord(oid, items, totalPrice);
-        //console.log(oid, typeof oid);
-        //await new Promise(resolve => setTimeout(resolve, 2000));
+        await saveRecord(oid, items, totalPrice);
 
-        console.log("Navigate to payBills");
-        //navigate('/payBills');
+        await saveFinanceRecord(oid, items, totalPrice);
+        console.log("order saved");
+        const productList = Object.entries(items)
+            .filter(([key, value]) => value > 0)
+            .map(([key, value]) => ({
+                itemId: key,
+                quantity: value
+            }));
+        console.log('product_list',productList);
+        if (Object.keys(items).some(key => key.includes('I'))) {
+            console.log('deleting products from product table');
+            await subtractProducts(productList);
+        }
+        else if (Object.keys(items).some(key => key.includes('E'))) {
+            console.log('deleting products from existing product table');
+            await subtractExistingProducts(productList);
+        }
+        console.log("return to dashboard");
     } catch (error) {
         console.error("Error occurred", error);
 

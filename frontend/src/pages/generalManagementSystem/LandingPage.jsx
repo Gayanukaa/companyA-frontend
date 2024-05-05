@@ -9,6 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Footer from './components/Footer';
+import LoginBtn from './components/LoginBtn';
+
 
 
 const LandingPage = () => {
@@ -86,16 +88,17 @@ const LandingPage = () => {
                             <Button component='a' href='#about-us' variant="contained" color="inherit" sx={{ marginRight: 1, color: 'black', height: 75, width: 130 }}>
                                 About
                             </Button>
-                            <Button component='a' href='#contact-us' variant="contained" color="inherit" sx={{ marginRight: 60, color: 'black', height: 75, width: 130 }}>
+                            <Button component='a' href='#contact-us' variant="contained" color="inherit" sx={{ marginRight: 80, color: 'black', height: 75, width: 130 }}>
                                 Contact Us
                             </Button>
+                           <LoginBtn/>
 
-                            <Button component={Link} to="/login/manager" variant="contained" color="secondary" sx={{ marginRight: 2 }}>
+                            {/* <Button component={Link} to="/login/manager" variant="contained" color="secondary" sx={{ marginRight: 2 }}>
                                 Manager Login
                             </Button>
                             <Button component={Link} to="/login/customer" variant="contained" color="success">
                                 Customer Login
-                            </Button>
+                            </Button> */}
                         </Box>
 
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -152,7 +155,7 @@ const LandingPage = () => {
 
             <Container >
                 <LandingPageCarousel /><br />
-                <LandingPageCarousel /><br />
+               
             </Container><br />
 
             <div className="card" id="about-us">

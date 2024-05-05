@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
 import {dashboardAdminData} from './data/DashBoardData';
-import { DashboardView} from './SideBarPages';
+import { DashboardView} from './SideBarPages.jsx';
 import { ViewEmployee } from './EmployeeSalary.jsx';
 import { OrderHistory } from './OrderHistory.jsx';
 import AllEmployeeSalary from './TotalSalary.jsx';
@@ -41,17 +41,7 @@ export default function Dashboard() {
         })
 
 
-        const switchMode = document.getElementById('switch-mode');
-        const wrapper = document.getElementById('dashboardWrapper');
-
-
-        switchMode.addEventListener('change', function () {
-            if (this.checked) {
-                wrapper.classList.add('dark');
-            } else {
-                wrapper.classList.remove('dark');
-            }
-        })
+       
     }
 
     useEffect(() => {

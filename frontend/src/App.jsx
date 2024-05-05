@@ -5,7 +5,6 @@ import RequireAuth from "./config/RequireAuth.jsx";
 
 import LoginHandle from './pages/generalManagementSystem/login/LoginHandle.jsx';
 
-import CustomerOrder from './pages/customerOrderSystem/Dashboard.jsx';
 import FinanticalManagement from './pages/financeSystem/Dashboard.jsx';
 import GeneralManagement from './pages/generalManagementSystem/Dashboard.jsx';
 import HumanResourceManagement from './pages/humanResourceSystem/Dashboard.jsx';
@@ -45,10 +44,6 @@ function App() {
 
           <Route element={<RequireAuth allowedRole='inventory_manager' />}>
             <Route path="/inventory-management/*" element={<InventoryManagement />} />
-          </Route>
-
-          <Route element={<RequireAuth allowedRole='customer_order_manager' />}>
-            <Route path="/customerorder-management/*" element={<CustomerOrder />} />
           </Route>
 
           <Route element={<RequireAuth allowedRole='financial_manager' />}>

@@ -197,7 +197,7 @@ export function AddUnitSupervisor(props) {
     };
 
     return (
-        <div className='container'>
+        <div className=''>
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                     <h2 className="text-center m-4">Add Unit Supervisor</h2>
@@ -257,7 +257,7 @@ export function AddMainSupervisor(props) {
     };
 
     return (
-        <div className='container'>
+        <div className=''>
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                     <h2 className="text-center m-4">Add Main Supervisor</h2>
@@ -388,7 +388,7 @@ export function AddCourse(props){
     };
 
     return (
-        <div className='container'>
+        <div className=''>
         <div className="row">
             <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                 <h2 className="text-center m-4">Add Course Details</h2>
@@ -488,7 +488,7 @@ export function EditCourse(props){
         };
 
   return (
-    <div className='container'>
+    <div className=''>
         <div className="row">
             <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                 <h2 className="text-center m-4">Edit Course Details</h2>
@@ -627,7 +627,7 @@ export function AddOse(props){
     };
 
     return (
-        <div className='container'>
+        <div className=''>
         <div className="row">
             <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
                 <h2 className="text-center m-4">Add Overseas Experience Details</h2>
@@ -722,7 +722,7 @@ export function EditOse(props){
         };
 
   return (
-    <div className='container'>
+    <div className=''>
         <div className="row">
             <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow" style={{  color: '#007bff' }}>
             <h2 className="text-center m-4">Edit Overseas Experience Details</h2>

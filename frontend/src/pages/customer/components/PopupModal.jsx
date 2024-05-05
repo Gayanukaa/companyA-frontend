@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import {useMediaQuery} from "@mui/material";
 import useTheme from "@mui/material/styles/useTheme";
+import popup from '../../../assets/popup.jpg';
 const modalStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -42,10 +43,10 @@ const PopupModal = () => {
     };
     const handleNavigate = () => {
         closePopup();
-        navigate('/sales-management/existingproducts');
+        navigate('/customer/existingproducts');
     };
     const modalContentStyle = {
-        backgroundImage: `url('https://t3.ftcdn.net/jpg/02/57/16/84/360_F_257168460_AwhicdEIavp7bdCbHXyTaBTHnBoBcZad.jpg')`,
+        backgroundImage: `url(${popup})`,
         backgroundSize: 'cover',
         padding: '24px',
         display: 'flex',

@@ -148,13 +148,15 @@ const AddOrUpdateEmployeeSalary = ({ initialFormData }) => {
     };
 
     const handleUpdate = () => {
-        if (isFormValid()) {
-            // Handle update operation
-            defaultReq('PUT', 'api/updateSalary', formData, handleUpdateResponse);
-        } else {
+        const { employeeId, basicSalary, otHours, payForOtHour, numberOfAbsentDays } = formData;
+        if (!isFormValid()) {
             Swal.fire({ title: 'Error!', text: 'Please fill in all fields.', icon: 'error', confirmButtonText: 'OK' });
+            return;
         }
+    
+        defaultReq('PUT', `api/updateSalary?employeeId=${employeeId}&basicSalary=${basicSalary}&otHours=${otHours}&payForOtHour=${payForOtHour}&numberOfAbsentDays=${numberOfAbsentDays}`, null, handleUpdateResponse);
     };
+    
 
     const isFormValid = () => {
         return Object.values(formData).every(value => value.trim() !== '');

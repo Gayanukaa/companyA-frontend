@@ -61,7 +61,26 @@ const ViewLoanDetails = () => {
             console.log("Please provide a loan ID.");
             return;
         }
-    
+
+        const selectedLoan = loanDetails.find(loan => loan.facilityId === loanId);
+        if (!selectedLoan) {
+            console.log(`Loan with ID ${loanId} not found.`);
+            return;
+        }
+
+        if (selectedLoan.currentLoanAmount === 0) {
+            console.log(`Loan with ID ${loanId} has already been paid off.`);
+            // Display a message indicating that the loan has been paid off
+            Swal.fire({
+                title: 'Loan Paid Off',
+                text: `Loan with ID ${loanId} has already been paid off.`,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        // Proceed with the update request for loan status
         defaultReq('PUT', `api/updateLoanStatus/${loanId}`, null,
             (response) => {
                 if (response.status === 200) {
@@ -158,7 +177,6 @@ const ViewLoanDetails = () => {
                 </div>
 
                 <div className="update-loans">
-                    
                     <div className="search-box">
                         <input 
                             type="text" 
@@ -173,8 +191,6 @@ const ViewLoanDetails = () => {
             </div>
         </>
     );
-    
-    
 };
 
 export default ViewLoanDetails;

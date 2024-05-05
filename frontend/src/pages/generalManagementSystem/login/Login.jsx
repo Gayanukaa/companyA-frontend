@@ -5,11 +5,20 @@ import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { forwardRef, useImperativeHandle } from 'react';
+import Swal from 'sweetalert2'
 import { motion } from "framer-motion";
 import axios from 'axios';
 
 import bg1 from '../../../assets/bg1.jpeg';
+
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true
+})
 
 
 
@@ -65,6 +74,7 @@ const Login = (props) => {
                         localStorage.setItem("userId", response.data.userId);
                         navigateToManagerPortal(response.data.role);
 
+                        Toast.fire({ icon: 'success', title: 'You have successfully Logged in!' });
                     } else {
                         setShowAlert(response.data.message || "Unknown error occurred");
                     }

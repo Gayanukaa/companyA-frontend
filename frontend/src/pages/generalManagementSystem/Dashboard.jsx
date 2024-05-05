@@ -5,9 +5,6 @@ import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
-// import {
-//     dashboardAdminData,
-// } from './data/DashBoardData';
 
 import { ViewManagers, ApprovalSection } from './SideBarPages';
 import ModalForm from './components/ModalForm'
@@ -40,16 +37,8 @@ export default function Dashboard() {
         menuBar.addEventListener('click', function () {
             sidebar.classList.toggle('hideSidebar');
         })
-        // const switchMode = document.getElementById('switch-mode');
-        // const wrapper = document.getElementById('dashboardWrapper');
-        // switchMode.addEventListener('change', function () {
-        //     if (this.checked) {
-        //         wrapper.classList.add('dark');
-        //     } else {
-        //         wrapper.classList.remove('dark');
-        //     }
-        // })
     }
+    
     useEffect(() => {
         addJs();
     }, [])
@@ -77,7 +66,8 @@ export default function Dashboard() {
 
     const dashboardAdminData = [
         { name: "Dashboard", icon: <i className='bx bxs-dashboard' ></i>, active: true, to: 'dashboard' },
-        { name: "Managers", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'view-managers' },
+        { name: "View Managers", icon: <i className='bx bxs-group'></i>, active: false, to: 'view-managers' },
+        { name: "Add Manager", icon: <i className='bx bxs-user-plus'></i>, active: false, to: 'add-managers' },
         { name: "Feedbacks", icon: <i className='bx bxs-comment-detail'></i>, active: false, to: 'view-feedback', notification: notificationData ? notificationData : null},
         { name: "Approvals", icon: <i className='bx bxs-file'></i>, active: false, to: 'approvals' },
     ]

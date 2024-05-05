@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Select, MenuItem, CircularProgress, Snackbar, 
 import axios from 'axios';
 import { Alert, Button, Grid, Input, TextField } from '@mui/material';
 
-const API_ENDPOINT = "http://localhost:8090/api";
+const API_ENDPOINT = "https://spring-boot-companya.azurewebsites.net/api";
 
 export function OrderStatus(props) {
 

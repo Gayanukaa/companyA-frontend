@@ -72,14 +72,14 @@ export default function Footer() {
                 id="category-c"
                 sx={{ fontSize: '12px', textTransform: 'uppercase' }}
               >
-                Category C
+                Branches
               </Box>
               <Box component="p" aria-labelledby="category-c" sx={{ pl: 2 }}>
-                Paragraph 1
+                Nugegoda
                 <br />
-                Paragraph 2
+                Kiribathgoda
                 <br />
-                Paragraph 3
+                Kandy
               </Box>
             
           </Grid>
