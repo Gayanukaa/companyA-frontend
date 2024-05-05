@@ -166,7 +166,7 @@ const SampleOperations = () => {
           <p>Expected Test: {selectedSample.expectedTest}</p>
           {selectedSample.allocatedTest && (
             <div>
-              <h3>Allocated Test</h3>
+              <h4>Allocated Test</h4>
               <p>Test ID: {selectedSample.allocatedTest.testId}</p>
               <p>Name: {selectedSample.allocatedTest.name}</p>
             </div>
@@ -184,7 +184,7 @@ const SampleOperations = () => {
           style={{ marginRight: '6px' }}
         />
         <Button onClick={deleteSampleById} variant="contained" color ="secondary">Delete Sample</Button>
-        {deletingMessage && <p>{deletingMessage}</p>}
+        {deletingMessage && <p style={{ color: 'purple', fontWeight: 'bold' }}>{deletingMessage}</p>}
       </div>
 
       <div style={{ margin: '30px 0' }}>
@@ -212,7 +212,7 @@ const SampleOperations = () => {
         </div>
         <Button type="submit" variant="contained" color ="primary">Update Test Method</Button>
       </form>
-      {updatingMessage && <p>{updatingMessage}</p>}
+      {updatingMessage && <p style={{ color: 'purple', fontWeight: 'bold' }}>{updatingMessage}</p>}
     </div>
 
     <div style={{ margin: '30px 0' }}>
@@ -236,10 +236,10 @@ const SampleOperations = () => {
       />
       </div>
       <Button onClick={handleTestSample} variant="contained" color ="primary">Test Sample</Button>
-      {inspectResponse && <p>{inspectResponse}</p>}
+      {inspectResponse && <p style={{ color: 'purple', fontWeight: 'bold' }}>{inspectResponse}</p>}
     </div>
 
-    <div style={{ margin: '30px 0' }}>
+    <div style={{ margin: '30px 0 50px' }}>
     <Typography variant="h6" gutterBottom>Add New Sample</Typography>
       <form onSubmit={handleCreateSample}>
         <div style={{ marginBottom: '6px' }}>
@@ -275,11 +275,10 @@ const SampleOperations = () => {
         style={{ marginRight: '6px' }}
         />
         </div>
-
         </div>
-        <Button type="submit" variant="contained" color ="primary">Add Sample</Button>
+        <Button type="submit" variant="contained" color ="primary" style={{marginBottom:'4px'}}>Add Sample</Button>
       </form>
-      {createMessage && <p>{createMessage}</p>}
+      {createMessage && <p style={{ color: 'purple', fontWeight: 'bold'}}>{createMessage}</p>}
     </div>
     </div>
   );

@@ -165,7 +165,7 @@ const PrototypeOperations = () => {
           <p>Expected Test: {selectedPrototype.expectedTest}</p>
           {selectedPrototype.allocatedTest && (
             <div>
-              <h3>Allocated Test</h3>
+              <h4>Allocated Test</h4>
               <p>Test ID: {selectedPrototype.allocatedTest.testId}</p>
               <p>Name: {selectedPrototype.allocatedTest.name}</p>
             </div>
@@ -183,7 +183,7 @@ const PrototypeOperations = () => {
         style={{ marginRight: '6px' }}
       />
         <Button onClick={deletePrototypeById} variant="contained" color ="secondary">Delete Prototype</Button>
-        {deletingMessage && <p>{deletingMessage}</p>}
+        {deletingMessage && <p style={{ color: 'purple', fontWeight: 'bold' }}>{deletingMessage}</p>}
       </div>
 
       <div style={{ margin: '30px 0' }}>
@@ -211,7 +211,7 @@ const PrototypeOperations = () => {
         </div>
         <Button type="submit" variant="contained" color ="primary">Update Test Method</Button>
       </form>
-      {updatingMessage && <p>{updatingMessage}</p>}
+      {updatingMessage && <p style={{ color: 'purple', fontWeight: 'bold' }}>{updatingMessage}</p>}
     </div>
 
     <div style={{ margin: '30px 0' }}>
@@ -235,7 +235,7 @@ const PrototypeOperations = () => {
       />
       </div>
       <Button onClick={handleTestPrototype} variant="contained" color ="primary">Test Prototype</Button>
-      {inspectResponse && <p>{inspectResponse}</p>}
+      {inspectResponse && <p style={{ color: 'purple', fontWeight: 'bold' }}>{inspectResponse}</p>}
     </div>
 
     <div style={{ margin: '30px 0' }}>
@@ -276,9 +276,9 @@ const PrototypeOperations = () => {
         </div>
          
         </div>
-        <Button type="submit" variant="contained" color ="primary">Add Prototype</Button>
+        <Button type="submit" variant="contained" color ="primary" style={{marginBottom:'4px'}}>Add Prototype</Button>
       </form>
-      {createMessage && <p>{createMessage}</p>}
+      {createMessage && <p style={{ color: 'purple', fontWeight: 'bold' }}>{createMessage}</p>}
     </div>
 
     </div>

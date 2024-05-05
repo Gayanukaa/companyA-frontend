@@ -5,6 +5,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
 const ReportDelete = () => {
   const [deleteReportId, setDeleteReportId] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
@@ -42,8 +45,9 @@ const ReportDelete = () => {
       <Button variant="contained" color="secondary" onClick={deleteReport} style={{ marginRight: '10px' }}>
         Delete Report
       </Button>
-      {responseMessage && <Typography variant="body1">{responseMessage}</Typography>}
-      {error && <Typography variant="body1" style={{ color: 'red' }}>{error}</Typography>}
+      {responseMessage && <Typography variant="body1" style={{ color: 'purple', fontWeight: 'bold' }}>{responseMessage}</Typography>}
+      {error && <Typography variant="body1" style={{ color: 'purple', fontWeight: 'bold' }}>{error}</Typography>}
+
     </div>
   );
 };

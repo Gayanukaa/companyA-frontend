@@ -135,10 +135,10 @@ const TestOperations = () => {
           variant="outlined"
           value={deleteTestId}
           onChange={(e) => setDeleteTestId(e.target.value)}
-          style={{ marginRight: '6px' }}
+          style={{ marginRight: '6px', marginBottom: '4px' }}
         />
         <Button onClick={handleDeleteTest} variant="contained" color="secondary" >Delete Test</Button>
-        {deleteResponse && <Typography>{deleteResponse}</Typography>}
+        {deleteResponse && <Typography style={{ color: 'purple', fontWeight: 'bold' }}>{deleteResponse}</Typography>}
       </div>
     </div>
   );
