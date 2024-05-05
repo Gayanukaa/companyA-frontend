@@ -31,6 +31,7 @@ import CardCompDashboard from "./CardCompDashboard.jsx"
 import TaskAlt from '@mui/icons-material/TaskAlt';
 import Summarize from '@mui/icons-material/Summarize';
 import RepairCompleteForm from "./RepairCompleteForm.jsx";
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 
 export function DashboardView(props) {
@@ -165,6 +166,14 @@ export function DashboardView(props) {
         }
     ];
 
+    const handleRefreshTable = () => {
+        fetchData(); 
+    };
+
+    const handleRefreshWarehouse = () => {
+        fetchWarehouseData(); 
+    };
+
     const toggleAddItemForm = () => {
         setShowAddItemForm(!showAddItemForm);
      };
@@ -194,12 +203,13 @@ export function DashboardView(props) {
 
                 <div>
                     
-                    <Stack direction="row" spacing={53}>
+                    <Stack direction="row" spacing={45}>
                         <h2>Inventory Details</h2>
                         <Stack direction="row" spacing={2}>
                             <button onClick={toggleAddItemForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Item</button>
                             <button onClick={toggleDeleteItemForm} type="button" className="btn btn-danger justify-center gap-2"><DeleteIcon/>Delete Item</button>
                             <button onClick={toggleSendForRepairsForm} type="button" className="btn btn-success justify-center gap-2"><BuildIcon/>Send For Repairs</button>
+                            <button onClick={handleRefreshTable} className="btn btn-secondary"><RefreshIcon/></button>
                         </Stack>
                         
                     </Stack>
@@ -218,9 +228,9 @@ export function DashboardView(props) {
                 <div className="full-width-components"><hr class="border border-secondary border-2 opacity-50"></hr></div>
 
                 <div>
-                    <Stack direction="row" spacing={87}>
+                    <Stack direction="row" spacing={85}>
                         <h2>Warehouse Details</h2>
-                        <button onClick={toggleAddWarehouseForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Warehouse</button>
+                            <button onClick={toggleAddWarehouseForm} type="button" className="btn btn-primary justify-center gap-2"><AddIcon/>Add Warehouse</button>
                     </Stack>
                     <br></br>
                     {showAddWarehouseForm && <AddWarehouseForm onClose={toggleAddWarehouseForm} />}
@@ -228,7 +238,11 @@ export function DashboardView(props) {
                 
                 <div className="full-width-components">
                     <Box boxShadow={5} borderRadius={8} bgcolor={"white"} padding={2}>
-                        <h2>Excisting Warehouses</h2>
+                        <Stack direction="row" spacing={92}>
+                            <h2>Excisting Warehouses</h2>
+                            <button onClick={handleRefreshWarehouse} className="btn btn-secondary"><RefreshIcon/></button>
+                        </Stack>
+                        <br></br>
                         <CardCompInventory data={dataList} />
                         <br></br>
                     </Box>
@@ -312,6 +326,10 @@ export function OrderItems(props) {
         );
     };
 
+    const handleRefreshShipments = () => {
+        fetchShipmentsData(); 
+    };
+    
     const toggleShipmentForm = () => {
         setShowShipmentForm(!showShipmentForm);
       };
@@ -359,9 +377,12 @@ export function OrderItems(props) {
             
             <div className="full-width-components">
                 <Box boxShadow={5} borderRadius={8} bgcolor={"white"} padding={2}>
-                    <Stack direction="row" spacing={81}>
+                    <Stack direction="row" spacing={73}>
                         <h2>Placed Shipments</h2>
-                        <button onClick={toggleNewShipmentForm} type="button" className="btn btn-primary"><AddIcon/>Place New Shipment</button>        
+                        <Stack direction="row" spacing={2}>
+                            <button onClick={toggleNewShipmentForm} type="button" className="btn btn-primary"><AddIcon/>Place New Shipment</button>
+                            <button onClick={handleRefreshShipments} className="btn btn-secondary"><RefreshIcon/></button> 
+                        </Stack>    
                     </Stack>
                     <br></br>
                     {showNewShipmentForm && <PlaceNewShipment onClose={toggleNewShipmentForm} />}

@@ -12,6 +12,7 @@ import TestOperations from './tests/TestOperations';
 import QAManagerView from './qaManager/QAManagerView';
 import HealthAndSafetyPracticeInfo from "./healthAndSafetyPractice/healthAndSafetyPracticeInfo";
 //import healthAndSafetyPracticeInfo from './healthAndSafetyPractice/healthAndSafetyPracticeInfo';
+import PreviousReports from './reports/PreviousReports';
 
 
 
@@ -67,8 +68,11 @@ export function Reports(props) {
           <div style={{ marginBottom: '20px' }}>
             <GetReport />
           </div>
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '40px' }}>
             <ReportDelete />
+          </div>
+          <div style={{ marginBottom: '20px' }}>
+            <PreviousReports />
           </div>
         </div>
       );

@@ -5,7 +5,6 @@ import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
 import {dashboardAdminData} from './data/DashBoardData';
-import { DashboardView,  ViewStocks} from './SideBarPages';
 import { ViewEmployee } from './EmployeeSalary.jsx';
 import { OrderHistory } from './OrderHistory.jsx';
 import AllEmployeeSalary from './TotalSalary.jsx';
@@ -14,6 +13,7 @@ import AddOrUpdateEmployeeSalary from './AddUpdateSalary.jsx';
 import ViewLoanDetails from './ViewLoanDetails.jsx';
 import AddLoanForm from './CreateLoan.jsx';
 import { FinanceOverview } from './FinanceOverview.jsx';
+import DashBoardContent from './DashBoardContent.jsx';
 
 
 export default function Dashboard() {
@@ -71,8 +71,7 @@ export default function Dashboard() {
                     <TopBar avatar={avatar} />
 
                     <Routes>
-                        <Route path="/dashboard" element={<DashboardView />} />
-                        <Route path="/view-stocks" element={<ViewStocks />} />
+                        <Route path="/dashboard" element={<DashBoardContent />} />
                         <Route path="/view-salary-details" element={<ViewEmployee />}/>
                         <Route path="/view-all-salary-details" element={<AllEmployeeSalary />}/>
                         <Route path="/add-update-salary-details" element={< AddOrUpdateEmployeeSalary/>}/>

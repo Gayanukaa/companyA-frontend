@@ -54,9 +54,9 @@ export function DashboardView(props) {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get("http://localhost:8090/api/v1/userDetails", {
+                const response = await axios.get("https://spring-boot-companya.azurewebsites.net/api/v1/userDetails", {
                     params: {
-                        email: "nimesh@mp.com"
+                        id: localStorage.getItem("userId") ? localStorage.getItem("userId") : '6636348e535dd04b97253092' 
                     }
                 });
                 setUserData(response.data);
@@ -241,14 +241,16 @@ export function OrderHistory() {
         // Fetch data from backend when component mounts
         axios
             .get(
-                `http://localhost:8090/api/v1/salesRecord?user_ID=${localStorage.getItem("userId")
+                `https://spring-boot-companya.azurewebsites.net/api/v1/salesRecord?user_ID=${localStorage.getItem("userId")
                     ? localStorage.getItem("userId")
                     : "66189fd589a3a818a791a9c2"
                 }`
             )
             .then((response) => {
-                setSalesRecords(response.data.orders);
-                console.log();
+                if (response.data && response.data.orders) { // Add this null check
+                    console.log(response.data);
+                    setSalesRecords(response.data.orders);
+                }
             })
             .catch((error) => {
                 // Handle any errors that occur during the fetch
@@ -273,7 +275,7 @@ export function OrderHistory() {
 
     const fetchOrderStatuses = async (orderId) => {
         try {
-            const response = await axios.get(`http://localhost:8090/api/v1/getOrderStatus?orderID=${orderId}`);
+            const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/getOrderStatus?orderID=${orderId}`);
             return response.data.status; // Return status from response
         } catch (error) {
             console.error("Error fetching order status:", error);
@@ -316,7 +318,7 @@ export function OrderHistory() {
                     </tr>
                 </thead>
                 <tbody>
-                    {salesRecords.map((record, index) => {
+                    {salesRecords && salesRecords.map((record, index) => {
 
 
                         return (

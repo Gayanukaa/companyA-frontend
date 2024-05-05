@@ -29,7 +29,7 @@ export default function ContactUs() {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:8090/api/feedback/send', formData);
+      await axios.post('https://spring-boot-companya.azurewebsites.net/api/feedback/send', formData);
 
       Swal.fire({
         icon: "success",

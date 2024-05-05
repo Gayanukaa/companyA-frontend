@@ -1,5 +1,4 @@
 import React from "react";
-import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp';
 import ApprovalCard from "./components/Approvals.jsx"
 import avatar from '../../assets/avatar.svg';
@@ -8,9 +7,9 @@ import { useEffect, useState } from "react";
 import TrashIcon from "./components/TrashIcon";
 import { useNavigate } from 'react-router-dom';
 import { systemRoles } from './data/RoleDetails.jsx';
+import * as reqSend from '../../global/reqSender.jsx';
 
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 import { Alert, Tab, Tabs } from "@mui/material";
 
@@ -51,30 +50,73 @@ export function ViewManagers(props) {
             });
     }, []);
 
+
+    
+    const handleDeleteClick = (managerId) => {
+        console.log("Data received from TrashIcon:", managerId);
+
+        reqSend.defaultReq(
+            "DELETE",
+            `api/manager/deleteManager?id=${managerId}`,
+            {},
+            response => {
+                if (response.status === 200 && response.data) {
+
+                    // Re-fetch manager data after deletion
+                    reqSend.defaultReq(
+                        "GET",
+                        "api/manager/viewAllManagers",
+                        {},
+                        response => {
+                            if (response.status === 200 && response.data) {
+                                setData(response.data);
+                                setLoading(false);
+                            } else {
+                                console.error("Invalid response format:", response);
+                            }
+                        },
+                        error => {
+                            console.error("API request failed:", error);
+                        }
+                    );
+
+                } else {
+                    console.error("Invalid response format:", response);
+                }
+            },
+            error => {
+                console.error("API request failed:", error);
+            }
+        );
+
+    }
+
+
     useEffect(() => {
         if (data != null) {
-            settabledata(
-                {
-                    heading: ["Person", "Name", "e-mail", "Role", "edit", ""],
-                    body: data.map((tablerow, index) => {
-
+            settabledata({
+                heading: ["Person", "Name", "e-mail", "Role", "Actions", ""],
+                body: data.map((tablerow, index) => {
+                    if (tablerow.isDeleted === 0) {
                         const roleLabel = systemRoles.find(role => role.role === tablerow.role)?.label || 'Unknown Role';
-
                         return (
                             <tr key={index}>
                                 <td><img src={avatar} alt="Avatar" /></td>
                                 <td>{tablerow.firstName + " " + tablerow.lastName}</td>
-                                <td >{tablerow.email}</td>
+                                <td>{tablerow.email}</td>
                                 <td>{roleLabel}</td>
                                 <td><button onClick={() => updateManagerButtonClick(tablerow.id)} className="btn btn-dark">Update</button></td>
-                                <td><TrashIcon /></td>
+                                <td><TrashIcon onClickHandler={() => handleDeleteClick(tablerow.id)} /></td>
                             </tr>
-                        )
-                    }),
-                }
-            )
+                        );
+                    } else {
+                        return null;
+                    }
+                })
+            });
         }
     }, [data]);
+
     return (
         <>
             <main>

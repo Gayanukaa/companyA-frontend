@@ -8,6 +8,12 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 
 const QAManagerView = () => {
   const [managers, setManagers] = useState([]);
@@ -22,6 +28,7 @@ const QAManagerView = () => {
   const [concludeTestStatus, setConcludeTestStatus] = useState('');
   const [newTestSubjectId, setNewTestSubjectId] = useState('');
   const [notCheckedTestSubjects, setNotCheckedTestSubjects] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     fetchManagers();
@@ -29,7 +36,7 @@ const QAManagerView = () => {
 
   const fetchManagers = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/v1/qaManager');
+      const response = await axios.get('https://spring-boot-companya.azurewebsites.net/api/v1/qaManager');
       setManagers(response.data);
     } catch (error) {
       console.error('Error fetching managers:', error);
@@ -42,8 +49,13 @@ const QAManagerView = () => {
   };
 
   const addManager = async () => {
+    if (!newManager.id || !newManager.name || !newManager.mobileNumber || !newManager.email) {
+      setConcludeTestStatus('All fields are required');
+      alert('All fields are required');
+      return; // Don't proceed further
+    }
     try {
-      const response = await axios.post('http://localhost:8090/api/v1/qaManager/addQAManager', newManager);
+      const response = await axios.post('https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/addQAManager', newManager);
       setManagers([...managers, response.data]);
       setNewManager({ id:'', name: '', mobileNumber: '', email: '' });
     } catch (error) {
@@ -53,7 +65,7 @@ const QAManagerView = () => {
 
   const deleteManager = async (id) => {
     try {
-      await axios.delete(`http://localhost:8090/api/v1/qaManager/delete/${id}`);
+      await axios.delete(`https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/delete/${id}`);
       setManagers(managers.filter(manager => manager.id !== id));
     } catch (error) {
       console.error('Error deleting manager:', error);
@@ -62,7 +74,7 @@ const QAManagerView = () => {
 
   const fetchTestSubjects = async (managerId) => {
     try {
-      const response = await axios.get(`http://localhost:8090/api/v1/qaManager/getQAManager/{id}?id=${managerId}`);
+      const response = await axios.get(`https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/getQAManager/{id}?id=${managerId}`);
       setSelectedManager(response.data);
       setTestSubjects(response.data.assignedTestSubjects);
     } catch (error) {
@@ -73,17 +85,21 @@ const QAManagerView = () => {
   const addTestSubject = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:8090/api/v1/qaManager/assignManager?qaManagerId=${selectedManager.id}&testSubjectId=${newTestSubjectId}`);
+        `https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/assignManager?qaManagerId=${selectedManager.id}&testSubjectId=${newTestSubjectId}`);
       setTestSubjects([...testSubjects, response.data]);
+      alert('Test subject assigned successfully');
       setNewTestSubjectId('');
+      window.location.reload();
     } catch (error) {
       console.error('Error adding test subject:', error);
+      alert('Test subject Not found');
     }
   };  
 
   const concludeTest = async (testSubjectId) => {
     try {
-      await axios.put(`http://localhost:8090/api/v1/qaManager/concludeTest?qaManagerId=${selectedManager.id}&testSubjectId=${testSubjectId}`);
+      setOpenDialog(true)
+      await axios.put(`https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/concludeTest?qaManagerId=${selectedManager.id}&testSubjectId=${testSubjectId}`);
       setConcludeTestStatus('Test concluded successfully');
     } catch (error) {
       console.error('Error concluding test:', error);
@@ -91,9 +107,11 @@ const QAManagerView = () => {
     }
   };
 
+  
+
   const getNotCheckedTestSubjects = async () => {
     try {
-      const response = await axios.get('http://localhost:8090/api/v1/qaManager/notCheckedItems');
+      const response = await axios.get('https://spring-boot-companya.azurewebsites.net/api/v1/qaManager/notCheckedItems');
       setNotCheckedTestSubjects(response.data);
     } catch (error) {
       console.error('Error fetching not checked test subjects:', error);
@@ -118,7 +136,7 @@ const QAManagerView = () => {
 
         {selectedManager && (
           <Grid item xs={12}>
-            <Typography variant="h3">Test Subjects Assigned to {selectedManager.name}</Typography>
+            <Typography variant="h4">Test Subjects Assigned to {selectedManager.name}</Typography>
             <List>
               {testSubjects.map((subject) => (
                 <ListItem key={subject.id}>
@@ -138,8 +156,7 @@ const QAManagerView = () => {
               </ListItem>
               ))}
             </List>
-            {concludeTestStatus && <Typography>{concludeTestStatus}</Typography>}
-            <Typography variant="h3" style={{ marginBottom: '10px' }}>Assign New Test Subject to {selectedManager.name}</Typography>
+            <Typography variant="h4" style={{ marginBottom: '10px' }}>Assign New Test Subject to {selectedManager.name}</Typography>
             <TextField
               label="Test Subject Id"
               name="testSubjectId"
@@ -152,7 +169,7 @@ const QAManagerView = () => {
         )}
 
         <Grid item xs={12}>
-          <Typography variant="h3" style={{ marginBottom: '10px' }}>Add New Manager</Typography>
+          <Typography variant="h4" style={{ marginBottom: '10px' }}>Add New Manager</Typography>
           <TextField
             label="ID"
             name="id"
@@ -189,7 +206,7 @@ const QAManagerView = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Typography variant="h3" style={{ marginBottom: '10px' }}>Items to be checked</Typography>
+          <Typography variant="h4" style={{ marginBottom: '10px' }}>Items to be checked</Typography>
           <Button onClick={getNotCheckedTestSubjects} variant="contained" color="primary">Get Not Checked Test Subjects</Button>
           <List>
             {notCheckedTestSubjects.map((subject) => (
@@ -200,6 +217,17 @@ const QAManagerView = () => {
           </List>
         </Grid>
       </Grid>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Concluding Test</DialogTitle>
+        <DialogContent>
+          <Typography>{concludeTestStatus}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() =>{setOpenDialog(false); window.location.reload();}} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
