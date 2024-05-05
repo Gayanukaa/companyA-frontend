@@ -39,7 +39,7 @@ export default function EmployeeDetailForm() {
     try {
       const response = await reqSend.defaultReq(
         "POST",
-        "Employee/Create",
+        "https://spring-boot-companya.azurewebsites.net/Employee/Create",
         formData,
         (response) => {
           if (response.status === 200) {

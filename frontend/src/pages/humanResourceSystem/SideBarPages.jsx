@@ -81,7 +81,7 @@ export function Search(props) {
   const searchClick = () => {
     reqSend.defaultReq(
       "GET",
-      `Employee/${val}`,
+      `https://spring-boot-companya.azurewebsites.net/Employee/${val}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -273,7 +273,7 @@ export function MarkAttendance(props) {
   const signInClick = () => {
     reqSend.defaultReq(
       "POST",
-      `Attendance/SignIn/${val1}`,
+      `https://spring-boot-companya.azurewebsites.net/Attendance/SignIn/${val1}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -313,7 +313,7 @@ export function MarkAttendance(props) {
   const signOutClick = () => {
     reqSend.defaultReq(
       "POST",
-      `Attendance/SignOut/${val2}`,
+      `https://spring-boot-companya.azurewebsites.net/Attendance/SignOut/${val2}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -430,12 +430,11 @@ export function WorkTime(props) {
       // Fetch work hours data
       reqSend.defaultReq(
         "GET",
-        `PayRoll/WorkTime/WorkHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        `https://spring-boot-companya.azurewebsites.net/PayRoll/WorkTime/WorkHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
         {},
         async (workHoursResponse) => {
           if (workHoursResponse.status === 200 && workHoursResponse.data) {
             const workHoursData = workHoursResponse.data;
-            console.log(workHoursResponse);
             setWorkHoursData(workHoursData);
             document.getElementById("header3").innerHTML =
               JSON.stringify(workHoursData);
@@ -451,12 +450,11 @@ export function WorkTime(props) {
       // Fetch OT hours data
       reqSend.defaultReq(
         "GET",
-        `PayRoll/WorkTime/WorkOtHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        `https://spring-boot-companya.azurewebsites.net/PayRoll/WorkTime/WorkOtHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
         {},
         (otHoursResponse) => {
           if (otHoursResponse.status === 200 && otHoursResponse.data) {
             const otHoursData = otHoursResponse.data;
-            console.log(otHoursResponse);
             setOtHoursData(otHoursData);
             document.getElementById("header4").innerHTML =
               JSON.stringify(otHoursData);
@@ -649,7 +647,7 @@ export function Leave(props) {
   const searchClick = () => {
     reqSend.defaultReq(
       "GET",
-      `Leave/Balance?employeeId=${val}&year=${year}&month=${month}`,
+      `https://spring-boot-companya.azurewebsites.net/Leave/Balance?employeeId=${val}&year=${year}&month=${month}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -798,7 +796,7 @@ export function DeleteEmployee(props) {
   const searchClick = () => {
     reqSend.defaultReq(
       "GET",
-      `Employee/${val}`,
+      `https://spring-boot-companya.azurewebsites.net/Employee/${val}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -821,7 +819,7 @@ export function DeleteEmployee(props) {
   const deleteClick = () => {
     reqSend.defaultReq(
       "DELETE",
-      `Employee/${val}`,
+      `https://spring-boot-companya.azurewebsites.net/Employee/${val}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
