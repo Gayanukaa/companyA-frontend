@@ -32,6 +32,8 @@ import TaskAlt from '@mui/icons-material/TaskAlt';
 import Summarize from '@mui/icons-material/Summarize';
 import RepairCompleteForm from "./RepairCompleteForm.jsx";
 import RefreshIcon from '@mui/icons-material/Refresh';
+import RecieveShipment from "./RecieveShipment.jsx";
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 
 export function DashboardView(props) {
@@ -43,6 +45,7 @@ export function DashboardView(props) {
     const [warehouseData, setWarehouseData] = useState([]);
     const [stockOptions, setStockOptions] = useState([]);
     const [shipmentsData, setShipmentsData] = useState([]);
+    
 
     useEffect(() => {
         fetchData();
@@ -190,6 +193,8 @@ export function DashboardView(props) {
         setShowAddWarehouseForm(!showAddWarehouseForm);
      };
 
+    
+
     return (
         <main>
             <div className="head-title">
@@ -245,7 +250,7 @@ export function DashboardView(props) {
                         <br></br>
                         <CardCompInventory data={dataList} />
                         <br></br>
-                    </Box>
+                    </Box>    
                 </div>
                 
             </div>
@@ -261,7 +266,8 @@ export function OrderItems(props) {
     const [showShipmentForm, setShowShipmentForm] = useState(false);
     const [shipmentsData, setShipmentsData] = useState([]);
     const [showNewShipmentForm, setShowNewShipmentForm] = useState(false);
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
+    const [showRecieveShipmentForm, setShowRecieveShipmentForm] = useState(false); 
     
     useEffect(() => {
         fetchShipmentsData();
@@ -338,6 +344,10 @@ export function OrderItems(props) {
         setShowNewShipmentForm(!showNewShipmentForm);
      };
 
+    const toggleRecieveShipmentForm = () => {
+        setShowRecieveShipmentForm(!showRecieveShipmentForm);
+     };
+
     return (
         <main>
             <div className="head-title">
@@ -377,15 +387,17 @@ export function OrderItems(props) {
             
             <div className="full-width-components">
                 <Box boxShadow={5} borderRadius={8} bgcolor={"white"} padding={2}>
-                    <Stack direction="row" spacing={73}>
+                    <Stack direction="row" spacing={49}>
                         <h2>Placed Shipments</h2>
                         <Stack direction="row" spacing={2}>
                             <button onClick={toggleNewShipmentForm} type="button" className="btn btn-primary"><AddIcon/>Place New Shipment</button>
+                            <button onClick={toggleRecieveShipmentForm} type="button" className="btn btn-success justify-center gap-2"><TaskAltIcon/>Receive Shipment</button>
                             <button onClick={handleRefreshShipments} className="btn btn-secondary"><RefreshIcon/></button> 
                         </Stack>    
                     </Stack>
                     <br></br>
                     {showNewShipmentForm && <PlaceNewShipment onClose={toggleNewShipmentForm} />}
+                    {showRecieveShipmentForm && <RecieveShipment onClose={toggleRecieveShipmentForm} />}
                     
                     <CardCompInventory data={dataList} />
                     <br></br>
