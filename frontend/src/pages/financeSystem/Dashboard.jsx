@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
 import {dashboardAdminData} from './data/DashBoardData';
-import { UserProfile} from './SideBarPages';
+import { UserProfile} from './SideBarPages.jsx';
 import { ViewEmployee } from './EmployeeSalary.jsx';
 import { OrderHistory } from './OrderHistory.jsx';
 import AllEmployeeSalary from './TotalSalary.jsx';
