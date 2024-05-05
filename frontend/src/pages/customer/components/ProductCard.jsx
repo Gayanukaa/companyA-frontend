@@ -36,7 +36,7 @@ const ProductCard = ({title,id, price,items,   onAddToCart , onRemoveFromCart}) 
                         {title}
                     </Typography>
                     <Typography variant="h5" color="primary" fontWeight="bold">
-                        ${roundedPrice}
+                        Rs {roundedPrice}
                     </Typography>
                 </div>
                 <Box sx={{ width: '300px', height: '40px',display: 'flex', alignItems: 'center', justifyContent: 'space-around',

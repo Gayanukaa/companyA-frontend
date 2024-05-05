@@ -10,7 +10,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import useTheme from "@mui/material/styles/useTheme";
 import {useMediaQuery} from "@mui/material";
-
+import {useNavigate} from "react-router-dom";
 function ProductList({ get_url, get_val }) {
     const [showUnavailable, setShowUnavailable] = useState(false);
     const [unavailableItems, setUnavailableItems] = useState([]);
@@ -20,6 +20,7 @@ function ProductList({ get_url, get_val }) {
     const buttonHeight = isSmallScreen ? "40px" : "50px";
     const fontSize = isSmallScreen ? "0.8rem" : "medium";
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const {
         data,
@@ -60,6 +61,7 @@ function ProductList({ get_url, get_val }) {
             console.error('Error occurred:', error);
         } finally {
             setLoading(false);
+            navigate('/customer/dashboard');
         }
     }
 
@@ -72,7 +74,7 @@ function ProductList({ get_url, get_val }) {
                     <Box style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', justifyContent: 'center' }}>
                         <div style={{ marginRight: '16px' ,height:buttonHeight,display: 'flex', alignItems: 'center',justifyContent: 'center'}}>
                             <span style={{fontSize:fontSize, marginRight: '4px' }}>Total Price:</span>
-                            <span style={{fontSize:fontSize}}>${totalPrice.toFixed(2)}</span>
+                            <span style={{fontSize:fontSize}}>Rs {totalPrice.toFixed(2)}</span>
                         </div>
                         <div style={{
                             marginRight: '16px',

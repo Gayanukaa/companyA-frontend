@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Typography } from '@mui/material';
+
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const ReportGenerator = ({ reportType, buttonText }) => {
   const [report, setReport] = useState(null);
@@ -10,8 +12,8 @@ const ReportGenerator = ({ reportType, buttonText }) => {
   const generateReport = () => {
     setLoading(true);
     const endpoint = reportType === 'sample' 
-      ? 'http://localhost:8090/api/v1/SmpReports/samples/generate' 
-      : 'http://localhost:8090/api/v1/SmpReports/prototypes/generate';
+      ? 'https://spring-boot-companya.azurewebsites.net/api/v1/SmpReports/samples/generate' 
+      : 'https://spring-boot-companya.azurewebsites.net/api/v1/SmpReports/prototypes/generate';
     axios.post(endpoint)
       .then(response => {
         setReport(response.data);
@@ -25,7 +27,7 @@ const ReportGenerator = ({ reportType, buttonText }) => {
 
   return (
     <div>
-      <Button variant="contained" onClick={generateReport} disabled={loading} style={{ marginBottom: '10px' }}>
+      <Button variant="contained" color="primary" onClick={generateReport} disabled={loading} style={{ marginBottom: '10px' }}>
         {buttonText}
       </Button>
       {loading && <Typography>Loading...</Typography>}
