@@ -81,7 +81,7 @@ export function Search(props) {
   const searchClick = () => {
     reqSend.defaultReq(
       "GET",
-      `https://spring-boot-companya.azurewebsites.net/Employee/${val}`,
+      `Employee/${val}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -273,7 +273,7 @@ export function MarkAttendance(props) {
   const signInClick = () => {
     reqSend.defaultReq(
       "POST",
-      `https://spring-boot-companya.azurewebsites.net/Attendance/SignIn/${val1}`,
+      `Attendance/SignIn/${val1}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -313,7 +313,7 @@ export function MarkAttendance(props) {
   const signOutClick = () => {
     reqSend.defaultReq(
       "POST",
-      `https://spring-boot-companya.azurewebsites.net/Attendance/SignOut/${val2}`,
+      `Attendance/SignOut/${val2}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -430,7 +430,7 @@ export function WorkTime(props) {
       // Fetch work hours data
       reqSend.defaultReq(
         "GET",
-        `https://spring-boot-companya.azurewebsites.net/PayRoll/WorkTime/WorkHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        `PayRoll/WorkTime/WorkHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
         {},
         async (workHoursResponse) => {
           if (workHoursResponse.status === 200 && workHoursResponse.data) {
@@ -450,7 +450,7 @@ export function WorkTime(props) {
       // Fetch OT hours data
       reqSend.defaultReq(
         "GET",
-        `https://spring-boot-companya.azurewebsites.net/PayRoll/WorkTime/WorkOtHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
+        `PayRoll/WorkTime/WorkOtHours?employeeId=${val}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`,
         {},
         (otHoursResponse) => {
           if (otHoursResponse.status === 200 && otHoursResponse.data) {
@@ -647,7 +647,7 @@ export function Leave(props) {
   const searchClick = () => {
     reqSend.defaultReq(
       "GET",
-      `https://spring-boot-companya.azurewebsites.net/Leave/Balance?employeeId=${val}&year=${year}&month=${month}`,
+      `Leave/Balance?employeeId=${val}&year=${year}&month=${month}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
@@ -796,7 +796,7 @@ export function DeleteEmployee(props) {
   const searchClick = () => {
     reqSend.defaultReq(
       "GET",
-      `https://spring-boot-companya.azurewebsites.net/Employee/${val}`,
+      `Employee/${val}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
