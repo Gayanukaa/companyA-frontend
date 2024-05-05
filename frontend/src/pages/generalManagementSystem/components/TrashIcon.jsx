@@ -2,8 +2,8 @@ import React from 'react';
 import Swal from 'sweetalert2';
 
 export default function TrashIcon({ onClickHandler }) {
+
   const handleClick = () => {
-    console.log("Trash icon clicked");
 
     Swal.fire({
       title: "Are you sure?",
@@ -13,8 +13,10 @@ export default function TrashIcon({ onClickHandler }) {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!"
+      
     }).then((result) => {
       if (result.isConfirmed) {
+        onClickHandler();
         Swal.fire({
           title: "Deleted!",
           text: "Your file has been deleted.",

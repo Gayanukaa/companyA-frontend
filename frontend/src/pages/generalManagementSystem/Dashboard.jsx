@@ -5,16 +5,12 @@ import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import avatar from '../../assets/avatar.svg';
 import { SideNavigation, TopBar } from '../../components/sideComps/dashBoardComps';
-// import {
-//     dashboardAdminData,
-// } from './data/DashBoardData';
 
 import { ViewManagers, ApprovalSection } from './SideBarPages';
 import ModalForm from './components/ModalForm'
 import AddManager from './components/AddManager';
 import FeedBack from './components/FeedbackSection';
 import DashboardView from './components/DashboardView';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 
 
