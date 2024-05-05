@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -94,54 +94,55 @@ export default function Register() {
 
     const handleSignupSubmit = async (values) => {
 
-            const signInFormData = {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                mobileNumber: values.mobileNumber,
-                email: values.email,
-                password: values.password,
-                role: 'customer',
-            }
+        const signInFormData = {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            mobileNumber: values.mobileNumber,
+            email: values.email,
+            password: values.password,
+            role: 'customer',
+        }
 
-            console.log(signInFormData);
+        console.log(signInFormData);
 
-            try {
-                axios.post('https://spring-boot-companya.azurewebsites.net/customer/register', signInFormData).then(response => {
+        try {
+            axios.post('https://spring-boot-companya.azurewebsites.net/customer/register', signInFormData).then(response => {
 
-                    const responseStatusReg = response.status;
-                    if (responseStatusReg === 200 || responseStatusReg === 201) {
-                        const registeredUser = {
-                            email: values.email,
-                            password: values.password,
-                            role: 'customer'
-                        }
-
-
-
-                        axios.post('https://spring-boot-companya.azurewebsites.net/api/login', registeredUser).then(response2 => {
-                            const responseStatusLog = response2.status;
-                            if (responseStatusLog === 200 || responseStatusLog === 201) {
-
-                                localStorage.setItem("role", response2.data.role);
-
-                                navigate('/customer/dashboard');
-                                Toast.fire({ icon: 'success', title: 'You have successfully Registered!' });
-                            } else {
-                                setShowAlert(response2.data['message'])
-                            }
-                        }).catch(error => { // Handle any errors
-                            setShowAlert("Error")
-                        });
-
-                    } else {
-                        setShowAlert(response.data['message'])
+                const responseStatusReg = response.status;
+                if (responseStatusReg === 200 || responseStatusReg === 201) {
+                    const registeredUser = {
+                        email: values.email,
+                        password: values.password,
+                        role: 'customer'
                     }
 
-                }).catch(() => { // Handle any errors
-                    setShowAlert("Error");
 
-                });
-            } catch (err) {
+
+                    axios.post('https://spring-boot-companya.azurewebsites.net/api/login', registeredUser).then(response2 => {
+                        const responseStatusLog = response2.status;
+                        if (responseStatusLog === 200 || responseStatusLog === 201) {
+
+                            localStorage.setItem("role", response2.data.role);
+                            localStorage.setItem("userId", response.data.userId);
+
+                            navigate('/customer/dashboard');
+                            Toast.fire({ icon: 'success', title: 'You have successfully Registered!' });
+                        } else {
+                            setShowAlert(response2.data['message'])
+                        }
+                    }).catch(error => { // Handle any errors
+                        setShowAlert("Error")
+                    });
+
+                } else {
+                    setShowAlert(response.data['message'])
+                }
+
+            }).catch(() => { // Handle any errors
+                setShowAlert("Error");
+
+            });
+        } catch (err) {
         }
 
     }
