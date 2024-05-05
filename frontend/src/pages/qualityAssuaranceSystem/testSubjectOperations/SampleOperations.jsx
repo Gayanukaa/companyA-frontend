@@ -101,12 +101,13 @@ const SampleOperations = () => {
       const response = await axios.post('https://spring-boot-companya.azurewebsites.net/api/v1/samples/createsample', {
         id: createSampleId,
         expectedTest: sampleExpectedTest,
-        receivedDate: sampleReceivedDate,
+        receivedDate: sampleReceivedDate.split('-').reverse().join('/'),
       });
       setCreateMessage(response.data);
       setCreateSampleId('');
       setSampleExpectedTest('');
       setSampleReceivedDate('');
+      getAllSamples();
     } catch (error) {
       console.error('Error creating sample:', error);
     }
@@ -260,15 +261,21 @@ const SampleOperations = () => {
           required
           style={{ marginRight: '6px' }}
         />
+
+      <div>
+        <Typography variant="body1" gutterBottom>
+          Received Date:
+        </Typography>
         <TextField
-          type="text"
-          variant="outlined"
-          value={sampleReceivedDate}
-          onChange={(e) => setSampleReceivedDate(e.target.value)}
-          label="Received Date"
-          required
-          style={{ marginRight: '6px' }}
+        type="date"
+        variant="outlined"
+        value={sampleReceivedDate}
+        onChange={(e) => setSampleReceivedDate(e.target.value)}
+        required
+        style={{ marginRight: '6px' }}
         />
+        </div>
+
         </div>
         <Button type="submit" variant="contained" color ="primary">Add Sample</Button>
       </form>

@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
+
 const PrototypeOperations = () => {
   const [prototypes, setPrototypes] = useState([]);
   const [selectedPrototype, setSelectedPrototype] = useState(null);
@@ -96,12 +97,12 @@ const PrototypeOperations = () => {
       const response = await axios.post('https://spring-boot-companya.azurewebsites.net/api/v1/prototypes/createprototype', {
         id: createPrototypeId,
         expectedTest: prototypeExpectedTest,
-        receivedDate: prototypeReceivedDate,
+        receivedDate: prototypeReceivedDate.split('-').reverse().join('/')
       });
-      setCreateMessage(response.data);
       setCreatePrototypeId('');
       setPrototypeExpectedTest('');
       setPrototypeReceivedDate('');
+      getAllPrototypes();
       setCreateMessage(response.data);
     } catch (error) {
       console.error('Error creating prototype:', error);
@@ -114,6 +115,8 @@ const PrototypeOperations = () => {
     getAllPrototypes();
     setShowAll(true);
   };
+
+
 
   return (
     <div style={{ margin: '30px 0' }}>
@@ -257,15 +260,21 @@ const PrototypeOperations = () => {
           required
           style={{ marginRight: '6px' }}
         />
+
+        <div>
+        <Typography variant="body1" gutterBottom>
+          Received Date:
+        </Typography>
         <TextField
-          type="text"
-          variant="outlined"
-          value={prototypeReceivedDate}
-          onChange={(e) => setPrototypeReceivedDate(e.target.value)}
-          label="Received Date"
-          required
-          style={{ marginRight: '6px' }}
+        type="date"
+        variant="outlined"
+        value={prototypeReceivedDate}
+        onChange={(e) => setPrototypeReceivedDate(e.target.value)}
+        required
+        style={{ marginRight: '6px' }}
         />
+        </div>
+         
         </div>
         <Button type="submit" variant="contained" color ="primary">Add Prototype</Button>
       </form>
