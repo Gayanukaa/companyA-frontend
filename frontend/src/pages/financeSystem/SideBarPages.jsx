@@ -2,7 +2,7 @@ import React from "react";
 import CardComp from "../../components/sideComps/CardComp";
 import TableComp from '../../components/sideComps/TableComp'
 import avatar from '../../assets/avatar.svg';
-import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography'; // Import Typography
 
 export function DashboardView(props) {
     const dataList = [
@@ -20,11 +20,9 @@ export function DashboardView(props) {
             <main>
                 <div className="head-title">
                     <div className="left">
-                        <Typography variant="h1">Dashboard</Typography> 
+                        <Typography variant="h1">Dashboard</Typography>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center' }}> 
-                        <CardComp data={dataList} /> 
-                    </div>
+                    <CardComp data={dataList}/>
                 </div>
             </main>
         </>
