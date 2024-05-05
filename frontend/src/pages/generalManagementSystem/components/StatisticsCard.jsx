@@ -5,6 +5,8 @@ import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import Typography from '@mui/material/Typography';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 function StatisticsCard() {
     const [apiData, setApiData] = useState(null);
@@ -21,7 +23,9 @@ function StatisticsCard() {
                 const newData = keys.map((key, index) => ({
                     name: key.charAt(0).toUpperCase() + key.slice(1), 
                     count: values[index], 
-                    image: index === 3 ? <DirectionsCarIcon fontSize="large" style={{ color: '#3C91E6' }} /> : <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
+                    image: index === 3 ? <DirectionsCarIcon fontSize="large" style={{ color: '#3C91E6' }} /> : 
+                    index === 2 ? <InventoryIcon fontSize="large" style={{ color: '#3C91E6' }} /> :
+                    <PeopleAltIcon fontSize="large" style={{ color: '#3C91E6' }} />,
                     altText: `Image ${index + 1}`,
                 }));
 
@@ -41,11 +45,15 @@ function StatisticsCard() {
                         <Card variant="outlined">
                             <CardContent>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '10px', paddingRight: '10px' }}>
-                                    <div>
-                                        <h3>{item.name}</h3>
-                                        <p>{item.count}</p>
-                                        {item.image}
-                                    </div>
+                                {item.image}
+                                <div style={{ textAlign: 'right' }}>
+                                        <Typography variant="h4" component="div">
+                                            {item.count}
+                                        </Typography>
+                                        <Typography variant="subtitle1" color="textSecondary" component="p">
+                                            {item.name}
+                                        </Typography>
+                                        </div>
                                 </div>
                             </CardContent>
                         </Card>
