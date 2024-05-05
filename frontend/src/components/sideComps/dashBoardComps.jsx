@@ -71,8 +71,7 @@ export function TopBar(props) {
                     <button type="submit" className="search-btn"><i className='bx bx-search' ></i></button>
                 </div> */}
             </form>
-            <input type="checkbox" id="switch-mode" hidden />
-            <label htmlFor="switch-mode" className="switch-mode"></label>
+            
             <Link to="#" className="notification">
                 <i className='bx bxs-bell' ></i>
                 <span className="num">8</span>

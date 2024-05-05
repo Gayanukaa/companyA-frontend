@@ -41,17 +41,7 @@ export default function Dashboard() {
         })
 
 
-        const switchMode = document.getElementById('switch-mode');
-        const wrapper = document.getElementById('dashboardWrapper');
-
-
-        switchMode.addEventListener('change', function () {
-            if (this.checked) {
-                wrapper.classList.add('dark');
-            } else {
-                wrapper.classList.remove('dark');
-            }
-        })
+       
     }
 
     useEffect(() => {

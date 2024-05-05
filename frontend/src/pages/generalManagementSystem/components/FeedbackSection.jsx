@@ -108,9 +108,15 @@ const FeedbackSection = () => {
         );
     }
 
-    const handleDeleteClick = (event) => {
-        event.stopPropagation();
-        deleteFeedback();
+    const handleDeleteClick = (feedbackId) => {
+
+        axios.delete(`https://spring-boot-companya.azurewebsites.net/api/feedback/delete?id=${feedbackId}`)
+            .then(response => {
+                
+            })
+            .catch(error => {
+                console.error("Error fetching manager data:", error);
+            });
     };
 
 
@@ -123,7 +129,7 @@ const FeedbackSection = () => {
         };
 
         fetchData();
-    }, [handleMarkAsReadClick]);
+    }, [handleMarkAsReadClick, handleDeleteClick]);
 
 
     return (
@@ -187,7 +193,7 @@ const FeedbackSection = () => {
                                                             <Typography variant="caption">{new Date(feedback.timestamp).toLocaleString()}</Typography>
                                                         </Grid>
                                                     </Box>
-                                                    <TrashIcon onClick={handleDeleteClick} />
+                                                    <TrashIcon onClickHandler={() => handleDeleteClick(feedback.id)} />
                                                 </Box>
                                             </AccordionSummary>
 
