@@ -106,7 +106,7 @@ export default function UpdateDetailForm() {
     try {
       const response = await reqSend.defaultReq(
         "PUT",
-        `https://spring-boot-companya.azurewebsites.net/Employee/${val}`,
+        `Employee/${val}`,
         formData,
         (response) => {
           console.log(response);

@@ -14,7 +14,7 @@ export default function SearchAll() {
       const formattedDate = new Date(selectedDate).toISOString().split("T")[0]; // Convert selected date string to ISO format
       reqSend.defaultReq(
         "GET",
-        `https://spring-boot-companya.azurewebsites.net/Attendance/GetDailyAttendance/${formattedDate}`,
+        `Attendance/GetDailyAttendance/${formattedDate}`,
         {},
         (response) => {
           if (response.status === 200 && response.data) {

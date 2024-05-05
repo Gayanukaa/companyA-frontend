@@ -12,7 +12,7 @@ export default function SearchOne() {
   const searchClick = () => {
     reqSend.defaultReq(
       "GET",
-      `https://spring-boot-companya.azurewebsites.net/Attendance/GetWeeklyAttendance/${val}`,
+      `Attendance/GetWeeklyAttendance/${val}`,
       {},
       (response) => {
         if (response.status === 200 && response.data) {
