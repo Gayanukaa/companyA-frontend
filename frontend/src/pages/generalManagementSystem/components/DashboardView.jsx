@@ -15,7 +15,7 @@ const DashboardView = () => {
 
 
     useEffect(() => {
-        reqSend.defaultReq("GET", "api/dashboard/graphs", {},
+        reqSend.defaultReq("GET", "/api/dashboard/graphs", {},
             response => {
                 if (response.status === 200 && response.data) {
                     setGraphData(response.data);
